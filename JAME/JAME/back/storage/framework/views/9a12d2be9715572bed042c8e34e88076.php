@@ -1,0 +1,1 @@
+<?php /**PATH C:\Users\estud\OneDrive\Documentos\JAME\JAME\back\citas-jame\resources\views/index.blade.php ENDPATH**/ ?>
