@@ -80,11 +80,11 @@ export default function AdminMascotas() {
                         <input 
                             type="number" 
                             className="form-control" 
-                            placeholder="Buscar por ID" 
+                            placeholder="Buscar Mascota por ID" 
                             value={busqueda} 
                             onChange={(e) => setBusqueda(e.target.value)} 
                         />
-                        <button className="btn btn-info" onClick={buscarMascota}>Buscar</button>
+                        <button className="btn btn-info" onClick={buscarMascota}>Buscar Mascota</button>
                     </div>
                     
                     {mascotaEncontrada && (
