@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer';
 import Navbar from '../../components/Navbar';
 
-export default function InicioAdmin() {
+export default function AdminMascotas() {
     return (
         <div className="vh-100 d-flex flex-column">
             {/* Header */}
@@ -24,7 +24,7 @@ export default function InicioAdmin() {
 
                 <div className="bg-dark text-white p-0 d-flex flex-column" style={{ width: '200px' }}>
                     <div className="list-group list-group-flush">
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
+                        <a href="#" className="list-group-item list-group-item-action bg-success text-white py-3">
                             <i className="bi bi-house me-2"></i> Inicio
                         </a>
                         <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
@@ -33,7 +33,7 @@ export default function InicioAdmin() {
                         <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-calendar2 me-2"></i> Agendamientos
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-warning text-white py-3">
+                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-box me-2"></i> Pedidos
                         </a>
                         <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
