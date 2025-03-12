@@ -94,10 +94,12 @@ export default function InicioAdmin() {
                             </button>
                         </div>
                         <div className="col-2">
+                            <Link to='/mascotas'>
                             <button className="btn btn-light border p-4">
                                 <i className="fa fa-paw fs-3"></i>
                                 <div className="mt-2">Mascotas</div>
                             </button>
+                            </Link>
                         </div>
                         <div className="col-2">
                             <button className="btn btn-light border p-4">

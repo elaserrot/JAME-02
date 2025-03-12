@@ -15,6 +15,7 @@ import ServiciosMedicina from "./pages/Cliente/ServiciosMedicina";
 import AgendamientoGrooming from "./pages/Cliente/AgendamientoGrooming";
 {/* ----------------------paginas de administrador-------------------- */ }
 import AdminPedidos from "./pages/Admin/AdminPedidos";
+import AdminMascotas from "./pages/Admin/AdminMascotas";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
 {/* ----------------------paginas de administrador-------------------- */}
         <Route path="/administrador/" element={<InicioAdmin />} />
         <Route path="/pedidos" element={<AdminPedidos />} />
+        <Route path="/mascotas" element={<AdminMascotas />} />
 
 
       </Routes>
