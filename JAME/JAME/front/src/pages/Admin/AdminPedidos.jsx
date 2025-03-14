@@ -44,6 +44,7 @@ export default function InicioAdmin() {
                         </a>
                     </div>
                 </div>
+                
 
              
                 <div className="flex-grow-1 bg-light p-4">
