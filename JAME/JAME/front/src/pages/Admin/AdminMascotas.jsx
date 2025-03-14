@@ -75,8 +75,10 @@ export default function AdminMascotas() {
                 <div className="flex-grow-1 bg-light p-4">
                     <h2 className="mb-4"> Mascotas</h2>
                     <div className="d-flex gap-2 mt-2">
+
                     <Link to='/agregar'><button className="btn btn-primary mb-4">Agregar Nueva Mascota</button></Link>
                     <Link to= '/administrador'><button className="btn btn-primary mb-4">Volver a Inicio</button></Link>
+
                     </div>
                     {/* Buscador de mascota */}
                     <div className="mb-3 d-flex gap-2">

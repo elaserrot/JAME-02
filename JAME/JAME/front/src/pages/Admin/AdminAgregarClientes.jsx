@@ -4,22 +4,21 @@ import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer';
 import Navbar from '../../components/Navbar';
 
-    const AgregarMascota = () => {
-        const [mascota, setMascota] = useState({
+    const AgregarCliente = () => {
+        const [cliente, setCliente] = useState({
           nombre: "",
-          especie: "",
-          raza: "",
-          edad: "",
-          dueño: "",
+          documento: "",
+          telefono: "",
+        
         });
         const handleChange = (e) => {
-            setMascota({ ...mascota, [e.target.name]: e.target.value });
+            setCliente({ ...cliente, [e.target.name]: e.target.value });
           };
         const handleSubmit = (e) => {
             e.preventDefault();
-            console.log("Mascota agregada:", mascota);
-            setMascota({ nombre: "", especie: "", raza: "", edad: "", dueño: "" }); 
-            
+            console.log("Cliente  agregado:", cliente);
+            setCliente({ nombre: "", documento: "", telefono: "",  }); 
+   
           };
       
 
@@ -64,7 +63,7 @@ import Navbar from '../../components/Navbar';
         <Container className="mt-4 flex-grow-1">
           <Card>
             <Card.Header className="bg-primary text-white text-center">
-              <h4>Agregar Nueva Mascota</h4>
+              <h4>Agregar Nuevo Cliente</h4>
             </Card.Header>
             <Card.Body>
               <Form onSubmit={handleSubmit}>
@@ -73,65 +72,52 @@ import Navbar from '../../components/Navbar';
                   <Form.Control
                     type="text"
                     name="nombre"
-                    value={mascota.nombre}
+                    value={cliente.nombre}
                     onChange={handleChange}
                     required
                   />
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <Form.Label>Especie</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="especie"
-                    value={mascota.especie}
-                    onChange={handleChange}
-                    required
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                  <Form.Label>Raza</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="raza"
-                    value={mascota.raza}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                  <Form.Label>Edad</Form.Label>
+                  <Form.Label>Documento</Form.Label>
                   <Form.Control
                     type="number"
-                    name="edad"
-                    value={mascota.edad}
+                    name="documento"
+                    value={cliente.documento}
                     onChange={handleChange}
+                    min="0"
+                    onKeyDown={(e) => e.key === '-' && e.preventDefault()} 
+                    
                   />
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <Form.Label>Dueño</Form.Label>
+                  <Form.Label>Telefono</Form.Label>
                   <Form.Control
-                    type="text"
-                    name="dueño"
-                    value={mascota.dueño}
+                    type="number"
+                    name="telefono"
+                    value={cliente.telefono}
                     onChange={handleChange}
-                    required
+                    min="0"
+                    onKeyDown={(e) => e.key === '-' && e.preventDefault()} 
                   />
                 </Form.Group>
 
                 <Button variant="success" type="submit">
-                  Agregar Mascota
+                  Agregar Cliente
                 </Button>
               </Form>
             </Card.Body>
           </Card>
         </Container>
+         <div className="d-flex gap-2 mt-2">
+           <Link to='/clientes'><button className="btn btn-primary mb-4">Volver</button></Link>
+           </div>
+
+                           
         </div>
             <Footer />
         </div>
     );
 };
-
-export default AgregarMascota;
+export default AgregarCliente;

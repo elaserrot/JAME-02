@@ -20,6 +20,8 @@ import AdminAgregarMascota from "./pages/Admin/AdminAgregarMascota";
 import AdminVentas  from "./pages/Admin/AdminVentas";
 import AdminClientes  from "./pages/Admin/AdminClientes";
 import AdminVerMascota  from "./pages/Admin/AdminVerMascota";
+import AdminAgregarClientes  from "./pages/Admin/AdminAgregarClientes";
+
 
 
 function App() {
@@ -43,10 +45,13 @@ function App() {
         <Route path="/administrador/" element={<InicioAdmin />} />
         <Route path="/pedidos" element={<AdminPedidos />} />
         <Route path="/mascotas" element={<AdminMascotas />} />
-        <Route path="/agregar" element={<AdminAgregarMascota />} />
+        <Route path="/agregarmascota" element={<AdminAgregarMascota />} />
         <Route path="/ventas" element={<AdminVentas />} />
         <Route path="/clientes" element={<AdminClientes />} />
         <Route path="/vermascota" element={<AdminVerMascota />} />
+        <Route path="/agregarcliente" element={<AdminAgregarClientes />} />
+        
+
         
 
 
