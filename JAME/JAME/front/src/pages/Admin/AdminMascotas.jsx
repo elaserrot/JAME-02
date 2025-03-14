@@ -26,6 +26,7 @@ export default function AdminMascotas() {
     const eliminarMascota = (id) => {
         setMascotas(mascotas.filter(mascota => mascota.id !== id));
     };
+
     const buscarMascota = () => {
         const mascota = mascotas.find(m => m.id === parseInt(busqueda));
         setMascotaEncontrada(mascota);
@@ -75,7 +76,7 @@ export default function AdminMascotas() {
                     <h2 className="mb-4"> Mascotas</h2>
                     <div className="d-flex gap-2 mt-2">
                     <Link to='/agregar'><button className="btn btn-primary mb-4">Agregar Nueva Mascota</button></Link>
-                    <Link to='/administrador'><button className="btn btn-primary mb-4">Volver a Inicio</button></Link>
+                    <Link to= '/administrador'><button className="btn btn-primary mb-4">Volver a Inicio</button></Link>
                     </div>
                     {/* Buscador de mascota */}
                     <div className="mb-3 d-flex gap-2">
@@ -131,6 +132,7 @@ export default function AdminMascotas() {
                                             </div>
                                             <div className="d-flex flex-column gap-2">
                                              <button className="btn btn-danger mt-2" onClick={() => eliminarMascota(mascota.id)}>Eliminar</button>
+                                             <Link to='/vermascota'><button className="btn btn-primary mb-4">Ver mascota</button></Link>
                                         </div>
                                         </div>
                                     </div>
