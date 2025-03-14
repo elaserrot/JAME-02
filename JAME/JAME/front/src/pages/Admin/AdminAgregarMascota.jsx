@@ -1,9 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import { Form, Button, Container, Card } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer';
 import Navbar from '../../components/Navbar';
 
-export default function AdminAgregarMascota() {
+    const AgregarMascota = () => {
+        const [mascota, setMascota] = useState({
+          nombre: "",
+          especie: "",
+          raza: "",
+          edad: "",
+          dueño: "",
+        });
+        const handleChange = (e) => {
+            setMascota({ ...mascota, [e.target.name]: e.target.value });
+          };
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            console.log("Mascota agregada:", mascota);
+            setMascota({ nombre: "", especie: "", raza: "", edad: "", dueño: "" }); // Resetea el formulario
+            // Aquí puedes agregar la lógica para enviar los datos a la API o base de datos
+          };
+      
 
     return (
         <div className="vh-100 d-flex flex-column">
@@ -43,11 +61,77 @@ export default function AdminAgregarMascota() {
                         </a>
                     </div>
                 </div>
-                
-                
-            
+        <Container className="mt-4 flex-grow-1">
+          <Card>
+            <Card.Header className="bg-primary text-white text-center">
+              <h4>Agregar Nueva Mascota</h4>
+            </Card.Header>
+            <Card.Body>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Nombre</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="nombre"
+                    value={mascota.nombre}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Especie</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="especie"
+                    value={mascota.especie}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Raza</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="raza"
+                    value={mascota.raza}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Edad</Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="edad"
+                    value={mascota.edad}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Dueño</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="dueño"
+                    value={mascota.dueño}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+
+                <Button variant="success" type="submit">
+                  Agregar Mascota
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Container>
         </div>
             <Footer />
         </div>
     );
-}
+};
+
+export default AgregarMascota;
