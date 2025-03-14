@@ -92,7 +92,7 @@ export default function InicioAdmin() {
                                         <li className="list-group-item">Cliente: María Gómez - $45.000</li>
                                         <li className="list-group-item">Cliente: Carlos Ramírez - $60.000</li>
                                     </ul>
-                                    <a href="#" className="btn btn-link">Ver historial completo...</a>
+                                    <Link to ='/clientes'><a href="#" className="btn btn-link">Ver historial completo...</a></Link>
                                 </div>
                             </div>
                         </div>
