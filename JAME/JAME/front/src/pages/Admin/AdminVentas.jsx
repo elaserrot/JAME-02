@@ -79,7 +79,7 @@ export default function InicioAdmin() {
                                         <li className="list-group-item">Collar Antipulgas - $30.000</li>
                                         <li className="list-group-item">Juguete para Perros - $20.000</li>
                                     </ul>
-                                    <a href="#" className="btn btn-link">Ver más productos...</a>
+                                    <Link to ='/productos'><a href="#" className="btn btn-link">Ver más productos...</a></Link>
                                 </div>
                             </div>
                         </div>
