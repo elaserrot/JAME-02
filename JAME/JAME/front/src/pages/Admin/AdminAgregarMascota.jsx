@@ -18,8 +18,8 @@ import Navbar from '../../components/Navbar';
         const handleSubmit = (e) => {
             e.preventDefault();
             console.log("Mascota agregada:", mascota);
-            setMascota({ nombre: "", especie: "", raza: "", edad: "", dueño: "" }); // Resetea el formulario
-            // Aquí puedes agregar la lógica para enviar los datos a la API o base de datos
+            setMascota({ nombre: "", especie: "", raza: "", edad: "", dueño: "" }); 
+            
           };
       
 

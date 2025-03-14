@@ -110,10 +110,14 @@ import Navbar from '../../components/Navbar';
             </Card.Body>
           </Card>
         </Container>
+         <div className="d-flex gap-2 mt-2">
+           <Link to='/clientes'><button className="btn btn-primary mb-4">Volver</button></Link>
+           </div>
+
+                           
         </div>
             <Footer />
         </div>
     );
 };
-
 export default AgregarCliente;
