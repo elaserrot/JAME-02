@@ -16,6 +16,7 @@ import AgendamientoGrooming from "./pages/Cliente/AgendamientoGrooming";
 {/* ----------------------paginas de administrador-------------------- */ }
 import AdminPedidos from "./pages/Admin/AdminPedidos";
 import AdminMascotas from "./pages/Admin/AdminMascotas";
+import AdminAgregarMascota from "./pages/Admin/AdminAgregarMascota";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/administrador/" element={<InicioAdmin />} />
         <Route path="/pedidos" element={<AdminPedidos />} />
         <Route path="/mascotas" element={<AdminMascotas />} />
+        <Route path="/agregar" element={<AdminAgregarMascota />} />
 
 
       </Routes>

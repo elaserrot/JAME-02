@@ -12,11 +12,13 @@ export default function AdminMascotas() {
     useEffect(() => {
         // Simulación de carga de datos
         const data = [
-            { id: 1, nombre: 'keyla', especie: 'Perro', raza: 'Bulldog french', edad: 3, dueño: 'alisson' },
-            { id: 2, nombre: 'Napoleon', especie: 'Perro', raza: 'Bulldog french', edad: 2, dueño: 'Juan José' },
-            { id: 3, nombre: 'Rocky', especie: 'Gato', raza: 'leopardo', edad: 4, dueño: 'Carlos' },
-            { id: 4, nombre: 'Toby', especie: 'Perro', raza: 'labrador', edad: 1, dueño: 'José' },
-            { id: 5, nombre: 'Jack', especie: 'Gato', raza: 'tigrillo', edad: 2, dueño: 'Lucas' }
+            { id: 1, nombre: 'keyla', especie: 'Perro', raza: 'Bulldog french', genero: 'masculino', edad: 3, dueño: 'alisson' },
+            { id: 2, nombre: 'Napoleon',especie: 'Perro', raza: 'Bulldog french', genero: 'masculino', edad: 2, dueño: 'Juan José' },
+            { id: 3, nombre: 'Rocky', especie: 'Gato',  raza: 'leopardo',       genero: 'masculino', edad: 1, dueño: 'Carlos' },
+            { id: 4, nombre: 'Toby',  especie: 'Perro', raza: 'labrador',       genero: 'masculino', edad: 4, dueño: 'José' },
+            { id: 5, nombre: 'Jack',  especie: 'Gato',  raza: 'tigrillo',       genero: 'masculino', edad: 3, dueño: 'Lucas' },
+            { id: 6, nombre: 'Max',   especie: 'Gato',  raza: 'siames',         genero: 'masculino', edad: 2, dueño: 'gilma' }
+              
         ];
         console.log("Cargando mascotas:", data);
         setMascotas(data);
@@ -70,10 +72,10 @@ export default function AdminMascotas() {
                 </div>
                 
                 <div className="flex-grow-1 bg-light p-4">
-                    <h3 className="mb-4">Listado de Mascotas</h3>
+                    <h2 className="mb-4"> Mascotas</h2>
                     <div className="d-flex gap-2 mt-2">
-                    <Link to={'agregarMascota'}><button className="btn btn-success mb-4">Agregar Mascota</button></Link>
-                    <Link to='/administrador'><button className="btn btn-primary mb-4" onClick={() => volver(mascota.id)}>Volver a Inicio</button></Link>
+                    <Link to='/agregar'><button className="btn btn-primary mb-4">Agregar Nueva Mascota</button></Link>
+                    <Link to='/administrador'><button className="btn btn-primary mb-4">Volver a Inicio</button></Link>
                     </div>
                     {/* Buscador de mascota */}
                     <div className="mb-3 d-flex gap-2">
@@ -90,8 +92,10 @@ export default function AdminMascotas() {
                     {mascotaEncontrada && (
                         <div className="alert alert-success">
                             <h5>{mascotaEncontrada.nombre}</h5>
+                            <p><strong>Id:</strong> {mascotaEncontrada.id}</p> 
                             <p><strong>Especie:</strong> {mascotaEncontrada.especie}</p>
                             <p><strong>Raza:</strong> {mascotaEncontrada.raza}</p>
+                            <p><strong>Genero:</strong> {mascotaEncontrada.genero}</p>
                             <p><strong>Edad:</strong> {mascotaEncontrada.edad} años</p>
                             <p><strong>Propietario:</strong> {mascotaEncontrada.propietario}</p>
                         </div>
@@ -99,15 +103,35 @@ export default function AdminMascotas() {
                     <div className="row">
                         {Array.isArray(mascotas) && mascotas.length > 0 ? (
                             mascotas.map(mascota => (
-                                <div key={mascota.id} className="col-md-4">
-                                    <div className="card mb-3">
-                                        <div className="card-body">
+                                <div key={mascota.id} className="col-md-12">
+                                    <div className="card mb-4">
+                                    <div className="card-body d-flex flex-row justify-content-between align-items-center">
+                                        <div>
+                                        </div>
+                                        <div className="d-flex flex-column gap-2">
                                             <h4 className="card-title">{mascota.nombre}</h4>
+                                            </div>
+                                            <div className="d-flex flex-column gap-2">
+                                            <p className="card-text"><strong>Id:</strong> {mascota.id}</p>
+                                            </div>
+                                            <div className="d-flex flex-column gap-2">
                                             <p className="card-text"><strong>Especie:</strong> {mascota.especie}</p>
+                                            </div>
+                                            <div className="d-flex flex-column gap-2">
                                             <p className="card-text"><strong>Raza:</strong> {mascota.raza}</p>
+                                            </div>
+                                            <div className="d-flex flex-column gap-2">
+                                            <p className="card-text"><strong>Genero:</strong> {mascota.genero}</p>
+                                            </div>
+                                            <div className="d-flex flex-column gap-2">
                                             <p className="card-text"><strong>Edad:</strong> {mascota.edad} años</p>
+                                            </div>
+                                            <div className="d-flex flex-column gap-2">
                                             <p className="card-text"><strong>Dueño:</strong> {mascota.dueño}</p>
+                                            </div>
+                                            <div className="d-flex flex-column gap-2">
                                              <button className="btn btn-danger mt-2" onClick={() => eliminarMascota(mascota.id)}>Eliminar</button>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
