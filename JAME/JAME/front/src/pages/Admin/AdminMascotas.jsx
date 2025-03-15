@@ -18,7 +18,6 @@ export default function AdminMascotas() {
             { id: 4, nombre: 'Toby',  especie: 'Perro', raza: 'labrador',       genero: 'masculino', edad: 4, dueño: 'José' },
             { id: 5, nombre: 'Jack',  especie: 'Gato',  raza: 'tigrillo',       genero: 'masculino', edad: 3, dueño: 'Lucas' },
             { id: 6, nombre: 'Max',   especie: 'Gato',  raza: 'siames',         genero: 'masculino', edad: 2, dueño: 'gilma' }
-              
         ];
         console.log("Cargando mascotas:", data);
         setMascotas(data);
@@ -133,8 +132,8 @@ export default function AdminMascotas() {
                                             <p className="card-text"><strong>Dueño:</strong> {mascota.dueño}</p>
                                             </div>
                                             <div className="d-flex flex-column gap-2">
-                                             <button className="btn btn-danger mt-2" onClick={() => eliminarMascota(mascota.id)}>Eliminar</button>
-                                             <Link to='/vermascota'><button className="btn btn-primary mb-4">Ver mascota</button></Link>
+                                            <button className="btn btn-danger mt-2" onClick={() => eliminarMascota(mascota.id)}>Eliminar</button>
+                                            <Link to='/vermascota'><button className="btn btn-primary mb-4">Ver mascota</button></Link>
                                         </div>
                                         </div>
                                     </div>

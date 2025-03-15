@@ -21,6 +21,7 @@ import AdminVentas  from "./pages/Admin/AdminVentas";
 import AdminClientes  from "./pages/Admin/AdminClientes";
 import AdminVerMascota  from "./pages/Admin/AdminVerMascota";
 import AdminAgregarClientes  from "./pages/Admin/AdminAgregarClientes";
+import AdminAgendamiento  from "./pages/Admin/AdminAgendamiento";
 
 
 
@@ -50,6 +51,7 @@ function App() {
         <Route path="/clientes" element={<AdminClientes />} />
         <Route path="/vermascota" element={<AdminVerMascota />} />
         <Route path="/agregarcliente" element={<AdminAgregarClientes />} />
+        <Route path="/agendamiento" element={<AdminAgendamiento />} />
         
 
         
