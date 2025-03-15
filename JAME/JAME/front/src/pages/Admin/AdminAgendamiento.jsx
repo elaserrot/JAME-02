@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import Footer from '../../components/Footer';
-import Navbar from '../../components/Navbar';
+import { useState } from 'react';
+import Calendar from 'react-calendar';
 
 
 
@@ -60,8 +61,9 @@ export default function InicioAdmin() {
         <h3 className="mb-4 text-gray-800 font-bold text-xl">Agendamientos de citas</h3>
     
     {/* Formulario para agendar cita */}
-    <div className="bg-white p-4 rounded-lg shadow mb-4">
-        <h4 className="text-lg font-semibold mb-2">Nueva Cita</h4>
+    <div className="card mt-4">
+                        <div className="card-header bg-primary text-white">Nueva Cita</div>
+                        <div className="card-body">
         <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input 
                 type="text" 
@@ -94,10 +96,12 @@ export default function InicioAdmin() {
             </button>
         </form>
     </div>
+    </div>
 
     {/* Tabla de citas agendadas */}
-    <div className="bg-white p-4 rounded-lg shadow">
-        <h4 className="text-lg font-semibold mb-2">Citas Programadas</h4>
+    <div className="card mt-4">
+                        <div className="card-header bg-primary text-white">Citas Agendadas</div>
+                        <div className="card-body">
         <table className="w-full border-collapse border border-gray-300">
             <thead>
                 <tr className="bg-gray-200 text-gray-700">
@@ -123,9 +127,21 @@ export default function InicioAdmin() {
                 </tr>
             </tbody>
         </table>
+    </div>    
     </div>
 </div>
-            </div>
+
+
+    {/* 📅 Calendario */}
+    <div className="card mt-4">
+                        <div className="card-header bg-primary text-white">Calendario de Citas</div>
+                        <div className="card-body">
+        <Calendar 
+            className="w-full border border-gray-300 rounded-lg p-2" 
+        />
+    </div>
+</div>
+</div>
 
             <Footer />
         </div>
