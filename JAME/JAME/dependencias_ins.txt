@@ -1,0 +1,9 @@
+Dependencias para poder ejecutar el proyecto
+1. npm i
+2. npm run dev
+
+Dependencias usadas en el front 
+1. npm install react-calendar --> para el calendario
+2. npm install recharts --> para los graficos
+
+Dependencias para el backend
