@@ -12,6 +12,7 @@ export default function AdminMascotas() {
     useEffect(() => {
         // Simulación de carga de datos
         const data = [
+
             { id: 1, nombre: 'keyla', especie: 'Perro', raza: 'Bulldog french', genero: 'masculino', edad: 3, dueño: 'Alisson' },
             { id: 2, nombre: 'Napoleon',especie: 'Perro', raza: 'Bulldog french', genero: 'masculino', edad: 2, dueño: 'Juan' },
             { id: 3, nombre: 'Rocky', especie: 'Gato',  raza: 'leopardo',       genero: 'masculino', edad: 1, dueño: 'Gilma' },
@@ -19,6 +20,7 @@ export default function AdminMascotas() {
             { id: 5, nombre: 'Jack',  especie: 'Gato',  raza: 'tigrillo',       genero: 'masculino', edad: 3, dueño: 'Diego' },
             { id: 6, nombre: 'Max',   especie: 'Gato',  raza: 'siames',         genero: 'masculino', edad: 2, dueño: 'Carlos' }
               
+
         ];
         console.log("Cargando mascotas:", data);
         setMascotas(data);
@@ -134,8 +136,8 @@ export default function AdminMascotas() {
                                             <p className="card-text"><strong>Dueño:</strong> {mascota.dueño}</p>
                                             </div>
                                             <div className="d-flex flex-column gap-2">
-                                             <button className="btn btn-danger mt-2" onClick={() => eliminarMascota(mascota.id)}>Eliminar</button>
-                                             <Link to='/vermascota'><button className="btn btn-primary mb-4">Ver mascota</button></Link>
+                                            <button className="btn btn-danger mt-2" onClick={() => eliminarMascota(mascota.id)}>Eliminar</button>
+                                            <Link to='/vermascota'><button className="btn btn-primary mb-4">Ver mascota</button></Link>
                                         </div>
                                         </div>
                                     </div>
