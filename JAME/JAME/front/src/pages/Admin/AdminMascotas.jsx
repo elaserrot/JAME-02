@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Modal, Button } from "react-bootstrap";
 import Footer from '../../components/Footer';
 import Navbar from '../../components/Navbar';
 
@@ -8,17 +9,18 @@ export default function AdminMascotas() {
     const [mascotas, setMascotas] = useState([]);
     const [busqueda, setBusqueda] = useState('');
     const [mascotaEncontrada, setMascotaEncontrada] = useState(null);
+    const [mascotaSeleccionada, setMascotaSeleccionada] = useState(null);
 
     useEffect(() => {
         // Simulación de carga de datos
         const data = [
 
-            { id: 1, nombre: 'keyla', especie: 'Perro', raza: 'Bulldog french', genero: 'masculino', edad: 3, dueño: 'Alisson' },
-            { id: 2, nombre: 'Napoleon',especie: 'Perro', raza: 'Bulldog french', genero: 'masculino', edad: 2, dueño: 'Juan' },
-            { id: 3, nombre: 'Rocky', especie: 'Gato',  raza: 'leopardo',       genero: 'masculino', edad: 1, dueño: 'Gilma' },
-            { id: 4, nombre: 'Toby',  especie: 'Perro', raza: 'labrador',       genero: 'masculino', edad: 4, dueño: 'Martin' },
-            { id: 5, nombre: 'Jack',  especie: 'Gato',  raza: 'tigrillo',       genero: 'masculino', edad: 3, dueño: 'Diego' },
-            { id: 6, nombre: 'Max',   especie: 'Gato',  raza: 'siames',         genero: 'masculino', edad: 2, dueño: 'Carlos' }
+            { id: 1, nombre: 'keyla',imagen: '/src/img/keyla.png', fecha: '16/12/2022',especie: 'Perro', raza: 'Bulldog french', genero: 'masculino', edad: 3, dueño: 'Alisson' },
+            { id: 2, nombre: 'Napoleon',imagen: '/src/img/napoleon.png', fecha: '28/06/2023',especie: 'Perro', raza: 'Bulldog french', genero: 'masculino', edad: 2, dueño: 'Juan' },
+            { id: 3, nombre: 'Rocky',imagen: '/src/img/rocky.png',fecha: '10/02/2024', especie: 'Gato',  raza: 'leopardo',       genero: 'masculino', edad: 1, dueño: 'Gilma' },
+            { id: 4, nombre: 'Toby', imagen: '/src/img/toby.png',fecha: '6/10/2021', especie: 'Perro', raza: 'rotwailler',       genero: 'masculino', edad: 4, dueño: 'Martin' },
+            { id: 5, nombre: 'Jack',imagen: '/src/img/jack.png', fecha: '4/12/2022', especie: 'Gato',  raza: 'tigrillo',       genero: 'masculino', edad: 3, dueño: 'Diego' },
+            { id: 6, nombre: 'Max', imagen: '/src/img/max.png', fecha: '26/07/2023 ', especie: 'Gato',  raza: 'siames',         genero: 'masculino', edad: 2, dueño: 'Carlos' }
               
 
         ];
@@ -103,42 +105,21 @@ export default function AdminMascotas() {
                             <p><strong>Raza:</strong> {mascotaEncontrada.raza}</p>
                             <p><strong>Genero:</strong> {mascotaEncontrada.genero}</p>
                             <p><strong>Edad:</strong> {mascotaEncontrada.edad} años</p>
-                            <p><strong>Propietario:</strong> {mascotaEncontrada.propietario}</p>
+                            <p><strong>Dueño:</strong> {mascotaEncontrada.dueño}</p>
                         </div>
                     )}
+                    {/* Lista de mascotas */}
                     <div className="row">
-                        {Array.isArray(mascotas) && mascotas.length > 0 ? (
+                        {mascotas.length > 0 ? (
                             mascotas.map(mascota => (
                                 <div key={mascota.id} className="col-md-12">
                                     <div className="card mb-4">
-                                    <div className="card-body d-flex flex-row justify-content-between align-items-center">
-                                        <div>
-                                        </div>
-                                        <div className="d-flex flex-column gap-2">
+                                        <div className="card-body d-flex justify-content-between align-items-center">
                                             <h4 className="card-title">{mascota.nombre}</h4>
+                                            <div className="d-flex gap-2 mt-2">
+                                            <button className="btn btn-primary" onClick={() => setMascotaSeleccionada(mascota)}>Ver mascota</button>
+                                            <button className="btn btn-danger" onClick={() => eliminarMascota(mascota.id)}>Eliminar</button>
                                             </div>
-                                            <div className="d-flex flex-column gap-2">
-                                            <p className="card-text"><strong>Id:</strong> {mascota.id}</p>
-                                            </div>
-                                            <div className="d-flex flex-column gap-2">
-                                            <p className="card-text"><strong>Especie:</strong> {mascota.especie}</p>
-                                            </div>
-                                            <div className="d-flex flex-column gap-2">
-                                            <p className="card-text"><strong>Raza:</strong> {mascota.raza}</p>
-                                            </div>
-                                            <div className="d-flex flex-column gap-2">
-                                            <p className="card-text"><strong>Genero:</strong> {mascota.genero}</p>
-                                            </div>
-                                            <div className="d-flex flex-column gap-2">
-                                            <p className="card-text"><strong>Edad:</strong> {mascota.edad} años</p>
-                                            </div>
-                                            <div className="d-flex flex-column gap-2">
-                                            <p className="card-text"><strong>Dueño:</strong> {mascota.dueño}</p>
-                                            </div>
-                                            <div className="d-flex flex-column gap-2">
-                                            <button className="btn btn-danger mt-2" onClick={() => eliminarMascota(mascota.id)}>Eliminar</button>
-                                            <Link to='/vermascota'><button className="btn btn-primary mb-4">Ver mascota</button></Link>
-                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -148,11 +129,48 @@ export default function AdminMascotas() {
                                 <p>No hay mascotas registradas</p>
                             </div>
                         )}
-                        
                     </div>
+
+                    {/* Modal para mostrar información de la mascota */}
+                    <Modal show={mascotaSeleccionada !== null} onHide={() => setMascotaSeleccionada(null)}>
+                        <Modal.Header closeButton className="bg-primary text-white">
+                            <Modal.Title>{mascotaSeleccionada?.nombre}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <div className="row">
+                            <img 
+                            src={mascotaSeleccionada?.imagen || "/src/img/dog_placeholder.png"} 
+                            alt={mascotaSeleccionada?.nombre} 
+                            className="img-fluid rounded-circle"
+                            border-radios=''
+                            style={{ height: "400px", objectFit: "cover"}}/>
+                            
+                                <div className="col-md-8">
+                                    <p><b>Fecha de nacimiento:</b> {mascotaSeleccionada?.fecha}</p>
+                                    <p><b>Especie:</b> {mascotaSeleccionada?.especie}</p>
+                                    <p><b>Raza:</b> {mascotaSeleccionada?.raza}</p>
+                                    <p><b>Género:</b> {mascotaSeleccionada?.genero}</p>
+                                    <p><b>Edad:</b> {mascotaSeleccionada?.edad} años</p>
+                                    <p><b>Dueño:</b> {mascotaSeleccionada?.dueño}</p>
+
+                                </div>
+                                <div className="d-flex flex-row justify-content-center">
+
+                                        <button className="btn btn-success btn-sm">Editar Mascota</button>
+                                        
+                                    </div>
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={() => setMascotaSeleccionada(null)}>Cerrar</Button>
+                        </Modal.Footer>
+                    </Modal>
+                    
+                        
+                    
                 </div>
-        </div>
-            <Footer />
-        </div>
-    );
+            </div>
+        <Footer />
+    </div>
+);
 }

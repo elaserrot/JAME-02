@@ -89,8 +89,8 @@ export default function InicioAdmin() {
                                 <div className="card-body">
                                     <ul className="list-group list-group-flush">
                                         <li className="list-group-item">Cliente: Alisson Torres - $80.000</li>
-                                        <li className="list-group-item">Cliente: María Gómez - $45.000</li>
-                                        <li className="list-group-item">Cliente: Carlos Ramírez - $60.000</li>
+                                        <li className="list-group-item">Cliente: Juan José - $45.000</li>
+                                        <li className="list-group-item">Cliente: Diego - $60.000</li>
                                     </ul>
                                     <Link to ='/clientes'><a href="#" className="btn btn-link">Ver historial completo...</a></Link>
                                 </div>
