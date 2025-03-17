@@ -13,11 +13,12 @@ export default function AdminClientes() {
     useEffect(() => {
         // Simulación de carga de datos
         const data = [
-            {  id: 1, nombre: 'Alisson', documento: 1025532382, telefono:3214138943 },
-            {  id: 2, nombre: 'Juan', documento: 1589634527 , telefono:26357894560},
-            {  id: 3, nombre: 'Gilma', documento: 1563289612, telefono: 3130456982},
-            {  id: 4, nombre: 'Martin', documento: 1896423584, telefono:313895672365 },
-            {  id: 5, nombre: 'Diego', documento: 1089532475, telefono:1523048965 },
+            {  id: 1, nombre: 'Alisson', documento: 1025532382, telefono:3214138943, mascota: 'keyla'},
+            {  id: 2, nombre: 'Juan', documento: 1589634527 , telefono:3163578945 , mascota: 'napoleon'},
+            {  id: 3, nombre: 'Gilma', documento: 1563289612, telefono: 3130456982 , mascota: 'rocky'},
+            {  id: 4, nombre: 'Martin', documento: 1896423584, telefono:3138956722, mascota: 'toby'},
+            {  id: 5, nombre: 'Diego', documento: 1089532475, telefono:3172304896, mascota: 'jack'},
+            {  id: 6, nombre: 'carlos', documento: 1524861357, telefono:3154892176, mascota: 'max'}
            
           
         ];
@@ -95,7 +96,8 @@ export default function AdminClientes() {
                             <h5>{clienteEncontrada.nombre}</h5>
                             <p><strong>Id:</strong> {clienteEncontrada.id}</p> 
                             <p><strong>documento:</strong> {clienteEncontrada.documento}</p>
-                            <p><strong>telefono:</strong> {clienteEncontrada.telefono}</p>                        
+                            <p><strong>telefono:</strong> {clienteEncontrada.telefono}</p>
+                            <p><strong>mascota:</strong> {clienteEncontrada.mascota}</p>                         
                         </div>
                     )}
                     <div className="row">
@@ -117,6 +119,9 @@ export default function AdminClientes() {
                                             </div>
                                             <div className="d-flex flex-column gap-2">
                                             <p className="card-text"><strong>telefono:</strong> {cliente.telefono}</p>
+                                            </div>
+                                            <div className="d-flex flex-column gap-2">
+                                            <p className="card-text"><strong>mascota:</strong> {cliente.mascota}</p>
                                             </div>
                                             <div className="d-flex flex-column gap-2">
                                              <button className="btn btn-danger mt-2" onClick={() => eliminarCliente(cliente.id)}>Eliminar</button>

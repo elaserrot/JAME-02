@@ -5,7 +5,7 @@ import Footer from '../../components/Footer';
 import Navbar from '../../components/Navbar';
 
 const data = [
-    { name: 'Lunes', ventas: 50 },
+    { name: 'Lunes', ventas: 200 },
     { name: 'Martes', ventas: 80 },
     { name: 'Miércoles', ventas: 65 },
     { name: 'Jueves', ventas: 90 },

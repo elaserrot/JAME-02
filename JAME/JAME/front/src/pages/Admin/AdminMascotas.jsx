@@ -12,12 +12,12 @@ export default function AdminMascotas() {
     useEffect(() => {
         // Simulación de carga de datos
         const data = [
-            { id: 1, nombre: 'keyla', especie: 'Perro', raza: 'Bulldog french', genero: 'masculino', edad: 3, dueño: 'alisson' },
-            { id: 2, nombre: 'Napoleon',especie: 'Perro', raza: 'Bulldog french', genero: 'masculino', edad: 2, dueño: 'Juan José' },
-            { id: 3, nombre: 'Rocky', especie: 'Gato',  raza: 'leopardo',       genero: 'masculino', edad: 1, dueño: 'Carlos' },
-            { id: 4, nombre: 'Toby',  especie: 'Perro', raza: 'labrador',       genero: 'masculino', edad: 4, dueño: 'José' },
-            { id: 5, nombre: 'Jack',  especie: 'Gato',  raza: 'tigrillo',       genero: 'masculino', edad: 3, dueño: 'Lucas' },
-            { id: 6, nombre: 'Max',   especie: 'Gato',  raza: 'siames',         genero: 'masculino', edad: 2, dueño: 'gilma' }
+            { id: 1, nombre: 'keyla', especie: 'Perro', raza: 'Bulldog french', genero: 'masculino', edad: 3, dueño: 'Alisson' },
+            { id: 2, nombre: 'Napoleon',especie: 'Perro', raza: 'Bulldog french', genero: 'masculino', edad: 2, dueño: 'Juan' },
+            { id: 3, nombre: 'Rocky', especie: 'Gato',  raza: 'leopardo',       genero: 'masculino', edad: 1, dueño: 'Gilma' },
+            { id: 4, nombre: 'Toby',  especie: 'Perro', raza: 'labrador',       genero: 'masculino', edad: 4, dueño: 'Martin' },
+            { id: 5, nombre: 'Jack',  especie: 'Gato',  raza: 'tigrillo',       genero: 'masculino', edad: 3, dueño: 'Diego' },
+            { id: 6, nombre: 'Max',   especie: 'Gato',  raza: 'siames',         genero: 'masculino', edad: 2, dueño: 'Carlos' }
               
         ];
         console.log("Cargando mascotas:", data);
@@ -54,9 +54,10 @@ export default function AdminMascotas() {
                         <a href="#" className="list-group-item list-group-item-action bg-success text-white py-3">
                             <i className="bi bi-house me-2"></i> Inicio
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
+                        <Link to='/ventas'><a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-cart me-2"></i> Ventas
                         </a>
+                        </Link>
                         <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-calendar2 me-2"></i> Agendamientos
                         </a>
