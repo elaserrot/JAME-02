@@ -15,12 +15,12 @@ export default function AdminMascotas() {
         // Simulación de carga de datos
         const data = [
 
-            { id: 1, nombre: 'keyla',imagen: '/src/img/keyla.png', fecha: '16/12/2022',especie: 'Perro', raza: 'Bulldog french', genero: 'masculino', edad: 3, dueño: 'Alisson' },
-            { id: 2, nombre: 'Napoleon',imagen: '/src/img/napoleon.png', fecha: '28/06/2023',especie: 'Perro', raza: 'Bulldog french', genero: 'masculino', edad: 2, dueño: 'Juan' },
-            { id: 3, nombre: 'Rocky',imagen: '/src/img/rocky.png',fecha: '10/02/2024', especie: 'Gato',  raza: 'leopardo',       genero: 'masculino', edad: 1, dueño: 'Gilma' },
-            { id: 4, nombre: 'Toby', imagen: '/src/img/toby.png',fecha: '6/10/2021', especie: 'Perro', raza: 'rotwailler',       genero: 'masculino', edad: 4, dueño: 'Martin' },
-            { id: 5, nombre: 'Jack',imagen: '/src/img/jack.png', fecha: '4/12/2022', especie: 'Gato',  raza: 'tigrillo',       genero: 'masculino', edad: 3, dueño: 'Diego' },
-            { id: 6, nombre: 'Max', imagen: '/src/img/max.png', fecha: '26/07/2023 ', especie: 'Gato',  raza: 'siames',         genero: 'masculino', edad: 2, dueño: 'Carlos' }
+            { id: 1, nombre: 'keyla',imagen: '/src/img/keyla.jpg', fecha: '16/10/2022',especie: 'Perro', raza: 'Bulldog french', genero: 'hembra', edad: 3, dueño: 'Alisson' },
+            { id: 2, nombre: 'Napoleon',imagen: '/src/img/napoleon.jpg', fecha: '28/06/2023',especie: 'Perro', raza: 'Bulldog french', genero: 'macho', edad: 2, dueño: 'Juan' },
+            { id: 3, nombre: 'Rocky',imagen: '/src/img/rocky.png',fecha: '10/02/2024', especie: 'Gato',  raza: 'leopardo',       genero: 'macho', edad: 1, dueño: 'Gilma' },
+            { id: 4, nombre: 'Toby', imagen: '/src/img/toby.png',fecha: '6/08/2021', especie: 'Perro', raza: 'rotwailler',       genero: 'macho', edad: 4, dueño: 'Martin' },
+            { id: 5, nombre: 'Jack',imagen: '/src/img/jack.png', fecha: '4/12/2022', especie: 'Gato',  raza: 'tigrillo',       genero: 'macho', edad: 3, dueño: 'Diego' },
+            { id: 6, nombre: 'Max', imagen: '/src/img/max.jpg', fecha: '26/07/2023 ', especie: 'Gato',  raza: 'siames',         genero: 'macho', edad: 2, dueño: 'Carlos' }
               
 
         ];
@@ -132,42 +132,33 @@ export default function AdminMascotas() {
                     </div>
 
                     {/* Modal para mostrar información de la mascota */}
-                    <Modal show={mascotaSeleccionada !== null} onHide={() => setMascotaSeleccionada(null)}>
+                    <Modal show={mascotaSeleccionada !== null} onHide={() => setMascotaSeleccionada(null)}size="lg">
                         <Modal.Header closeButton className="bg-primary text-white">
-                            <Modal.Title>{mascotaSeleccionada?.nombre}</Modal.Title>
+                            <Modal.Title><h1>{mascotaSeleccionada?.nombre}</h1></Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <div className="row">
+                            <div className="mb-5 d-flex gap-5">
                             <img 
                             src={mascotaSeleccionada?.imagen || "/src/img/dog_placeholder.png"} 
                             alt={mascotaSeleccionada?.nombre} 
-                            className="img-fluid rounded-circle"
-                            border-radios=''
+                            className="img-fluid rounded"
                             style={{ height: "400px", objectFit: "cover"}}/>
                             
-                                <div className="col-md-8">
-                                    <p><b>Fecha de nacimiento:</b> {mascotaSeleccionada?.fecha}</p>
-                                    <p><b>Especie:</b> {mascotaSeleccionada?.especie}</p>
-                                    <p><b>Raza:</b> {mascotaSeleccionada?.raza}</p>
-                                    <p><b>Género:</b> {mascotaSeleccionada?.genero}</p>
-                                    <p><b>Edad:</b> {mascotaSeleccionada?.edad} años</p>
-                                    <p><b>Dueño:</b> {mascotaSeleccionada?.dueño}</p>
-
+                                <div className="col-md-12">
+                                    <p><b><strong>Fecha de nacimiento:</strong></b> {mascotaSeleccionada?.fecha}</p>
+                                    <p><b><strong>Especie:</strong></b> {mascotaSeleccionada?.especie}</p>
+                                    <p><b><strong>Raza:</strong></b> {mascotaSeleccionada?.raza}</p>
+                                    <p><b><strong>Género:</strong></b> {mascotaSeleccionada?.genero}</p>
+                                    <p><b><strong>Edad:</strong></b> {mascotaSeleccionada?.edad} años</p>
+                                    <p><b><strong>Dueño:</strong></b> {mascotaSeleccionada?.dueño}</p>
+                                    
                                 </div>
-                                <div className="d-flex flex-row justify-content-center">
-
-                                        <button className="btn btn-success btn-sm">Editar Mascota</button>
-                                        
-                                    </div>
                             </div>
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={() => setMascotaSeleccionada(null)}>Cerrar</Button>
                         </Modal.Footer>
                     </Modal>
-                    
-                        
-                    
                 </div>
             </div>
         <Footer />
