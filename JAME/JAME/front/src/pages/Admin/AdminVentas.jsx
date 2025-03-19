@@ -45,7 +45,7 @@ export default function AdminVentas() {
                         <a href="/ventas" className="list-group-item list-group-item-action bg-success text-white py-3">
                             <i className="bi bi-cart me-2"></i> Ventas
                         </a>
-                        <a href="/agendamientos" className="list-group-item list-group-item-action bg-dark text-white py-3">
+                        <a href="/agendamiento" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-calendar2 me-2"></i> Agendamientos
                         </a>
 
