@@ -15,6 +15,7 @@ import ServiciosMedicina from "./pages/Cliente/ServiciosMedicina";
 import AgendamientoGrooming from "./pages/Cliente/AgendamientoGrooming";
 {/* ----------------------paginas de administrador-------------------- */ }
 import AdminPedidos from "./pages/Admin/AdminPedidos";
+import CalendarioPedidos from "./pages/Admin/CalendarioPedidos";
 import AdminMascotas from "./pages/Admin/AdminMascotas";
 import AdminAgregarMascota from "./pages/Admin/AdminAgregarMascota";
 import AdminVentas  from "./pages/Admin/AdminVentas";
@@ -46,6 +47,7 @@ function App() {
 {/* ----------------------paginas de administrador-------------------- */}
         <Route path="/administrador/" element={<InicioAdmin />} />
         <Route path="/pedidos" element={<AdminPedidos />} />
+        <Route path="/calendario" element={<CalendarioPedidos />} />
         <Route path="/mascotas" element={<AdminMascotas />} />
         <Route path="/agregarmascota" element={<AdminAgregarMascota />} />
         <Route path="/ventas" element={<AdminVentas />} />
