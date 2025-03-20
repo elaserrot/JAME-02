@@ -54,7 +54,7 @@ import Footer from '../../components/Footer';
                         <a href="/reportes" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-bar-chart-line"></i> Reportes
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3 mt-auto">
+                        <a href="/configuracion" className="list-group-item list-group-item-action bg-dark text-white py-3 mt-auto">
                             <i className="bi bi-gear me-2"></i> Configuración
                         </a>
                     </div>
@@ -96,6 +96,30 @@ import Footer from '../../components/Footer';
                     type="number"
                     name="telefono"
                     value={cliente.telefono}
+                    onChange={handleChange}
+                    min="0"
+                    onKeyDown={(e) => e.key === '-' && e.preventDefault()} 
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Correo Electronico</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="correo"
+                    value={cliente.correo}
+                    onChange={handleChange}
+                    min="0"
+                    onKeyDown={(e) => e.key === '-' && e.preventDefault()} 
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Direccion</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="direccion"
+                    value={cliente.direccion}
                     onChange={handleChange}
                     min="0"
                     onKeyDown={(e) => e.key === '-' && e.preventDefault()} 
