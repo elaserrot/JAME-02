@@ -23,6 +23,11 @@ const AgregarMascota = () => {
         console.log("Mascota agregada:", mascota);
         setMascota({ nombre: "", especie: "", raza: "", edad: "", dueño: "", observaciones: "" }); 
     };
+    const handleAgregar = () => {
+        alert("Mascota Agregada");
+
+    };
+   
 
     return (
         <div className="vh-100 d-flex flex-column">
@@ -140,8 +145,12 @@ const AgregarMascota = () => {
                                     />
                                 </Form.Group>
 
-                                <Button variant="success" type="submit">
-                                    Agregar Mascota
+                                <Button variant="success" type="submit"
+                                size="sm"
+                                className="my-2 p-1 fs-6"
+                                style={{ width: "150px" }}
+                                onClick={handleAgregar}>
+                                Agregar Mascota
                                 </Button>
                             </Form>
                         </Card.Body>
