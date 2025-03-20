@@ -39,7 +39,7 @@ export default function InicioAdmin() {
                         <a href="/reportes" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-bar-chart-line"></i> Reportes
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3 mt-auto">
+                        <a href="/configuracion" className="list-group-item list-group-item-action bg-dark text-white py-3 mt-auto">
                             <i className="bi bi-gear me-2"></i> Configuración
                         </a>
                     </div>
@@ -82,10 +82,12 @@ export default function InicioAdmin() {
                     {/* Bottom Icons */}
                     <div className="row justify-content-center text-center">
                         <div className="col-2">
+                        <Link to='/configuracion'>
                             <button className="btn btn-light border p-4">
                                 <i className="bi bi-gear fs-3"></i>
                                 <div className="mt-2">Configuración</div>
                             </button>
+                            </Link>
                         </div>
                         <div className="col-2">
                             <button className="btn btn-light border p-4">
