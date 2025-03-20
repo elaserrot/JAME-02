@@ -182,8 +182,8 @@ export default function AdminMascotas() {
                                     <h5 className="fw-bold">Observaciones</h5>
                                     <p>{mascotaSeleccionada?.observaciones || "No hay observaciones registradas."}</p>
                                 </div>
+                                </div>
                             </div>
-                        </div>
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={() => setMascotaSeleccionada(null)}>Cerrar</Button>
