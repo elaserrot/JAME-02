@@ -8,6 +8,9 @@ import Footer from '../../components/Footer';
           nombre: "",
           documento: "",
           telefono: "",
+          direccion: "",
+          correo: ""
+          
         
         });
         const handleChange = (e) => {
@@ -16,9 +19,16 @@ import Footer from '../../components/Footer';
         const handleSubmit = (e) => {
             e.preventDefault();
             console.log("Cliente  agregado:", cliente);
-            setCliente({ nombre: "", documento: "", telefono: "",  }); 
+            setCliente({ nombre: "", documento: "", telefono: "", direccion: "",correo: "" }); 
    
           };
+
+
+          const handleAgregar = () => {
+            alert("Usuario Agregado");
+
+        };
+       
       
 
     return (
@@ -59,6 +69,8 @@ import Footer from '../../components/Footer';
                         </a>
                     </div>
                 </div>
+
+                
         <Container className="mt-4 flex-grow-1">
           <Card>
             <Card.Header className="bg-primary text-white text-center">
@@ -76,6 +88,7 @@ import Footer from '../../components/Footer';
                     required
                   />
                 </Form.Group>
+                
 
                 <Form.Group className="mb-3">
                   <Form.Label>Documento</Form.Label>
@@ -125,10 +138,13 @@ import Footer from '../../components/Footer';
                     onKeyDown={(e) => e.key === '-' && e.preventDefault()} 
                   />
                 </Form.Group>
-
-                <Button variant="success" type="submit">
-                  Agregar Cliente
-                </Button>
+                  <Button variant="success" type="submit"
+                   size="sm"
+                   className="my-2 p-1 fs-6"
+                   style={{ width: "150px" }}
+                   onClick={handleAgregar}>
+                   Agregar Cliente
+                   </Button>
               </Form>
             </Card.Body>
           </Card>
