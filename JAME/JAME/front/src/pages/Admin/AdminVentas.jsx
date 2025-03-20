@@ -66,7 +66,7 @@ export default function AdminVentas() {
                 {/* Main Content - Ventas */}
                 <div className="flex-grow-1 bg-light p-4">
                     <h3 className="mb-4">Gestión de Ventas</h3>
-                    <button className="btn btn-success mb-3">Agregar Nueva Venta</button>
+                 
                     
                     <div className="row">
                         <div className="col-8">
