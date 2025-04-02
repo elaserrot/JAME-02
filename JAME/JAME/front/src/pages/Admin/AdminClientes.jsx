@@ -13,11 +13,12 @@ export default function AdminClientes() {
     useEffect(() => {
         // Simulación de carga de datos
         const data = [
-            {  id: 1, nombre: 'Alisson', documento: 1025532382, telefono:3214138943 },
-            {  id: 2, nombre: 'Juan', documento: 1589634527 , telefono:26357894560},
-            {  id: 3, nombre: 'Gilma', documento: 1563289612, telefono: 3130456982},
-            {  id: 4, nombre: 'Martin', documento: 1896423584, telefono:313895672365 },
-            {  id: 5, nombre: 'Diego', documento: 1089532475, telefono:1523048965 },
+            {  id: 1, nombre: 'Alisson', documento: 1025532382, telefono:3214138943, mascota: 'keyla'},
+            {  id: 2, nombre: 'Juan', documento: 1589634527 , telefono:3163578945 , mascota: 'napoleon'},
+            {  id: 3, nombre: 'Gilma', documento: 1563289612, telefono: 3130456982 , mascota: 'rocky'},
+            {  id: 4, nombre: 'Martin', documento: 1896423584, telefono:3138956722, mascota: 'toby'},
+            {  id: 5, nombre: 'Diego', documento: 1089532475, telefono:3172304896, mascota: 'jack'},
+            {  id: 6, nombre: 'carlos', documento: 1524861357, telefono:3154892176, mascota: 'max'}
            
           
         ];
@@ -51,22 +52,22 @@ export default function AdminClientes() {
             <div className="d-flex flex-grow-1">
                 <div className="bg-dark text-white p-0 d-flex flex-column" style={{ width: '200px' }}>
                     <div className="list-group list-group-flush">
-                        <a href="#" className="list-group-item list-group-item-action bg-success text-white py-3">
+                        <a href="/administrador" className="list-group-item list-group-item-action bg-success text-white py-3">
                             <i className="bi bi-house me-2"></i> Inicio
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
+                        <a href="/ventas" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-cart me-2"></i> Ventas
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
+                        <a href="/agendamiento" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-calendar2 me-2"></i> Agendamientos
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
+                        <a href="/pedidos" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-box me-2"></i> Pedidos
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
+                        <a href="/reportes" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-bar-chart-line"></i> Reportes
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3 mt-auto">
+                        <a href="/configuracion" className="list-group-item list-group-item-action bg-dark text-white py-3 mt-auto">
                             <i className="bi bi-gear me-2"></i> Configuración
                         </a>
                     </div>
@@ -95,7 +96,8 @@ export default function AdminClientes() {
                             <h5>{clienteEncontrada.nombre}</h5>
                             <p><strong>Id:</strong> {clienteEncontrada.id}</p> 
                             <p><strong>documento:</strong> {clienteEncontrada.documento}</p>
-                            <p><strong>telefono:</strong> {clienteEncontrada.telefono}</p>                        
+                            <p><strong>telefono:</strong> {clienteEncontrada.telefono}</p>
+                            <p><strong>mascota:</strong> {clienteEncontrada.mascota}</p>                         
                         </div>
                     )}
                     <div className="row">
@@ -117,6 +119,9 @@ export default function AdminClientes() {
                                             </div>
                                             <div className="d-flex flex-column gap-2">
                                             <p className="card-text"><strong>telefono:</strong> {cliente.telefono}</p>
+                                            </div>
+                                            <div className="d-flex flex-column gap-2">
+                                            <p className="card-text"><strong>mascota:</strong> {cliente.mascota}</p>
                                             </div>
                                             <div className="d-flex flex-column gap-2">
                                              <button className="btn btn-danger mt-2" onClick={() => eliminarCliente(cliente.id)}>Eliminar</button>

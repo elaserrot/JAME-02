@@ -24,22 +24,22 @@ export default function InicioAdmin() {
                 {/* Sidebar */}
                 <div className="bg-dark text-white p-0 d-flex flex-column" style={{ width: '200px' }}>
                     <div className="list-group list-group-flush">
-                        <a href="#" className="list-group-item list-group-item-action bg-warning text-white py-3">
+                        <a href="/administrador" className="list-group-item list-group-item-action bg-success text-white py-3">
                             <i className="bi bi-house me-2"></i> Inicio
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
+                        <a href="/ventas" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-cart me-2"></i> Ventas
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
+                        <a href="/agendamiento" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-calendar2 me-2"></i> Agendamientos
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
+                        <a href="/pedidos" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-box me-2"></i> Pedidos
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
+                        <a href="/reportes" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-bar-chart-line"></i> Reportes
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3 mt-auto">
+                        <a href="/configuracion" className="list-group-item list-group-item-action bg-dark text-white py-3 mt-auto">
                             <i className="bi bi-gear me-2"></i> Configuración
                         </a>
                     </div>
@@ -82,10 +82,12 @@ export default function InicioAdmin() {
                     {/* Bottom Icons */}
                     <div className="row justify-content-center text-center">
                         <div className="col-2">
+                        <Link to='/configuracion'>
                             <button className="btn btn-light border p-4">
                                 <i className="bi bi-gear fs-3"></i>
                                 <div className="mt-2">Configuración</div>
                             </button>
+                            </Link>
                         </div>
                         <div className="col-2">
                             <button className="btn btn-light border p-4">

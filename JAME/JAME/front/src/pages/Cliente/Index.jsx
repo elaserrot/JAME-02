@@ -151,7 +151,7 @@ export default function Index() {
                     <p className="lead bg-info-emphasis">
                         Nuestra clínica está conformada por profesionales altamente capacitados, con amplia experiencia en atención veterinaria y un profundo amor por los animales. Cada uno de nuestros servicios ha sido cuidadosamente diseñado para brindar atención médica de alta calidad, considerando las necesidades individuales de cada uno de nuestros pacientes.
                     </p>
-                    <a href=""><button className="btn btn-outline-primary">Conocer más</button></a>
+                    <a href="../Nosotros"><button className="btn btn-outline-primary">Conocer más</button></a>
 
                 </div>
                 <div className="container shadow p-5 rounded-5" id="servicios">

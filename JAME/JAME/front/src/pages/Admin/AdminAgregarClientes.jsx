@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Card } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer';
-import Navbar from '../../components/Navbar';
 
     const AgregarCliente = () => {
         const [cliente, setCliente] = useState({
           nombre: "",
           documento: "",
           telefono: "",
+          direccion: "",
+          correo: ""
+          
         
         });
         const handleChange = (e) => {
@@ -17,9 +19,16 @@ import Navbar from '../../components/Navbar';
         const handleSubmit = (e) => {
             e.preventDefault();
             console.log("Cliente  agregado:", cliente);
-            setCliente({ nombre: "", documento: "", telefono: "",  }); 
+            setCliente({ nombre: "", documento: "", telefono: "", direccion: "",correo: "" }); 
    
           };
+
+
+          const handleAgregar = () => {
+            alert("Usuario Agregado");
+
+        };
+       
       
 
     return (
@@ -40,26 +49,28 @@ import Navbar from '../../components/Navbar';
             <div className="d-flex flex-grow-1">
                 <div className="bg-dark text-white p-0 d-flex flex-column" style={{ width: '200px' }}>
                     <div className="list-group list-group-flush">
-                        <a href="#" className="list-group-item list-group-item-action bg-success text-white py-3">
+                        <a href="/administrador" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-house me-2"></i> Inicio
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
+                        <a href="/ventas" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-cart me-2"></i> Ventas
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
+                        <a href="/agendamientos" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-calendar2 me-2"></i> Agendamientos
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
+                        <a href="/pedidos" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-box me-2"></i> Pedidos
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3">
+                        <a href="/reportes" className="list-group-item list-group-item-action bg-dark text-white py-3">
                             <i className="bi bi-bar-chart-line"></i> Reportes
                         </a>
-                        <a href="#" className="list-group-item list-group-item-action bg-dark text-white py-3 mt-auto">
+                        <a href="/configuracion" className="list-group-item list-group-item-action bg-dark text-white py-3 mt-auto">
                             <i className="bi bi-gear me-2"></i> Configuración
                         </a>
                     </div>
                 </div>
+
+                
         <Container className="mt-4 flex-grow-1">
           <Card>
             <Card.Header className="bg-primary text-white text-center">
@@ -77,6 +88,7 @@ import Navbar from '../../components/Navbar';
                     required
                   />
                 </Form.Group>
+                
 
                 <Form.Group className="mb-3">
                   <Form.Label>Documento</Form.Label>
@@ -103,9 +115,36 @@ import Navbar from '../../components/Navbar';
                   />
                 </Form.Group>
 
-                <Button variant="success" type="submit">
-                  Agregar Cliente
-                </Button>
+                <Form.Group className="mb-3">
+                  <Form.Label>Correo Electronico</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="correo"
+                    value={cliente.correo}
+                    onChange={handleChange}
+                    min="0"
+                    onKeyDown={(e) => e.key === '-' && e.preventDefault()} 
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Direccion</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="direccion"
+                    value={cliente.direccion}
+                    onChange={handleChange}
+                    min="0"
+                    onKeyDown={(e) => e.key === '-' && e.preventDefault()} 
+                  />
+                </Form.Group>
+                  <Button variant="success" type="submit"
+                   size="sm"
+                   className="my-2 p-1 fs-6"
+                   style={{ width: "150px" }}
+                   onClick={handleAgregar}>
+                   Agregar Cliente
+                   </Button>
               </Form>
             </Card.Body>
           </Card>

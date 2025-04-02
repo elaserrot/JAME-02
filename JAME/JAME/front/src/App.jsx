@@ -15,6 +15,7 @@ import ServiciosMedicina from "./pages/Cliente/ServiciosMedicina";
 import AgendamientoGrooming from "./pages/Cliente/AgendamientoGrooming";
 {/* ----------------------paginas de administrador-------------------- */ }
 import AdminPedidos from "./pages/Admin/AdminPedidos";
+import CalendarioPedidos from "./pages/Admin/CalendarioPedidos";
 import AdminMascotas from "./pages/Admin/AdminMascotas";
 import AdminAgregarMascota from "./pages/Admin/AdminAgregarMascota";
 import AdminVentas  from "./pages/Admin/AdminVentas";
@@ -23,6 +24,7 @@ import AdminVerMascota  from "./pages/Admin/AdminVerMascota";
 import AdminAgregarClientes  from "./pages/Admin/AdminAgregarClientes";
 import AdminAgendamiento  from "./pages/Admin/AdminAgendamiento";
 import AdminReportes  from "./pages/Admin/AdminReportes";
+import AdminConfiguracion  from "./pages/Admin/AdminConfiguracion";
 
 
 
@@ -46,6 +48,7 @@ function App() {
 {/* ----------------------paginas de administrador-------------------- */}
         <Route path="/administrador/" element={<InicioAdmin />} />
         <Route path="/pedidos" element={<AdminPedidos />} />
+        <Route path="/calendario" element={<CalendarioPedidos />} />
         <Route path="/mascotas" element={<AdminMascotas />} />
         <Route path="/agregarmascota" element={<AdminAgregarMascota />} />
         <Route path="/ventas" element={<AdminVentas />} />
@@ -54,6 +57,7 @@ function App() {
         <Route path="/agregarcliente" element={<AdminAgregarClientes />} />
         <Route path="/agendamiento" element={<AdminAgendamiento />} />
         <Route path="/reportes" element={<AdminReportes />} />
+        <Route path="/configuracion" element={<AdminConfiguracion />} />
         
 
         
