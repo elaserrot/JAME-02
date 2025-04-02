@@ -8,4 +8,6 @@ router.get("/listar", usersController.listarUsuarios);
 
 router.post("/agregar", usersController.registrar)
 
-module.exports = router;
+router.delete("/eliminar/:id", usersController.eliminar)
+
+module.exports = router;  

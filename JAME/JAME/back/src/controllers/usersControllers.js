@@ -57,3 +57,26 @@ exports.registrar = async (req, res) => {
         res.status(200).json("Usuario Registrado correctamente")
     })
 }
+
+exports.eliminar = async (req, res) => {
+    const { id } = req.params;
+    const q = "DELETE FROM usuarios WHERE id_usuario = ?";  
+
+    conexion.query(q, [id], (err, result) => {
+        if (err) {
+            console.error('Error en la consulta SQL:', err); // Mostrar el error en consola
+            return res.status(500).json({ 
+                error: 'Error al eliminar el usuario',
+                details: err.message // Agregar detalles del error en la respuesta
+            });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Usuario no encontrado con ese ID' });
+        }
+
+        res.status(200).json({ message: 'Usuario eliminado correctamente' });
+    });
+};
+ 
+          
