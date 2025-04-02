@@ -29,7 +29,7 @@ exports.listarUsuarios = async (req, res) => {
         res.status(200).json(resultado)
     })
 };
-
+ /* registrar usuario */
 exports.registrar = async (req, res) => {   
     const { nombreCompleto, correoElectronico, usuario, contrasena } = req.body;
     if (!nombreCompleto || !correoElectronico || !usuario || !contrasena){

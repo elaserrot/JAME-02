@@ -1,62 +1,141 @@
-import React from 'react'
+import React, { useState } from 'react'
+
 import Footer from '../../components/Footer'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import axios from 'axios'
 
 export default function Register() {
+
+  const [user, setUser] = useState({
+    nombreCompleto: '',
+    correoElectronico: '',
+    usuario: '',
+    contrasena: '',
+    confirmarContrasena: ''
+  })
+
+  const handleChange = (e) => {
+    setUser(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:3001/api/usuarios/agregar", user)
+      console.log(response.data)
+      if (response.status === 200) {
+        console.log(response.data)
+        Swal.fire({
+          icon: 'success',
+          title: 'Registro exitoso',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          navigate('/login')
+        })  
+      }
+
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div>
       <div className="vh-100 d-flex justify-content-center align-items-center " style={{
         backgroundImage: `url("https://hoylecohen.com/wp-content/uploads/login-page-bg.jpg")`
       }}>
-        <div class="w-50 p-5">
-          <div class="card shadow p-5 rounded-5">
-            <div class=" text-dark text-center">
+        <div className="w-50 p-5">
+          <div className="card shadow p-5 rounded-5">
+            <div className=" text-dark text-center">
               <i className="display-2 fa fa-paw" aria-hidden="true"></i>
 
               <h2>Registro Clinica Veterinaria</h2>
               <h2>Ciudad Canina</h2>
 
             </div>
-            <div class="card-body">
-              <form>
+            <div className="card-body">
+              <form onSubmit={handleSubmit}>
                 {/* <!-- Información del propietario --> */}
-                <h4 class="mb-3 text-center">Información del cliente</h4>
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <label for="nombrePropietario" class="form-label">Usuario</label>
-                    <input type="text" id="nombrePropietario" class="form-control" placeholder="Usuario" required />
+                <h4 className="mb-3 text-center">Información del cliente</h4>
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <label for="nombrePropietario" className="form-label">Nombre Completo</label>
+                    <input
+                      type="text"
+                      value={user.nombreCompleto}
+                      onChange={handleChange}
+                      id="nombrePropietario"
+                      className="form-control"
+                      placeholder="Nombre Completo"
+                      name="nombreCompleto" 
+                      required
+                    />
                   </div>
-                  <div class="col-md-6">
-                    <label for="emailPropietario" class="form-label">Correo Electrónico</label>
-                    <input type="email" id="emailPropietario" class="form-control" placeholder="Correo electrónico" required />
+
+                  <div className="col-md-6">
+                    <label for="usuario" className="form-label">Usuario</label>
+                    <input
+                      type="text"
+                      value={user.usuario}
+                      onChange={handleChange}
+                      id="usuario"
+                      className="form-control"
+                      placeholder="Usuario"
+                      name="usuario"
+                      required
+                    />
+                  </div>
+
+                  <div className="col-md-6">
+                    <label for="emailPropietario" className="form-label">Correo Electrónico</label>
+                    <input
+                      type="email"
+                      value={user.correoElectronico}
+                      onChange={handleChange}
+                      id="emailPropietario"
+                      className="form-control"
+                      placeholder="Correo electrónico"
+                      name="correoElectronico" 
+                      required
+                    />
                   </div>
                 </div>
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <label for="Usuario" class="form-label">Contraseña</label>
-                    <input type="tel" id="Usuario" class="form-control" placeholder="Contraseña" required />
+
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <label for="contrasena" className="form-label">Contraseña</label>
+                    <input
+                      type="password"
+                      value={user.contrasena}
+                      onChange={handleChange}
+                      id="contrasena"
+                      className="form-control"
+                      placeholder="Contraseña"
+                      name="contrasena"
+                      required
+                    />
                   </div>
-                  <div class="col-md-6">
-                    <label for="password" class="form-label">Confirmar Contraseña</label>
-                    <input type="text" id="password" class="form-control" placeholder="Confirmar Contraseña" required />
+
+                  <div className="col-md-6">
+                    <label for="confirmarContrasena" className="form-label">Confirmar Contraseña</label>
+                    <input
+                      type="password"
+                      value={user.confirmarContrasena}
+                      onChange={handleChange}
+                      id="confirmarContrasena"
+                      className="form-control"
+                      placeholder="Confirmar Contraseña"
+                      name="confirmarContrasena"
+                      required
+                    />
                   </div>
                 </div>
                 {/*              {/* <!-- Botón de registro --> */}
-                <div class="text-center">
-                  <button type="submit" class="btn btn-success w-100" onClick={()=>{
-                    Swal.fire({
-                      position: "top-end",
-                      icon: "success",
-                      title: "Usuario Registrado Correctante",
-                      showConfirmButton: false,
-                      timer: 1500,
-                    }
-                    ).then(() => {
-                      window.location.href = "/login";
-                    });
-                    
-                  }}>Registrarse</button>
+                <div className="text-center">
+                  <button type="submit" className="btn btn-success w-100">Registrarse</button>
                 </div>
               </form>
             </div>
