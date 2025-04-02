@@ -232,9 +232,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre_completo`, `correo_electronico`, `usuario`, `contraseña`, `direccion`, `telefono`, `imagen`, `fecha_registro`, `id_rol`) VALUES
-(1, 'Andrés Gutiérrez Hurtado', 'andres52885241@gmail.com', 'AndresJajaa', '1111', '68 D SUR 70 C 31', 3209202177, 'USUARIOS_FOTOS/1.jpg', '2023-09-07 19:33:21', 1),
-(2, 'Samuel Useche Chaparro', 'samuel@gmail.com', 'SamuUseche', '1111', 'El valle de la sierra', 3209207777, 'USUARIOS_FOTOS/2.jpg', '2023-09-07 20:59:42', 2),
-(3, 'Alisson', 'alison@gmail.com', 'Alisson', '1111', 'Dirección', 3109999999, 'USUARIOS_FOTOS/3.jpg', '2023-10-03 19:33:21', 1),
+(1, 'Juan José Uparela Sosa', 'uparelajuan2@gmail.com', 'juanjo', '1111', '94 B 130a-67', 3138332309, 'USUARIOS_FOTOS/1.jpg', '2024-10-08 19:33:21', 1),
+(2, 'Diego esteban sanchez', 'diego@gmail.com', 'Diego', '1111', 'kenedy', 3209207777, 'USUARIOS_FOTOS/2.jpg', '2024-09-07 20:59:42', 2),
+(3, 'Alisson', 'alison@gmail.com', 'Alisson', '1111', 'Dirección', 3109999999, 'USUARIOS_FOTOS/3.jpg', '2024-10-03 19:33:21', 1),
 (4, 'martin', 'misterlee272006@gmail.com', 'martinlee', '$2y$10$PdVFzzhsC.EUo8C/V5F.h.SODYF9e2fCLveDcOiKxn1/.AefPSdm6', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '2024-09-29 22:53:38', 1);
 
 -- --------------------------------------------------------
