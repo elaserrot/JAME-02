@@ -7,3 +7,9 @@ Dependencias usadas en el front
 2. npm install recharts --> para los graficos
 
 Dependencias para el backend
+1. npm init --> para crear el archivo "package.json"
+2. npm i express --> para usar el framework express de node
+3. npm i cors --> para conectar el front con el backend
+4. npm i nodeom -D --> para evitar tener que reiniciar el servidor cada vez que hay un cambio y se cambie de manera automatica
+5. npm install mysql2 --> para conectar una base de datos MySQL con el frondtend
+6. npm install dotenv --> se usa para cargar variables de entorno desde un archivo .env
