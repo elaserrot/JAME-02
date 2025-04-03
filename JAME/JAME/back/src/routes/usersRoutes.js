@@ -12,6 +12,7 @@ router.delete("/eliminar/:id", usersController.eliminar)
 
 router.put("/editar/:id", usersController.editar)
 
+router.patch("/actualizar/:id", usersController.actualizar)
 
 
 module.exports = router;       

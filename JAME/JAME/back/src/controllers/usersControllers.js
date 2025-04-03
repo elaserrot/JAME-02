@@ -105,6 +105,54 @@ exports.editar = async (req, res) => {
         });
     };
     
+    exports.actualizar = async (req, res) => {
+        const { id } = req.params;
+        const { nombrecompleto, correoelectronico, usuario, contraseña } = req.body;
+    
+        // Verificar si al menos un campo fue enviado para actualizar
+        if (!nombrecompleto && !correoelectronico && !usuario && !contraseña) {
+            return res.status(400).json({ error: "Debe enviar al menos un campo para actualizar" });
+        }
+    
+        // Construcción dinámica de la consulta SQL
+        let campos = [];
+        let valores = [];
+    
+        if (nombrecompleto) {
+            campos.push("nombre_completo = ?");
+            valores.push(nombrecompleto);
+        }
+        if (correoelectronico) {
+            campos.push("correo_electronico = ?");
+            valores.push(correoelectronico);
+        }
+        if (usuario) {
+            campos.push("usuario = ?");
+            valores.push(usuario);
+        }
+        if (contraseña) {
+            campos.push("contraseña = ?");
+            valores.push(contraseña);
+        }
+    
+        valores.push(id); // Agregar el ID al final para la condición WHERE
+    
+        const q = `UPDATE usuarios SET ${campos.join(", ")} WHERE id_usuario = ?`;
+    
+        conexion.query(q, valores, (err, result) => {
+            if (err) {
+                return res.status(500).json({ error: "Error al actualizar el usuario", details: err.sqlMessage });
+            }
+    
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: "Usuario no encontrado con ese ID" });
+            }
+    
+            res.status(200).json({ message: "Usuario actualizado correctamente" });
+        });
+    };
+    
+
 
 
 
