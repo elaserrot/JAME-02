@@ -10,4 +10,8 @@ router.post("/agregar", usersController.registrar)
 
 router.delete("/eliminar/:id", usersController.eliminar)
 
-module.exports = router;  
+router.put("/editar/:id", usersController.editar)
+
+
+
+module.exports = router;       

@@ -16,7 +16,7 @@ conexion.connect((err) => {
         return;
     }
     console.log('Conectado a la base de datos MySQL');
-    });
+    });  
 
 // Controlador para listar usuarios
 exports.listarUsuarios = async (req, res) => {
@@ -64,10 +64,10 @@ exports.eliminar = async (req, res) => {
 
     conexion.query(q, [id], (err, result) => {
         if (err) {
-            console.error('Error en la consulta SQL:', err); // Mostrar el error en consola
+           
             return res.status(500).json({ 
                 error: 'Error al eliminar el usuario',
-                details: err.message // Agregar detalles del error en la respuesta
+                
             });
         }
 
@@ -78,5 +78,36 @@ exports.eliminar = async (req, res) => {
         res.status(200).json({ message: 'Usuario eliminado correctamente' });
     });
 };
+
+exports.editar = async (req, res) => {
+    
+        const { id } = req.params;  
+        const { nombrecompleto, correoelectronico, usuario, contraseña } = req.body;  
+
+        // Validar que todos los campos están presentes
+        if (!id || !nombrecompleto || !correoelectronico || !usuario || !contraseña) {
+            return res.status(400).json({ error: "Todos los campos son obligatorios" });
+        }
+
+        const q = "UPDATE usuarios SET nombre_completo = ?, correo_electronico = ?, usuario = ?, contraseña = ? WHERE id_usuario = ?";
+
+        conexion.query(q, [nombrecompleto, correoelectronico, usuario, contraseña, id], (err, result) => {
+            if (err) {
+                
+                return res.status(500).json({ error: "Error al actualizar el usuario", details: err.sqlMessage });
+            }
+
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: "Usuario no encontrado con ese ID" });
+            }
+
+            res.status(200).json({ message: "Usuario actualizado correctamente" });
+        });
+    };
+    
+
+
+
+
  
           
