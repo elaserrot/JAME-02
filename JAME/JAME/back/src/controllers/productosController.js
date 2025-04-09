@@ -1,5 +1,5 @@
-const mysql = require('mysql')
-const bcrypt = require("bcrypt")
+// productosController.js
+const mysql = require('mysql');
 
 // Crear la conexión a la base de datos
 const conexion = mysql.createConnection({
@@ -16,116 +16,89 @@ conexion.connect((err) => {
         return;
     }
     console.log('Conectado a la base de datos MySQL');
-    });  
+});
 
-
-
-app.listarProductos('/api/productos/listar', async (req, res) => {
-    const sql = 'SELECT * FROM productos'
+// Listar todos los productos
+exports.listarProductos = (req, res) => {
+    const sql = 'SELECT * FROM productos';
     conexion.query(sql, (error, resultado) => {
-        if (error) return console.error(error.message)
+        if (error) return console.error(error.message);
         if (resultado.length > 0) {
-            console.log(resultado)
-            res.json(resultado)
+            res.json(resultado);
         } else {
-            res.json('No hay registros')
-
-        }
-    })
-})
-
-
-app.get('/productos', (request, response) => {
-    conexion.query("SELECT * FROM productos",
-        (error, results) => {
-            if (error)
-                throw error;
-            response.status(200).json(results);
-        });
-});
-
-
-app.listar('/api/productos/:id', (req, res) => {
-    const { id } = req.params
-    const query = `SELECT * FROM productos WHERE id_producto=${id}`
-    conexion.query(query, (error, resultado) => {
-        if (error) return console.error(error.message)
-
-        if (resultado.length > 0) {
-            console.log(resultado)
-            res.json(resultado)
-
-        } else {
-            res.json('No hay registros con ese ID')
-
+            res.json('No hay registros');
         }
     });
-});
+};
 
-app.agregarProducto('/api/productos/agregar', (request, response) => {
-    const { nombre_producto, descripcion, precio, stock } = request.body;
-
-    // Validar los datos recibidos
-    if (!nombre_producto || !precio || !stock) {
-        return response.status(400).json({ message: "Faltan datos requeridos" });
-    }
-
-    conexion.query("INSERT INTO `productos`(`nombre_producto`, `descripcion`, `precio`, `stock`) VALUES (?,?,?,?)",
-        [nombre_producto, descripcion, precio, stock],
-        (error, results) => {
-            if (error) {
-                console.log("Error SQL:", error.sqlMessage);
-                return response.status(500).json({ message: "Error al agregar el producto", error: error.sqlMessage });
-            }
-            console.log("Producto añadido con éxito:", results);
-            response.status(201).json({ message: "Producto añadido correctamente", id: results.insertId });
-        });
-});
-
-
-
-app.eliminarProducto('/api/productos/eliminar/:id', (req, res) => {
-    const { id } = req.params; // Obtenemos el id desde la URL
-    const query = `DELETE FROM productos WHERE id_producto = ?`; // Consulta para eliminar el usuario
-
-    // Ejecutamos la consulta SQL para eliminar el registro
-    conexion.query(query, [id], (error, results) => {
-        if (error) {
-            console.error(error.message);
-            return res.status(500).json({ message: "Hubo un error al intentar eliminar el usuario." });
-        }
-
-        else if (results.affectedRows > 0) {
-            res.json({ message: `Usuario con ID ${id} eliminado correctamente.` });
-        } else {
-            res.status(404).json({ message: `No se encontró un usuario con el ID ${id}.` });
-        }
-    });
-});
-
-app.actualizarProducto('/api/productos/actualizar/:id', (req, res) => {
+// Listar un producto por ID
+exports.listarProductoPorId = (req, res) => {
     const { id } = req.params;
+    const query = `SELECT * FROM productos WHERE id_producto = ${id}`;
+    conexion.query(query, (error, resultado) => {
+        if (error) return console.error(error.message);
+        if (resultado.length > 0) {
+            res.json(resultado);
+        } else {
+            res.json('No hay registros con ese ID');
+        }
+    });
+};
+
+// Agregar un producto
+exports.agregarProducto = (req, res) => {
     const { nombre_producto, descripcion, precio, stock } = req.body;
 
+    if (!nombre_producto || !precio || !stock) {
+        return res.status(400).json({ message: "Faltan datos requeridos" });
+    }
+
+    const sql = "INSERT INTO productos (nombre_producto, descripcion, precio, stock) VALUES (?, ?, ?, ?)";
+    conexion.query(sql, [nombre_producto, descripcion, precio, stock], (error, resultado) => {
+        if (error) {
+            console.log("Error SQL:", error.sqlMessage);
+            return res.status(500).json({ message: "Error al agregar el producto", error: error.sqlMessage });
+        }
+        res.status(201).json({ message: "Producto añadido correctamente", id: resultado.insertId });
+    });
+};
+
+// Eliminar un producto
+exports.eliminarProducto = (req, res) => {
+    const { id } = req.params;
+    const query = `DELETE FROM productos WHERE id_producto = ?`;
+    conexion.query(query, [id], (error, resultado) => {
+        if (error) {
+            console.error(error.message);
+            return res.status(500).json({ message: "Error al eliminar el producto" });
+        }
+        if (resultado.affectedRows > 0) {
+            res.json({ message: `Producto con ID ${id} eliminado correctamente.` });
+        } else {
+            res.status(404).json({ message: `No se encontró un producto con el ID ${id}` });
+        }
+    });
+};
+
+// Actualizar un producto
+exports.actualizarProducto = (req, res) => {
+    const { id } = req.params;
+    const { nombre_producto, descripcion, precio, stock } = req.body;
 
     if (!nombre_producto || !descripcion || !precio || !stock) {
         return res.status(400).json({ message: "Por favor, proporcione nombre, descripción, precio y stock." });
     }
 
     const query = `UPDATE productos SET nombre_producto = ?, descripcion = ?, precio = ?, stock = ? WHERE id_producto = ?`;
-
-    conexion.query(query, [nombre_producto, descripcion, precio, stock, id], (error, results) => {
+    conexion.query(query, [nombre_producto, descripcion, precio, stock, id], (error, resultado) => {
         if (error) {
             console.error(error.message);
             return res.status(500).json({ message: "Error al actualizar el producto", error: error.message });
         }
-
-        if (results.affectedRows > 0) {
-            return res.json({ message: `Producto con ID ${id} actualizado correctamente.` });
+        if (resultado.affectedRows > 0) {
+            res.json({ message: `Producto con ID ${id} actualizado correctamente.` });
         } else {
-
-            return res.status(404).json({ message: `No se encontró un producto con el ID ${id}.` });
+            res.status(404).json({ message: `No se encontró un producto con el ID ${id}` });
         }
     });
-});
-
+};
