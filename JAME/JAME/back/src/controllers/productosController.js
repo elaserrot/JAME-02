@@ -6,7 +6,7 @@ const conexion = mysql.createConnection({
     host: 'localhost', 
     user: 'root',      
     password: '',
-    database: 'prueba'    
+    database: 'jame'    
 });
 
 // Verificar la conexión
@@ -15,7 +15,7 @@ conexion.connect((err) => {
         console.error('Error de conexión a la base de datos:', err.message);
         return;
     }
-    console.log('Conectado a la base de datos MySQL');
+    console.log('Conectado a la base de datos MySQL productos');
 });
 
 // Listar todos los productos
