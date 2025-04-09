@@ -55,3 +55,21 @@ CREATE TABLE `productos` (
  --
  -- Volcado de datos para la tabla `productos`
  --
+CREATE TABLE `citas` (
+  `ID_Citas` int(11) NOT NULL,
+  `Usuario` int(11) NOT NULL,
+  `Fecha` date NOT NULL,
+  `Motivo` varchar(50) NOT NULL,
+  `Estado` varchar(50) NOT NULL,
+  `Mascota` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `citas`
+--
+
+INSERT INTO `citas` (`ID_Citas`, `Usuario`, `Fecha`, `Motivo`, `Estado`, `Mascota`) VALUES
+(4, 2, '2025-04-09', 'Control de vacunas', 'Actualizada', 1),
+(5, 1, '2025-05-25', 'especialista', 'pendiente', 5),
+(6, 1, '2025-04-09', 'cepillado', 'activo', 1),
+(7, 1, '2026-04-09', 'groming', 'pendiente', 1);
