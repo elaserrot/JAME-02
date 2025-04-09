@@ -6,7 +6,7 @@ const conexion = mysql.createConnection({
     host: 'localhost', 
     user: 'root',      
     password: '',
-    database: 'jame'    
+    database: 'prueba'    
 });
 
 // Verificar la conexión
@@ -18,17 +18,9 @@ conexion.connect((err) => {
     console.log('Conectado a la base de datos MySQL');
     });  
 
-app.get('/', (req, res) => {
-    res.send('Mi Primer API')
-})
-
-app.get('/api/productos/login', (req, res) => {
-    res.send("Esta Api permite hacer Login")
-})
 
 
-
-app.get('/api/productos/listar', async (req, res) => {
+app.listarProductos('/api/productos/listar', async (req, res) => {
     const sql = 'SELECT * FROM productos'
     conexion.query(sql, (error, resultado) => {
         if (error) return console.error(error.message)
@@ -53,7 +45,7 @@ app.get('/productos', (request, response) => {
 });
 
 
-app.get('/api/productos/:id', (req, res) => {
+app.listar('/api/productos/:id', (req, res) => {
     const { id } = req.params
     const query = `SELECT * FROM productos WHERE id_producto=${id}`
     conexion.query(query, (error, resultado) => {
@@ -70,7 +62,7 @@ app.get('/api/productos/:id', (req, res) => {
     });
 });
 
-app.post('/api/productos/agregar', (request, response) => {
+app.agregarProducto('/api/productos/agregar', (request, response) => {
     const { nombre_producto, descripcion, precio, stock } = request.body;
 
     // Validar los datos recibidos
@@ -92,7 +84,7 @@ app.post('/api/productos/agregar', (request, response) => {
 
 
 
-app.delete('/api/productos/eliminar/:id', (req, res) => {
+app.eliminarProducto('/api/productos/eliminar/:id', (req, res) => {
     const { id } = req.params; // Obtenemos el id desde la URL
     const query = `DELETE FROM productos WHERE id_producto = ?`; // Consulta para eliminar el usuario
 
@@ -111,7 +103,7 @@ app.delete('/api/productos/eliminar/:id', (req, res) => {
     });
 });
 
-app.put('/api/productos/actualizar/:id', (req, res) => {
+app.actualizarProducto('/api/productos/actualizar/:id', (req, res) => {
     const { id } = req.params;
     const { nombre_producto, descripcion, precio, stock } = req.body;
 
