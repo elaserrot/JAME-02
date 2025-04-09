@@ -146,14 +146,13 @@ INSERT INTO `pedidos` (`id_pedido`, `id_usuario`, `fecha_pedido`, `MetodoPago_Pe
 
 CREATE TABLE `productos` (
   `id_producto` int(11) NOT NULL,
-  `nombre_producto` varchar(100) NOT NULL,
-  `descripcion` varchar(200) NOT NULL,
-  `precio` decimal(10,0) NOT NULL,
-  `stock` int(11) NOT NULL,
+  `nombre_producto` varchar(255) NOT NULL,
+  `descripcion` text DEFAULT NULL,
+  `precio` decimal(10,2) DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL,
   `imagen` varchar(200) NOT NULL,
   `id_cate` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 --
 -- Volcado de datos para la tabla `productos`
 --
