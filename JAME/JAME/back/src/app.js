@@ -34,7 +34,7 @@ app.use('/api/citas', citasRoutes);
 app.use('/api/roles', rolesRoutes);
 
 app.use('/api/productos', productosRoutes);
-app.use('/api/categorias', categoriasRoutes);
+app.use('/api/categorias', categoriaRoutes);
 
 
 
