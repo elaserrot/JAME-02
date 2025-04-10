@@ -1,11 +1,12 @@
 const express = require('express')
 const routes = express.Router();
 const usersController = require('../controllers/usersControllers')
+const { verificarToken, verificarRol } = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-// Ruta para listar usuarios
-router.get("/listar", usersController.listarUsuarios);
+// Ruta para listar usuarios protegida - solo admin
+router.get("/listar", verificarToken, verificarRol("admin"), usersController.listarUsuarios);
 
 router.post("/agregar", usersController.registrar)
 
