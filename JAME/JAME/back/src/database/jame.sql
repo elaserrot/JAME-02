@@ -90,3 +90,17 @@ CREATE TABLE roles (
   INSERT INTO roles (nombre_rol) VALUES 
   ('Administrador'),
   ('Usuario')
+
+
+
+CREATE TABLE `pedidos` (
+  `id_pedido` int(11) NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `metodoPago` tinyint(1) NOT NULL COMMENT '0 = Efectivo, 1 = Tarjeta',
+  `descripcion` varchar(100),
+  PRIMARY KEY (`id_pedido`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `pedidos` (`id_usuario`, `fecha`, `metodoPago`, `descripcion`) VALUES
+(1, '2023-10-03', 0, 'Pedido de productos de limpieza');
