@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Importa el controlador
-const categoriasController = require('../controllers/categoriasController');
+const categoriasController = require('../controllers/categoriaController');
 
 // Rutas CRUD
 router.get('/', categoriasController.listarCategorias);                 

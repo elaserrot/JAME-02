@@ -6,7 +6,7 @@ const mascotasRoutes = require('./routes/mascotasRoutes')
 const citasRoutes = require('./routes/citasRoutes')
 const rolesRoutes = require('./routes/rolesRoutes');
 const productosRoutes = require('./routes/productosRoutes')
-const categoriasRoutes = require('./routes/categoriasRoutes')
+const categoriaRoutes = require('./routes/categoriaRoutes')
 
 
 dotenv.config();
