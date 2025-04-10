@@ -5,12 +5,11 @@ const router = express.Router();
 const categoriasController = require('../controllers/categoriasController');
 
 // Rutas CRUD
-router.get('/', categoriasController.listarCategorias);                 // Listar todas las categorías
-router.post('/', categoriasController.agregarCategoria);                // Agregar una categoría
-router.put('/:id', categoriasController.actualizarCategoria);           // Actualizar una categoría por ID
-router.delete('/:id', categoriasController.eliminarCategoria);          // Eliminar una categoría por ID
+router.get('/', categoriasController.listarCategorias);                 
+router.post('/', categoriasController.agregarCategoria);                
+router.put('/:id', categoriasController.actualizarCategoria);          
+router.delete('/:id', categoriasController.eliminarCategoria);         
 
 // (Opcionales) rutas adicionales:
-router.get('/:id', categoriasController.obtenerCategoriaPorId);         // Obtener una categoría por ID
-
+router.get('/:id', categoriasController.obtenerCategoriaPorId);         
 module.exports = router;
