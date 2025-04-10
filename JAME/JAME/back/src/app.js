@@ -10,9 +10,11 @@ const productosRoutes = require('./routes/productosRoutes')
 const comprasRoutes = require('./routes/comprasRoutes')
 
 const pedidoRoutes = require('./routes/pedidoRoutes')
-const categoriasRoutes = require('./routes/categoriasRoutes')
-
 const categoriaRoutes = require('./routes/categoriaRoutes')
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
 
 
 
@@ -34,6 +36,8 @@ app.use(cors(corsOptions));
 // Middleware para analizar el cuerpo de las solicitudes
 app.use(express.json());
 
+// Swagger docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Rutas
 app.use('/api/usuarios', usersRoutes);
 app.use('/api/mascota', mascotasRoutes);
@@ -44,11 +48,11 @@ app.use('/api/compras', comprasRoutes);
 
 
 
-app.use('/api/categorias', categoriaRoutes);
+
 
 
 app.use('/api/pedidos', pedidoRoutes);
-app.use('/api/categorias', categoriasRoutes);
+app.use('/api/categorias', categoriaRoutes);
 
 
 app.listen(PORT, () => {
