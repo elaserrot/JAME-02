@@ -16,7 +16,7 @@ conexion.connect((err) => {
         console.error('Error de conexión a la base de datos:', err.message);
         return;
     }
-    console.log('Conectado a la base de datos MySQL');
+    console.log('Conectado a la base de datos MySQL Compras ');
     });  
 
 // Controlador para listar las compras 
