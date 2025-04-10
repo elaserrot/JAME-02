@@ -22,8 +22,13 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://127.0.0.1:8000/login', user);
-            console.log (response.data);
+            const response = await axios.post('http://localhost:3001/api/usuarios/login', { 
+                correo: user.correo,
+                password: user.password 
+            });
+    
+            console.log(response.data);
+    
             if (response.status === 200) {
                 const token = response.data.token;
                 localStorage.setItem('token', token);
@@ -33,8 +38,8 @@ export default function Login() {
                     showConfirmButton: false,
                     timer: 1500
                 }).then(() => {
-                    window.location.href = '/cliente/home';
-                })
+                    window.location.href = '/';
+                });
             }
         } catch (error) {
             console.error(error);
@@ -45,7 +50,6 @@ export default function Login() {
             });
         }
     };
-
 
     return (
         <div className="">
@@ -63,7 +67,7 @@ export default function Login() {
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
                                     <label htmlFor="email" className="form-label">Correo Electrónico</label>
-                                    <input onChange={handleChange} type="email" className="form-control" name="email" id="email" placeholder="nombre@ejemplo.com" required />
+                                    <input onChange={handleChange} type="email" className="form-control" name="correo" id="correo" placeholder="nombre@ejemplo.com" required />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="password" className="form-label">Contraseña</label>

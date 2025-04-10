@@ -1,5 +1,6 @@
 const mysql = require('mysql')
 const bcrypt = require("bcrypt")
+const jwt = require('jsonwebtoken');
 
 // Crear la conexión a la base de datos
 const conexion = mysql.createConnection({
@@ -151,11 +152,53 @@ exports.editar = async (req, res) => {
             res.status(200).json({ message: "Usuario actualizado correctamente" });
         });
     };
+
+
     
+  // Ruta para iniciar sesión
+exports.login = async (req, res) => {
+    const { correo, password } = req.body;
+
+    console.log("Login recibido:", correo, password);
 
 
+    if (!correo || !password) {
+        return res.status(400).json({ error: "Correo y contraseña requeridos" });
+    }
 
+    const q = "SELECT * FROM usuarios WHERE correo_electronico = ?";
+    conexion.query(q, [correo], async (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: "Error en la base de datos", details: err });
+        }
 
+        if (result.length === 0) {
+            return res.status(401).json({ error: "Correo no registrado" });
+        }
 
- 
-          
+        const usuario = result[0];
+        const contraseñaValida = await bcrypt.compare(password, usuario.contraseña);
+
+        if (!contraseñaValida) {
+            return res.status(401).json({ error: "Contraseña incorrecta" });
+        }
+
+        // Generar token
+        const token = jwt.sign(
+            { id: usuario.id_usuario, correo: usuario.correo_electronico, rol: usuario.rol },
+            process.env.JWT_SECRET,
+            { expiresIn: '2h' }
+        );
+
+        // Opcional: puedes omitir la contraseña al devolver el usuario
+        delete usuario.contraseña;
+
+        return res.status(200).json({
+            mensaje: "Inicio de sesión exitoso",
+            token,
+            usuario
+        });
+    });
+};
+
+    
