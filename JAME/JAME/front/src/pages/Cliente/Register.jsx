@@ -31,9 +31,9 @@ export default function Register() {
           title: 'Registro exitoso',
           showConfirmButton: false,
           timer: 1500
-        }).then(() => {
-          navigate('/login')
-        })  
+          }).then(() => {
+          window.location.href = '/login';
+          });
       }
 
     }
