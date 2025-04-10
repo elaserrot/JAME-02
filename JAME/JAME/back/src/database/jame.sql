@@ -92,6 +92,7 @@ CREATE TABLE roles (
   ('Usuario')
 
 
+
   CREATE TABLE `compras` (
   `ID_Compra` int(100) NOT NULL,
   `Fecha` date NOT NULL,
@@ -111,3 +112,24 @@ VALUES
 (3, '2025-04-03', 1, 'Desparasitante Interno', 1, 12347, 15000, 15000, 3),
 (4, '2025-04-04', 3, 'Arena Sanitaria 10kg', 1, 12348, 20000, 60000, 4),
 (5, '2025-04-05', 1, 'Vacuna Antirrábica', 0, 12349, 20000, 20000, 5);
+
+CREATE TABLE `pedidos` (
+  `id_pedido` int(11) NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `metodoPago` tinyint(1) NOT NULL COMMENT '0 = Efectivo, 1 = Tarjeta',
+  `descripcion` varchar(100),
+  PRIMARY KEY (`id_pedido`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `pedidos` (`id_usuario`, `fecha`, `metodoPago`, `descripcion`) VALUES
+(1, '2023-10-03', 0, 'Pedido de productos de limpieza');
+
+ CREATE TABLE `categorias` (
+    `id_categoria` INT NOT NULL AUTO_INCREMENT,
+    `nombre_categoria` VARCHAR(100) NOT NULL,
+    `descripcion_categoria` VARCHAR(100),
+    PRIMARY KEY (`id_categoria`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+
