@@ -101,7 +101,7 @@ exports.eliminarCompra = async (req, res) => {
             return res.status(404).json({ error: "Compra no encontrada" });
         }
 
-        res.status(200).json("Compra eliminada correctamente");
+        res.status(200).json("Compra eliminada correctamente");  
     });
 };
 

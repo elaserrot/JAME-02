@@ -10,7 +10,7 @@ router.post("/agregar", comprasController.agregarCompra);
 
 router.put("/:id", comprasController.actualizarCompra);
 
-router.delete("/:id", comprasController.eliminarCompra);
+router.delete("/:id", comprasController.eliminarCompra);   
 
 
 
