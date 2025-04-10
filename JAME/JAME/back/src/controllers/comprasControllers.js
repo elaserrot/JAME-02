@@ -32,7 +32,7 @@ exports.listarCompras = async (req, res) => {
 };
 
 // Controlador para agregar compras
-exports.agregarCompra = async (req, res) => {
+exports.agregarCompra = async (req, res) => {    
     const {
         ID_Compra,Fecha,Cantidad,Descripción,MetodoPago,NumeroFactura,PrecioUnitario,Precio_Total,ID_producto
     } = req.body;
