@@ -1,17 +1,17 @@
-const express = require('express')
-const productosControllers = require('../controllers/productosController')
-
+// routes.js
+const express = require('express');
 const router = express.Router();
+const productosController = require('../controllers/productosController');
 
-// Ruta para listar usuarios
-router.get("/listar", productosControllers.listarProductos);
+// Definir las rutas
+router.get('/listar', productosController.listarProductos);
+ 
+router.get('/listar/:id', productosController.listarProductoPorId);
+ 
+router.post('/agregar', productosController.agregarProducto);
 
-router.get("/listar/:id", productosControllers.listar);
+router.delete('/eliminar/:id', productosController.eliminarProducto);
 
-router.post("/agregar", productosControllers.agregarProducto)
-
-router.delete("/eliminar/:id", productosControllers.eliminarProducto)
-
-router.put("/actualizar/:id", productosControllers.actualizarProducto)
+router.put('/actualizar/:id', productosController.actualizarProducto);
 
 module.exports = router;
