@@ -90,3 +90,24 @@ CREATE TABLE roles (
   INSERT INTO roles (nombre_rol) VALUES 
   ('Administrador'),
   ('Usuario')
+
+
+  CREATE TABLE `compras` (
+  `ID_Compra` int(100) NOT NULL,
+  `Fecha` date NOT NULL,
+  `Cantidad` int(100) NOT NULL,
+  `Descripción` text NOT NULL,
+  `MetodoPago` tinyint(1) NOT NULL,
+  `NumeroFactura` int(100) NOT NULL,
+  `PrecioUnitario` decimal(15,0) NOT NULL,
+  `Precio_Total` decimal(15,0) NOT NULL,
+  `ID_producto` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO compras (ID_Compra, Fecha, Cantidad, Descripción, MetodoPago, NumeroFactura, PrecioUnitario, Precio_Total, ID_producto)
+VALUES
+(1, '2025-04-01', 1, 'Vacuna Triple Felina', 1, 12345, 45000, 45000, 1),
+(2, '2025-04-02', 2, 'Alimento Gato Adulto', 0, 12346, 30000, 60000, 2),
+(3, '2025-04-03', 1, 'Desparasitante Interno', 1, 12347, 15000, 15000, 3),
+(4, '2025-04-04', 3, 'Arena Sanitaria 10kg', 1, 12348, 20000, 60000, 4),
+(5, '2025-04-05', 1, 'Vacuna Antirrábica', 0, 12349, 20000, 20000, 5);

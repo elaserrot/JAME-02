@@ -69,10 +69,10 @@ exports.actualizarRol = async (req, res) => {
         }
 
         if (resultado.affectedRows === 0) {
-            return res.status(404).json("Rol no encontrado");
+            return res.status(404).json("rol no encontrado");
         }
 
-        res.status(200).json("Rol actualizado con éxito");
+        res.status(200).json("rol actualizado con éxito");
     });
 };
 // Controlador para eliminar Rol 
