@@ -1,15 +1,12 @@
 const express = require('express');
 const router = express.Router();
-
-// Importa el controlador
 const categoriaControllers = require('../controllers/categoriaControllers');
 
 // Rutas CRUD
-router.get('/', categoriaControllers.listarCategorias);                 
-router.post('/', categoriaControllers.agregarCategoria);                
-router.put('/:id', categoriaControllers.actualizarCategoria);          
-router.delete('/:id', categoriaControllers.eliminarCategoria);         
+router.get('listar/', categoriaControllers.listarCategorias);
+router.post('agregar/', categoriaControllers.agregarCategoria);
+router.put('actualizar/:id', categoriaControllers.actualizarCategoria);
+router.delete('eliminar/:id', categoriaControllers.eliminarCategoria);
+router.get('agregar/:id', categoriaControllers.obtenerCategoriaPorId);
 
-// (Opcionales) rutas adicionales:
-router.get('/:id', categoriaControllers.obtenerCategoriaPorId);         
 module.exports = router;
