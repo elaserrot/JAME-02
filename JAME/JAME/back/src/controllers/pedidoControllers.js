@@ -71,7 +71,7 @@ exports.actualizarPedido = async (req, res) => {
 
    
 
-    const q = "UPDATE pedidos SET id_usuario = ?, fecha = ?, metodoPago = ?, descripcion = ? WHERE id_pedido = ?";
+    const q = "UPDATE pedidos SET id_usuario = ?, fecha = ?, metodoPago = ?, descripcion = ? WHERE id_pedido = ?";  
 
     conexion.query(q, [id_usuario, fecha, metodoPago, descripcion, id], (err, result) => {
         if (err) {

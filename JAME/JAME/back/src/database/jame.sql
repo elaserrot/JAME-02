@@ -92,7 +92,6 @@ CREATE TABLE roles (
   ('Usuario')
 
 
-
 CREATE TABLE `pedidos` (
   `id_pedido` int(11) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
@@ -104,3 +103,11 @@ CREATE TABLE `pedidos` (
 
 INSERT INTO `pedidos` (`id_usuario`, `fecha`, `metodoPago`, `descripcion`) VALUES
 (1, '2023-10-03', 0, 'Pedido de productos de limpieza');
+
+ CREATE TABLE `categorias` (
+    `id_categoria` INT NOT NULL AUTO_INCREMENT,
+    `nombre_categoria` VARCHAR(100) NOT NULL,
+    `descripcion_categoria` VARCHAR(100),
+    PRIMARY KEY (`id_categoria`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+

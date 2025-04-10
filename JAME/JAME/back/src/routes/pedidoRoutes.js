@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/listarPedidos", pedidoController.listarPedidos); 
 router.post("/agregarPedido", pedidoController.agregarPedido);
 router.delete("/eliminarPedido/:id", pedidoController.eliminarPedido);
-router.put("/actualizarPedido/:id", pedidoController.actualizarPedido);
+router.put("/actualizarPedido/:id", pedidoController.actualizarPedido); 
 
 
 

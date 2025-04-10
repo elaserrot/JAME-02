@@ -8,6 +8,7 @@ const citasRoutes = require('./routes/citasRoutes')
 const rolesRoutes = require('./routes/rolesRoutes');
 const productosRoutes = require('./routes/productosRoutes')
 const pedidoRoutes = require('./routes/pedidoRoutes')
+const categoriasRoutes = require('./routes/categoriasRoutes')
 
 
 
@@ -34,7 +35,9 @@ app.use('/api/mascota', mascotasRoutes);
 app.use('/api/citas', citasRoutes);
 app.use('/api/roles', rolesRoutes);
 app.use('/api/productos', productosRoutes);
+
 app.use('/api/pedidos', pedidoRoutes);
+app.use('/api/categorias', categoriasRoutes);
 
 
 app.listen(PORT, () => {
