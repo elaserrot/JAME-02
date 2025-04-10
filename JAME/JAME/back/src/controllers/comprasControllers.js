@@ -7,7 +7,7 @@ const conexion = mysql.createConnection({
     host: 'localhost', 
     user: 'root',      
     password: '',
-    database: 'jame'    
+    database: 'jame'      
 });
 
 // Verificar la conexión
