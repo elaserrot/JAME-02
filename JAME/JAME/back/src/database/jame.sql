@@ -73,3 +73,20 @@ INSERT INTO `citas` (`ID_Citas`, `Usuario`, `Fecha`, `Motivo`, `Estado`, `Mascot
 (5, 1, '2025-05-25', 'especialista', 'pendiente', 5),
 (6, 1, '2025-04-09', 'cepillado', 'activo', 1),
 (7, 1, '2026-04-09', 'groming', 'pendiente', 1);
+
+--
+-- Volcado de datos para la tabla `roles`
+--
+
+CREATE TABLE roles (
+    id_rol INT(11) NOT NULL AUTO_INCREMENT, 
+    nombre_rol VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_rol)
+
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+   TRUNCATE TABLE roles;
+
+  INSERT INTO roles (nombre_rol) VALUES 
+  ('Administrador'),
+  ('Usuario')
