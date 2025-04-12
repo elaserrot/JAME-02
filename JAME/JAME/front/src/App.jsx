@@ -25,6 +25,7 @@ import AdminAgregarClientes  from "./pages/Admin/AdminAgregarClientes";
 import AdminAgendamiento  from "./pages/Admin/AdminAgendamiento";
 import AdminReportes  from "./pages/Admin/AdminReportes";
 import AdminConfiguracion  from "./pages/Admin/AdminConfiguracion";
+import ClienteHome from "./pages/Cliente/ClienteHome";  
 
 
 
@@ -32,11 +33,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Index />} />
+        <Route path="/" element={<Index/>} />
         <Route path="/login/" element={<Login />} />
         <Route path="/register/" element={<Register />} />
         <Route path="/example" element={<Example />} />
-        <Route path="/perfil" element={<PerfilUsuario/>}/>
+        <Route path="/perfilUsuario" element={<PerfilUsuario/>}/>
         <Route path="/productos" element={<Productos/>}/>
         <Route path="/producto" element={<Producto/>}/>
         <Route path="/carrito" element={<CarritoCompras/>}/>
@@ -45,6 +46,7 @@ function App() {
         <Route path="/mascota" element={<Mascota/>} />
         <Route path="/medicina" element={<ServiciosMedicina/>} />
         <Route path="/grooming" element={<AgendamientoGrooming/>} />
+        <Route path="/clientehome" element={<ClienteHome />} />
 {/* ----------------------paginas de administrador-------------------- */}
         <Route path="/administrador/" element={<InicioAdmin />} />
         <Route path="/pedidos" element={<AdminPedidos />} />

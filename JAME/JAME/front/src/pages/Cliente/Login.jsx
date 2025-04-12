@@ -3,6 +3,9 @@ import { Link } from "react-router-dom"
 import Footer from '../../components/Footer'
 import axios from 'axios'
 import Swal from 'sweetalert2';
+import { useAuth } from '../../context/AuthContext';
+
+const { login } = useAuth();
 
 export default function Login() {
 
@@ -31,14 +34,14 @@ export default function Login() {
     
             if (response.status === 200) {
                 const token = response.data.token;
-                localStorage.setItem('token', token);
+                login(token);
                 Swal.fire({
                     icon: 'success',
                     title: 'Inicio de sesión exitoso',
                     showConfirmButton: false,
                     timer: 1500
                 }).then(() => {
-                    window.location.href = '/';
+                    window.location.href = '/ClienteHome';
                 });
             }
         } catch (error) {

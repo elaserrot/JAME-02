@@ -187,7 +187,7 @@ exports.login = async (req, res) => {
         const token = jwt.sign(
             { id: usuario.id_usuario, correo: usuario.correo_electronico, rol: usuario.rol },
             process.env.JWT_SECRET,
-            { expiresIn: '2h' }
+            { expiresIn: '30d' }
         );
 
         // Opcional: puedes omitir la contraseña al devolver el usuario
