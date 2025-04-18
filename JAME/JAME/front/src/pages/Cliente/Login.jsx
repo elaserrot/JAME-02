@@ -4,10 +4,11 @@ import Footer from '../../components/Footer'
 import axios from 'axios'
 import Swal from 'sweetalert2';
 import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
-const { login } = useAuth();
 
 export default function Login() {
+    const navigate = useNavigate();
 
     const [user, setUser] = useState({
         correo: '',
@@ -29,19 +30,17 @@ export default function Login() {
                 correo: user.correo,
                 password: user.password 
             });
-    
-            console.log(response.data);
-    
+
             if (response.status === 200) {
                 const token = response.data.token;
-                login(token);
+                localStorage.setItem('token', token);
                 Swal.fire({
                     icon: 'success',
                     title: 'Inicio de sesión exitoso',
                     showConfirmButton: false,
                     timer: 1500
                 }).then(() => {
-                    window.location.href = '/ClienteHome';
+                    navigate('/ClienteHome'); 
                 });
             }
         } catch (error) {
