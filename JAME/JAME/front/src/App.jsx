@@ -13,6 +13,7 @@ import OlvidoContraseña from "./pages/Cliente/OlvidoContraseña";
 import Mascota from "./pages/Cliente/Mascota";
 import ServiciosMedicina from "./pages/Cliente/ServiciosMedicina";
 import AgendamientoGrooming from "./pages/Cliente/AgendamientoGrooming";
+import ClienteHome from "./pages/Cliente/ClienteHome";  
 {/* ----------------------paginas de administrador-------------------- */ }
 import AdminPedidos from "./pages/Admin/AdminPedidos";
 import CalendarioPedidos from "./pages/Admin/CalendarioPedidos";
@@ -25,7 +26,6 @@ import AdminAgregarClientes  from "./pages/Admin/AdminAgregarClientes";
 import AdminAgendamiento  from "./pages/Admin/AdminAgendamiento";
 import AdminReportes  from "./pages/Admin/AdminReportes";
 import AdminConfiguracion  from "./pages/Admin/AdminConfiguracion";
-import ClienteHome from "./pages/Cliente/ClienteHome";  
 
 
 
