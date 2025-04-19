@@ -12,13 +12,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Lista de productos de ejemplo
   final List<Map<String, String>> productos = [
-    {"nombre": "Comida para perros", "imagen": "assets/product1.png"},
-    {"nombre": "Collar personalizado", "imagen": "assets/product2.png"},
-    {"nombre": "Juguete interactivo", "imagen": "assets/product3.png"},
-    {"nombre": "Arena para gatos", "imagen": "assets/product4.png"},
-    {"nombre": "Casita para mascotas", "imagen": "assets/product5.png"},
+    {"nombre": "Comida para perros", "imagen": "assets/Royal2.png"},
+    {"nombre": "Collar personalizado", "imagen": "assets/Royal2.png"},
+    {"nombre": "Juguete interactivo", "imagen": "assets/Royal2.png"},
+    {"nombre": "Arena para gatos", "imagen": "assets/Royal2.png"},
+    {"nombre": "Casita para mascotas", "imagen": "assets/Royal2.png"},
   ];
-
+ 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index; // Actualiza el índice seleccionado
@@ -136,11 +136,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: ListTile(
-                                leading: Image.asset(
-                                  productos[index]["imagen"]!,
-                                  width: 50,
+                                leading: SizedBox(
+                                  width: 50, // Limita el ancho del contenedor
                                   height: 50,
-                                  fit: BoxFit.cover,
+                                  child: Image.asset(
+                                    productos[index]["imagen"]!,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                                 title: Text(
                                   productos[index]["nombre"]!,
