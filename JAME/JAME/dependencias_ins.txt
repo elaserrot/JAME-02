@@ -13,3 +13,4 @@ Dependencias para el backend
 4. npm i nodeom -D --> para evitar tener que reiniciar el servidor cada vez que hay un cambio y se cambie de manera automatica
 5. npm install mysql2 --> para conectar una base de datos MySQL con el frondtend
 6. npm install dotenv --> se usa para cargar variables de entorno desde un archivo .env
+7. no cambiar el puerto, debe ser 3001 todo.
