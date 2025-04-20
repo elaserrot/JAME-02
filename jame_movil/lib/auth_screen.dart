@@ -13,7 +13,7 @@ class AuthScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
        appBar: AppBar(
-      backgroundColor: Colors.black, // Fondo del AppBar
+      backgroundColor: Colors.white , // Fondo del AppBar
       title: const Text(
       'Veterinaria Ciudad Canina',
         style: TextStyle(
@@ -26,7 +26,7 @@ class AuthScreen extends StatelessWidget {
       bottom: const TabBar(
       indicatorColor: Colors.blueAccent, // Indicador activo (línea)
       labelColor: Color.fromARGB(255, 6, 119, 233), // Color del texto activo
-      unselectedLabelColor: Colors.white, // Color del texto inactivo
+      unselectedLabelColor: Colors.black, // Color del texto inactivo
       
       tabs: [
       Tab(text: 'Registro'), // Pestaña de Registro

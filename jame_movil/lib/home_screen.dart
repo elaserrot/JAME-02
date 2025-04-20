@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, // Fondo exterior fuera del marco
+      backgroundColor: Colors.white, // Fondo exterior fuera del marco
       body: Center(
         child: Stack(
           alignment: Alignment.center,
