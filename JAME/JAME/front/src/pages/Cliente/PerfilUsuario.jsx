@@ -1,26 +1,38 @@
-import React, { useState } from "react";
-import Footer from '../../components/Footer'
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import Footer from '../../components/Footer';
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const UserProfile = () => {
     const [isEditing, setIsEditing] = useState(false);
-    const [profile, setProfile] = useState({
-        name: "María García",
-        email: "maria.garcia@ejemplo.com",
-        phone: "+34 612 345 678",
-        contraseña: "123456789",
-        usuario: "maria.garcia",
-        direccion: "Calle Principal 123",
-        about: "Dueña orgullosa de Max, un labrador de 3 años. Cliente regular de la clínica veterinaria desde 2020.",
-        profileImage: "/src/img/logovet.png",
-        memberSince: "Enero 2023",
-    });
+    const [profile, setProfile] = useState(null);
     const [newImage, setNewImage] = useState(null);
+    const navigate = useNavigate();
+
+    const token = localStorage.getItem('token');
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/api/usuarios/perfil', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                setProfile(response.data.usuario);
+            } catch (error) {
+                console.error("Error al obtener perfil:", error);
+                alert("Hubo un error al obtener el perfil.");
+                navigate('/login');
+            }
+        };
+        fetchProfile();
+    }, [navigate, token]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setProfile((prevProfile) => ({
-            ...prevProfile,
+        setProfile((prev) => ({
+            ...prev,
             [name]: value,
         }));
     };
@@ -28,23 +40,46 @@ const UserProfile = () => {
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setNewImage(reader.result); // Convertimos la imagen a base64 para previsualizar
-                setProfile((prevProfile) => ({
-                    ...prevProfile,
-                    profileImage: reader.result,
-                }));
-            };
-            reader.readAsDataURL(file);
+            setNewImage(file); 
+            setProfile((prev) => ({
+                ...prev,
+                imagen: URL.createObjectURL(file),
+            }));
         }
     };
 
-    const handleSave = () => {
-        setIsEditing(false);
-        console.log("Datos actualizados:", profile);
-        // Aquí puedes agregar lógica para enviar los datos actualizados a un backend.
+    const handleSave = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('nombre_completo', profile.nombre_completo);
+            formData.append('usuario', profile.usuario);
+            formData.append('telefono', profile.telefono);
+            formData.append('direccion', profile.direccion);
+    
+            if (newImage) {
+                formData.append('imagen', newImage);
+            }
+    
+            await axios.put(`http://localhost:3001/api/usuarios/${profile.id_usuario}`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data', 
+                },
+            });
+            setIsEditing(false);
+            alert("Datos actualizados correctamente");
+        } catch (error) {
+            console.error("Error al actualizar:", error);
+            alert("Hubo un error al actualizar los datos.");
+        }
     };
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/");
+    };
+
+    if (!profile) return <div className="text-center mt-5">Cargando perfil...</div>;
 
     return (
         <div>
@@ -64,6 +99,9 @@ const UserProfile = () => {
                         </div>
                         <div className="col-md-4 text-center">
                             <h1>Veterinaria Ciudad Canina</h1>
+                        </div>
+                        <div className="col-md-4 text-end">
+                            <button onClick={handleLogout} className="btn btn-danger">Cerrar Sesión</button>
                         </div>
                     </div>
                 </div>
@@ -86,7 +124,7 @@ const UserProfile = () => {
                                 <div className="card-body">
                                     <div className="text-center mb-4">
                                         <img
-                                            src={profile.profileImage}
+                                            src={`http://localhost:3001/USUARIOS_FOTOS/${profile.imagen}`}
                                             className="rounded-circle mb-3"
                                             alt="Foto de perfil"
                                             width="150"
@@ -105,14 +143,6 @@ const UserProfile = () => {
                                     <hr />
                                     <div className="row mb-3">
                                         <div className="col-sm-3">
-                                            <h6 className="mb-0">Usuario desde</h6>
-                                        </div>
-                                        <div className="col-sm-9 text-secondary">
-                                            {profile.memberSince}
-                                        </div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <div className="col-sm-3">
                                             <h6 className="mb-0">Nombre</h6>
                                         </div>
                                         <div className="col-sm-9 text-secondary">
@@ -120,12 +150,12 @@ const UserProfile = () => {
                                                 <input
                                                     type="text"
                                                     className="form-control"
-                                                    name="name"
-                                                    value={profile.name}
+                                                    name="nombre_completo"
+                                                    value={profile.nombre_completo}
                                                     onChange={handleInputChange}
                                                 />
                                             ) : (
-                                                profile.name
+                                                profile.nombre_completo
                                             )}
                                         </div>
                                     </div>
@@ -149,38 +179,10 @@ const UserProfile = () => {
                                     </div>
                                     <div className="row mb-3">
                                         <div className="col-sm-3">
-                                            <h6 className="mb-0">Contraseña</h6>
+                                            <h6 className="mb-0">Correo</h6>
                                         </div>
                                         <div className="col-sm-9 text-secondary">
-                                            {isEditing ? (
-                                                <input
-                                                    type="password"
-                                                    className="form-control"
-                                                    name="contraseña"
-                                                    value={profile.contraseña}
-                                                    onChange={handleInputChange}
-                                                />
-                                            ) : (
-                                                "********"
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <div className="col-sm-3">
-                                            <h6 className="mb-0">Email</h6>
-                                        </div>
-                                        <div className="col-sm-9 text-secondary">
-                                            {isEditing ? (
-                                                <input
-                                                    type="email"
-                                                    className="form-control"
-                                                    name="email"
-                                                    value={profile.email}
-                                                    onChange={handleInputChange}
-                                                />
-                                            ) : (
-                                                profile.email
-                                            )}
+                                            {profile.correo_electronico}
                                         </div>
                                     </div>
                                     <div className="row mb-3">
@@ -192,12 +194,12 @@ const UserProfile = () => {
                                                 <input
                                                     type="text"
                                                     className="form-control"
-                                                    name="phone"
-                                                    value={profile.phone}
+                                                    name="telefono"
+                                                    value={profile.telefono || ''}
                                                     onChange={handleInputChange}
                                                 />
                                             ) : (
-                                                profile.phone
+                                                profile.telefono || 'No registrado'
                                             )}
                                         </div>
                                     </div>
@@ -211,34 +213,16 @@ const UserProfile = () => {
                                                     type="text"
                                                     className="form-control"
                                                     name="direccion"
-                                                    value={profile.direccion}
+                                                    value={profile.direccion || ''}
                                                     onChange={handleInputChange}
                                                 />
                                             ) : (
-                                                profile.direccion
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <div className="col-sm-3">
-                                            <h6 className="mb-0">Sobre mí</h6>
-                                        </div>
-                                        <div className="col-sm-9 text-secondary">
-                                            {isEditing ? (
-                                                <textarea
-                                                    className="form-control"
-                                                    name="about"
-                                                    rows="3"
-                                                    value={profile.about}
-                                                    onChange={handleInputChange}
-                                                />
-                                            ) : (
-                                                profile.about
+                                                profile.direccion || 'No registrada'
                                             )}
                                         </div>
                                     </div>
                                     {isEditing && (
-                                        <button className="btn btn-success" onClick={handleSave}>
+                                        <button className="btn btn-success mt-3" onClick={handleSave}>
                                             Guardar Cambios
                                         </button>
                                     )}
@@ -261,7 +245,6 @@ const UserProfile = () => {
             </main>
             <Footer />
         </div>
-        
     );
 };
 

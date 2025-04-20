@@ -201,4 +201,77 @@ exports.login = async (req, res) => {
     });
 };
 
+    // GET /api/usuarios/perfil
+    exports.obtenerPerfil = (req, res) => {
+        const id_usuario = req.user.id; 
     
+        conexion.query("SELECT * FROM usuarios WHERE id_usuario = ?", [id_usuario], (err, results) => {
+            if (err) {
+                console.error("Error al obtener perfil:", err);
+                return res.status(500).json({ mensaje: "Error al obtener el perfil" });
+            }
+    
+            if (results.length === 0) {
+                return res.status(404).json({ mensaje: "Usuario no encontrado" });
+            }
+    
+            // Solo entra aquí si todo salió bien y solo se envía una respuesta
+            return res.json({ usuario: results[0] });
+        });
+    };
+
+    exports.actualizarUsuario = (req, res) => {
+        console.log('ACTUALIZANDO USUARIO');
+        const id_usuario = req.params.id;
+        const { nombre_completo, usuario, telefono, direccion } = req.body;
+
+        // 1) Consulta la fila actual para sacar el nombre de la imagen "vieja"
+        conexion.query(
+        'SELECT imagen FROM usuarios WHERE id_usuario = ?',
+        [id_usuario],
+        (err, results) => {
+            if (err) {
+            console.error('Error al leer usuario antes de actualizar:', err);
+            return res.status(500).json({ mensaje: 'Error interno' });
+            }
+            if (results.length === 0) {
+            return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+            }
+            const imagenVieja = results[0].imagen; // puede ser null o un nombre de archivo
+            // 2) Si subieron nueva imagen, la borramos de disco
+            let nombreImagen = imagenVieja;
+            if (req.file) {
+            nombreImagen = req.file.filename;
+            if (imagenVieja) {
+                const rutaVieja = path.join(__dirname, '..', 'USUARIOS_FOTOS', imagenVieja);
+                if (fs.existsSync(rutaVieja)) {
+                try {
+                    fs.unlinkSync(rutaVieja);
+                } catch (e) {
+                    console.warn('No se pudo borrar imagen vieja (quizá ya no existía):', rutaVieja);
+                }
+                }
+            }
+            }
+    
+            // 3) Hacemos el UPDATE ya con el nombre correcto de la imagen
+            const q = `
+                UPDATE usuarios SET 
+                nombre_completo = ?, 
+                usuario         = ?, 
+                telefono        = ?, 
+                direccion       = ?, 
+                imagen          = ?
+                WHERE id_usuario  = ?
+            `;
+            const valores = [nombre_completo, usuario, telefono, direccion, nombreImagen, id_usuario];
+            conexion.query(q, valores, (err2) => {
+            if (err2) {
+                console.error('Error al actualizar usuario:', err2);
+                return res.status(500).json({ mensaje: 'Error al actualizar el usuario' });
+            }
+            res.json({ mensaje: 'Usuario actualizado correctamente' });
+            });
+        }
+        );
+    };

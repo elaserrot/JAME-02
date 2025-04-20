@@ -34,6 +34,8 @@ export default function Login() {
             if (response.status === 200) {
                 const token = response.data.token;
                 localStorage.setItem('token', token);
+                localStorage.setItem('usuario', JSON.stringify(response.data.usuario));
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Inicio de sesión exitoso',

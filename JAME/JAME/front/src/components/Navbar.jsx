@@ -29,7 +29,7 @@ export default function Navegacion() {
                         </div>
                         <div className="col-md-3 text-end">
                             <i class="bi bi-person"></i>
-                            <Link to={"/PerfilUsuario"} className="text-decoration-none text-secondary me-3">EDITAR PERFIL</Link>
+                            <Link to={"/PerfilUsuario"} className="text-decoration-none text-secondary me-3">PERFIL</Link>
 
                             <Link to={"/carrito"} className="text-decoration-none text-secondary">CARRITO</Link>
                             <i class="bi bi-cart4"></i>

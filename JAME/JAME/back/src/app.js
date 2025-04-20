@@ -8,6 +8,7 @@ const citasRoutes = require('./routes/citasRoutes')
 const rolesRoutes = require('./routes/rolesRoutes');
 const productosRoutes = require('./routes/productosRoutes')
 const comprasRoutes = require('./routes/comprasRoutes')
+const path = require('path');
 
 const pedidoRoutes = require('./routes/pedidoRoutes')
 const categoriaRoutes = require('./routes/categoriaRoutes')
@@ -47,6 +48,8 @@ app.use('/api/citas', citasRoutes);
 app.use('/api/roles', rolesRoutes);
 app.use('/api/productos', productosRoutes);
 app.use('/api/compras', comprasRoutes);
+app.use("/uploads", express.static("uploads"));
+app.use('/USUARIOS_FOTOS', express.static(path.join(__dirname,'USUARIOS_FOTOS')));
 
 
 

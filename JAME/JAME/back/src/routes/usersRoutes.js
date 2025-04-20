@@ -1,22 +1,32 @@
-const express = require('express')
-const routes = express.Router();
-const usersController = require('../controllers/usersControllers')
-const { verificarToken, verificarRol } = require('../middlewares/authMiddleware');
-
+const express = require('express');
 const router = express.Router();
+const usersController = require('../controllers/usersControllers');
+const { verificarToken, verificarRol } = require('../middlewares/authMiddleware');
+const upload = require("../middlewares/uploadMiddleware");
 
-// Ruta para listar usuarios protegida - solo admin
+
+// Rutas protegidas solo para admin
 router.get("/listar", verificarToken, verificarRol("admin"), usersController.listarUsuarios);
 
-router.post("/agregar", usersController.registrar)
+// Registro de usuario (público)
+router.post("/agregar", usersController.registrar);
 
-router.delete("/eliminar/:id", usersController.eliminar)
+// Eliminar usuario (restringido a admin si deseas)
+router.delete("/eliminar/:id", verificarToken, verificarRol("admin"), usersController.eliminar);
 
-router.put("/editar/:id", usersController.editar)
+// Editar usuario (admin o el mismo usuario)
+router.put("/editar/:id", verificarToken, usersController.editar);
 
-router.patch("/actualizar/:id", usersController.actualizar)
+// Actualización parcial del usuario
+router.patch("/actualizar/:id", verificarToken, usersController.actualizar);
 
-router.post('/login', usersController.login);
+// Login
+router.post("/login", usersController.login);
 
+// Obtener perfil del usuario autenticado
+router.get("/perfil", verificarToken, usersController.obtenerPerfil);
 
-module.exports = router;       
+// Actualizar perfil completo (autenticado)
+router.put("/:id", verificarToken, upload.single("imagen"), usersController.actualizarUsuario);
+
+module.exports = router;
