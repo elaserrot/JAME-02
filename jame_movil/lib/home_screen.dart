@@ -8,27 +8,45 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0; // Índice del botón seleccionado
-
-  // Lista de productos de ejemplo
-  final List<Map<String, String>> productos = [
-    {"nombre": "Comida para perros", "imagen": "assets/Royal2.png"},
-    {"nombre": "Collar personalizado", "imagen": "assets/Royal2.png"},
-    {"nombre": "Juguete interactivo", "imagen": "assets/Royal2.png"},
-    {"nombre": "Arena para gatos", "imagen": "assets/Royal2.png"},
-    {"nombre": "Casita para mascotas", "imagen": "assets/Royal2.png"},
+  final List<Map<String, dynamic>> productos = [
+    {"nombre": "Juguete Pollo Al Horno", "peso": "500 Gr", "precio": 12000, "imagen": "assets/Royal2.png"},
+    {"nombre": "Hueso Carne de Res", "peso": "500 Gr", "precio": 12800, "imagen": "assets/Royal2.png"},
+    {"nombre": "Galleta Pavo Al Horno", "peso": "500 Gr", "precio": 16250, "imagen": "assets/Royal2.png"},
+    {"nombre": "Huesos de Carne", "peso": "30 Un", "precio": 180000, "imagen": "assets/Royal2.png"},
   ];
- 
-  void _onItemTapped(int index) {
+
+  Map<int, int> cantidades = {}; // Almacena la cantidad seleccionada por producto
+
+  void _incrementarCantidad(int index) {
     setState(() {
-      _selectedIndex = index; // Actualiza el índice seleccionado
+      cantidades[index] = (cantidades[index] ?? 1) + 1;
     });
+  }
+
+  void _decrementarCantidad(int index) {
+    setState(() {
+      if (cantidades[index] != null && cantidades[index]! > 1) {
+        cantidades[index] = cantidades[index]! - 1;
+      }
+    });
+  }
+
+  void _onComprar(int index) {
+    final producto = productos[index];
+    final cantidad = cantidades[index] ?? 1;
+    final total = producto["precio"] * cantidad;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Has añadido al carrito $cantidad "${producto["nombre"]}" por \$${total}'),
+        duration: const Duration(seconds: 4),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, // Fondo exterior fuera del marco
+      backgroundColor: Colors.blueAccent,
       body: Center(
         child: Stack(
           alignment: Alignment.center,
@@ -53,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            // Fondo azul claro dentro del marco del dispositivo
+            // Fondo dentro del marco
             Positioned(
               left: 20,
               right: 20,
@@ -123,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      // Lista de productos desplazable
+                      // Lista de productos con botón de comprar
                       Expanded(
                         child: ListView.builder(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -135,27 +153,87 @@ class _HomeScreenState extends State<HomeScreen> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
                               ),
-                              child: ListTile(
-                                leading: SizedBox(
-                                  width: 50, // Limita el ancho del contenedor
-                                  height: 50,
-                                  child: Image.asset(
-                                    productos[index]["imagen"]!,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                title: Text(
-                                  productos[index]["nombre"]!,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                trailing: const Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Colors.black54,
-                                  size: 18,
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    // Imagen del producto
+                                    SizedBox(
+                                      width: 60,
+                                      height: 60,
+                                      child: Image.asset(
+                                        productos[index]["imagen"]!,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 15),
+                                    // Detalles del producto
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            productos[index]["nombre"]!,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          Text(
+                                            productos[index]["peso"]!,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          Text(
+                                            "\$${productos[index]["precio"]}",
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.green,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    // Botones de cantidad y comprar
+                                    Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            IconButton(
+                                              icon: const Icon(Icons.remove, color: Colors.red),
+                                              onPressed: () => _decrementarCantidad(index),
+                                            ),
+                                            Text(
+                                              cantidades[index]?.toString() ?? "1",
+                                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                            ),
+                                            IconButton(
+                                              icon: const Icon(Icons.add, color: Colors.green),
+                                              onPressed: () => _incrementarCantidad(index),
+                                            ),
+                                          ],
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () => _onComprar(index),
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.blueAccent,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(15),
+                                            ),
+                                          ),
+                                          child: const Text(
+                                            ' carrito',
+                                            style: TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                             );
@@ -163,51 +241,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Container(
-                        height: 72,
-                        width: 350,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 5, 51, 88),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(
-                              onTap: () => _onItemTapped(0),
-                              child: Icon(
-                                Icons.home,
-                                color: _selectedIndex == 0 ? Colors.black : Colors.blueAccent,
-                                size: 28,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () => _onItemTapped(1),
-                              child: Icon(
-                                Icons.pets,
-                                color: _selectedIndex == 1 ? Colors.black : Colors.blueAccent,
-                                size: 28,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () => _onItemTapped(2),
-                              child: Icon(
-                                Icons.event,
-                                color: _selectedIndex == 2 ? Colors.black : Colors.blueAccent,
-                                size: 28,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () => _onItemTapped(3),
-                              child: Icon(
-                                Icons.person,
-                                color: _selectedIndex == 3 ? Colors.black : Colors.blueAccent,
-                                size: 28,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 ),

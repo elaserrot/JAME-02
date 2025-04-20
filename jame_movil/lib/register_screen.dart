@@ -6,7 +6,7 @@ class FramedApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, // Fondo exterior fuera del marco
+      backgroundColor: Colors.blueAccent, // Fondo exterior fuera del marco
       body: Center(
         child: Stack(
           alignment: Alignment.center,
