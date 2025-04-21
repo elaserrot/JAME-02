@@ -83,7 +83,7 @@ class FramedApp extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 45),
+                        const SizedBox(height: 15),
                         // Tarjeta con los campos centrados
                         Card(
                           elevation: 6, // Sombra para dar efecto 3D
