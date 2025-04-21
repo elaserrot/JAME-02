@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navegacion from '../../components/Navegacion'
+import Navegacion from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
 function RegistrarMascota() {
