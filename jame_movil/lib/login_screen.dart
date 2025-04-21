@@ -56,7 +56,7 @@ class LoginScreen extends StatelessWidget {
                         Image.asset(
                           'assets/background3.png', // Ruta de la imagen del bulldog
                           width: 290,
-                          height: 250,
+                          height: 200,
                           fit: BoxFit.contain,
                         ),
                         const SizedBox(height: 0), // Espacio entre el bulldog y la tarjeta
