@@ -1,6 +1,8 @@
 const mysql = require('mysql')
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken');
+const path = require('path');
+const fs = require('fs');
 
 // Crear la conexión a la base de datos
 const conexion = mysql.createConnection({
