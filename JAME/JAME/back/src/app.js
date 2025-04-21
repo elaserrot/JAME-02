@@ -2,6 +2,7 @@
 const express = require('express')
 const cors = require('cors')
 const dotenv = require('dotenv')
+const authRoutes = require("./routes/auth")
 const usersRoutes = require('./routes/usersRoutes')
 const mascotasRoutes = require('./routes/mascotasRoutes')
 const citasRoutes = require('./routes/citasRoutes')
@@ -42,6 +43,7 @@ app.use(express.json());
 // Swagger docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Rutas
+app.use('/api/auth', authRoutes);
 app.use('/api/usuarios', usersRoutes);
 app.use('/api/mascota', mascotasRoutes);
 app.use('/api/citas', citasRoutes);

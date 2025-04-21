@@ -13,7 +13,9 @@ import OlvidoContraseña from "./pages/Cliente/OlvidoContraseña";
 import Mascota from "./pages/Cliente/Mascota";
 import ServiciosMedicina from "./pages/Cliente/ServiciosMedicina";
 import AgendamientoGrooming from "./pages/Cliente/AgendamientoGrooming";
-import ClienteHome from "./pages/Cliente/ClienteHome";  
+import ClienteHome from "./pages/Cliente/ClienteHome";
+import NuevaContrasena from "./pages/Cliente/NuevaContraseña";
+import VerificarCodigo from "./pages/Cliente/VerificarCodigo";  
 {/* ----------------------paginas de administrador-------------------- */ }
 import AdminPedidos from "./pages/Admin/AdminPedidos";
 import CalendarioPedidos from "./pages/Admin/CalendarioPedidos";
@@ -47,6 +49,8 @@ function App() {
         <Route path="/medicina" element={<ServiciosMedicina/>} />
         <Route path="/grooming" element={<AgendamientoGrooming/>} />
         <Route path="/clientehome" element={<ClienteHome />} />
+        <Route path="/nuevacontrasena" element={<NuevaContrasena />} />
+        <Route path="/verificarcodigo" element={<VerificarCodigo />} />
 {/* ----------------------paginas de administrador-------------------- */}
         <Route path="/administrador/" element={<InicioAdmin />} />
         <Route path="/pedidos" element={<AdminPedidos />} />
