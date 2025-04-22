@@ -47,62 +47,69 @@ const AgendamientoMedicina = () => {
         return `${year}-${month}-${day}T${hours}:${minutes}`;
     }
 
+return (
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Navbar />
+        <div className="container mt-5" style={{ flex: 1 }}>
+            <h2 className="text-center mb-4">Agendamiento de Medicina</h2>
 
-    return (
-        <div>
-            <Navbar />
-            <div className="container mt-5">
-                <h2 className="text-center mb-4">Agendamiento de Medicina</h2>
+            <div className="row">
+                <div className="col-md-6">
+                    <label>Servicio:</label>
+                    <input
+                        type="text"
+                        className="form-control mb-3 bg-light"
+                        max={200}
+                        onChange={(e) => setServicio(e.target.value)}
+                        placeholder="Servicio"
+                    />
 
-                <div className="row">
-                    <div className="col-md-6">
-                        <label>Servicio:</label>
-                        <input type="text" className="form-control mb-3 bg-light" max={200} onChange={(e) => setServicio(e.target.value)} placeholder="Servicio" />
+                    <label>Tipo de mascota:</label>
+                    <select
+                        className="form-select mb-3"
+                        onChange={(e) => setTipoMascota(e.target.value)}
+                    >
+                        <option value="">Seleccione el tipo</option>
+                        <option value="Perro">Perro</option>
+                        <option value="Gato">Gato</option>
+                    </select>
 
-                        <label>Tipo de mascota:</label>
-                        <select className="form-select mb-3" onChange={(e) => setTipoMascota(e.target.value)}>
-                            <option value="">Seleccione el tipo</option>
-                            <option value="Perro">Perro</option>
-                            <option value="Gato">Gato</option>
-                        </select>
+                    <label>Fecha:</label>
+                    <input
+                        className="mb-3 bg-light"
+                        type="datetime-local"
+                        onChange={(e) => setSelectedDate(new Date(e.target.value))}
+                        value={formatDateToLocalInput(selectedDate)}
+                    />
+                </div>
 
-                        <label>Fecha:</label>
-                        {/* <Calendar onChange={setSelectedDate} value={selectedDate} className="mb-3" /> */}
-                        <input
-                            className="mb-3 bg-light"
-                            type="datetime-local"
-                            onChange={(e) => setSelectedDate(new Date(e.target.value))}
-                            value={formatDateToLocalInput(selectedDate)}
-                        />
-                    </div>
+                <div className="col-md-6">
+                    <label>Nombre de la mascota:</label>
+                    <input
+                        type="text"
+                        className="form-control mb-3 bg-light"
+                        placeholder="Nombre Mascota"
+                        onChange={(e) => setNombreMascota(e.target.value)}
+                    />
 
-                    <div className="col-md-6">
-                        <label>Nombre de la mascota:</label>
-                        <input
-                            type="text"
-                            className="form-control mb-3 bg-light"
-                            placeholder="Nombre Mascota"
-                            onChange={(e) => setNombreMascota(e.target.value)}
-                        />
+                    <label>Raza:</label>
+                    <input
+                        type="text"
+                        className="form-control mb-3 bg-light"
+                        placeholder="Raza"
+                        onChange={(e) => setRaza(e.target.value)}
+                    />
 
-                        <label>Raza:</label>
-                        <input
-                            type="text"
-                            className="form-control mb-3 bg-light"
-                            placeholder="Raza"
-                            onChange={(e) => setRaza(e.target.value)}
-                        />
-
-                        <button className="btn btn-success mt-3 w-100" onClick={handleAgendar}>
-                            AGENDAR
-                        </button>
-                    </div>
+                    <button className="btn btn-success mt-3 w-100" onClick={handleAgendar}>
+                        AGENDAR
+                    </button>
                 </div>
             </div>
-            <Footer />
-
         </div>
-    );
+        <Footer />
+    </div>
+);
+
 };
 
 export default AgendamientoMedicina;

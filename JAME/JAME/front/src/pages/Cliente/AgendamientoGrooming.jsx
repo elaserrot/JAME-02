@@ -49,11 +49,11 @@ const ServiciosGrooming = () => {
 
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Navbar />
-      <div className="container mt-5">
+      <div className="container mt-5" style={{ flex: 1 }}>
         <h2 className="text-center mb-4">Servicios de Grooming</h2>
-
+  
         <div className="row">
           <div className="col-md-6">
             <label>Servicio:</label>
@@ -64,7 +64,7 @@ const ServiciosGrooming = () => {
               <option value="Corte y Baño">Corte y Baño</option>
               <option value="Baño y Uñas">Baño y Uñas</option>
             </select>
-
+  
             <label>Pelaje:</label>
             <select className="form-select mb-3" onChange={(e) => setPelaje(e.target.value)}>
               <option value="">Seleccione el tipo de pelaje</option>
@@ -72,16 +72,15 @@ const ServiciosGrooming = () => {
               <option value="Mediano">Mediano</option>
               <option value="Largo">Largo</option>
             </select>
-
+  
             <label>Tipo de mascota:</label>
             <select className="form-select mb-3" onChange={(e) => setTipoMascota(e.target.value)}>
               <option value="">Seleccione el tipo</option>
               <option value="Perro">Perro</option>
               <option value="Gato">Gato</option>
             </select>
-
+  
             <label>Fecha:</label>
-            {/* <Calendar onChange={setSelectedDate} value={selectedDate} className="mb-3" /> */}
             <input
               className="mb-3 bg-light"
               type="datetime-local"
@@ -89,7 +88,7 @@ const ServiciosGrooming = () => {
               value={formatDateToLocalInput(selectedDate)}
             />
           </div>
-
+  
           <div className="col-md-6">
             <label>Nombre de la mascota:</label>
             <input
@@ -98,7 +97,7 @@ const ServiciosGrooming = () => {
               placeholder="Nombre Mascota"
               onChange={(e) => setNombreMascota(e.target.value)}
             />
-
+  
             <label>Raza:</label>
             <input
               type="text"
@@ -106,7 +105,7 @@ const ServiciosGrooming = () => {
               placeholder="Raza"
               onChange={(e) => setRaza(e.target.value)}
             />
-
+  
             <button className="btn btn-success mt-3 w-100" onClick={handleAgendar}>
               AGENDAR
             </button>
@@ -114,9 +113,8 @@ const ServiciosGrooming = () => {
         </div>
       </div>
       <Footer />
-
     </div>
   );
-};
+};  
 
 export default ServiciosGrooming;

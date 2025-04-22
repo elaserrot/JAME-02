@@ -1,12 +1,12 @@
 import React from 'react'
 import Footer from '../../components/Footer'
-import Navegacion from '../../components/Navegacion'
+import NavbarC from '../../components/NavbarC'
 
 export default function Servicios() {
   return (
     
     <div>
-      <Navegacion />
+      <NavbarC/>
 
     {/* <!-- Services Section --> */}
     <section class="bg-custom-blue py-5">
