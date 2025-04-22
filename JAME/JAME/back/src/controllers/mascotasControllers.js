@@ -35,11 +35,11 @@ exports.listarMascota = async (req, res) => {
 
 // Controlador para agregar mascota
 exports.agregarMascota = async (req, res) => {
-    const { nombre, edad, raza, dueño} = req.body;
-    if ( !nombre || !edad || !raza || !dueño) {
+    const { Nombre_Mascota	, Edad_Mascota, Facha_nacimiento, Raza_Mascota, ID_Usuario} = req.body;
+    if ( !Nombre_Mascota || !Edad_Mascota || !Facha_nacimiento || !Raza_Mascota || !ID_Usuario) {
         return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
-    const q = "INSERT INTO mascotas (nombre, edad, raza, dueño) VALUES (?, ?, ?, ?)";
+    const q = "INSERT INTO `mascota`(`ID_Mascota`, `Nombre_Mascota`, `Edad_Mascota`, `Facha_nacimiento`, `Raza_Mascota`, `ID_Usuario`) VALUES (?, ?, ?, ?, ? )";
     conexion.query(q, [nombre, edad, raza, dueño], (err,
         resultado) => {
             if (err) {
@@ -76,7 +76,8 @@ exports.actualizarMascota = (req, res) => {
         return res.status(400).json({ error: "Todos los campos son obligatorios"
             });
             }
-            const q = "UPDATE mascotas SET nombre = ?, edad = ?, raza = ?, dueño = ? WHERE ID_Mascota = ?";
+            const q = "UPDATE mascota SET Nombre_Mascota = ? , `Edad_Mascota` = ?, `Facha_nacimiento` = ?, `Raza_Mascota` = ?, `ID_Usuario` = ? WHERE ID_Mascota = ?";
+            
             conexion.query(q, [nombre, edad, raza, dueño, id], (err
                 , resultado) => {
                     if (err) {
