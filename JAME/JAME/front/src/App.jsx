@@ -16,6 +16,7 @@ import AgendamientoGrooming from "./pages/Cliente/AgendamientoGrooming";
 import ClienteHome from "./pages/Cliente/ClienteHome";
 import NuevaContrasena from "./pages/Cliente/NuevaContrasena";
 import VerificarCodigo from "./pages/Cliente/VerificarCodigo";  
+import AgendamientoMedicina from "./pages/Cliente/AgendamientoMedicina";
 {/* ----------------------paginas de administrador-------------------- */ }
 import AdminPedidos from "./pages/Admin/AdminPedidos";
 import CalendarioPedidos from "./pages/Admin/CalendarioPedidos";
@@ -51,6 +52,9 @@ function App() {
         <Route path="/clientehome" element={<ClienteHome />} />
         <Route path="/nuevacontrasena" element={<NuevaContrasena />} />
         <Route path="/verificarcodigo" element={<VerificarCodigo />} />
+        <Route path="/agendamientomedicina" element={<AgendamientoMedicina />} />
+
+        {/* <Route path="/nosotros" element={<Nosotros />} /> */}
 {/* ----------------------paginas de administrador-------------------- */}
         <Route path="/administrador/" element={<InicioAdmin />} />
         <Route path="/pedidos" element={<AdminPedidos />} />

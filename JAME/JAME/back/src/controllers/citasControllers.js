@@ -38,7 +38,7 @@ exports.agregarCita = async (req, res) => {
         return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
 
-    const q = "INSERT INTO citas (Usuario, Fecha, Motivo, Estado, Mascota) VALUES (?, ?, ?, ?, ?)";
+    const q = "INSERT INTO citas (ID_Usuario , Fecha_Cita, Motivo_Cita, Estado_Cita, ID_Mascota) VALUES (?, ?, ?, ?, ?)";
 
     conexion.query(q, [Usuario, Fecha, Motivo, Estado, Mascota], (err, resultado) => {
         if (err) {

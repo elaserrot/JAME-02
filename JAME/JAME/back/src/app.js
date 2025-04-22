@@ -17,11 +17,6 @@ const categoriaRoutes = require('./routes/categoriaRoutes')
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
-
-
-
-
-
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
