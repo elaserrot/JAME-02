@@ -2,6 +2,8 @@ const mysql = require("mysql")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const nodemailer = require("nodemailer")
+require ("dotenv").config()
+
 
 // Configuración de la base de datos
 const connection = mysql.createConnection({
@@ -17,10 +19,13 @@ const codigosPendientes = {}
 
 // Configuración del transporte de correo
 const transporter = nodemailer.createTransport({
-  service: "correo_electronico", // O el servicio que uses
+  service: "gmail", // o el que uses
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
+    pass: process.env.EMAIL_PASS,
+  },
+  tls: {
+    rejectUnauthorized: false, // ⚠️ Desactiva la verificación del certificado
   },
 })
 
@@ -55,6 +60,16 @@ exports.enviarCodigo = (req, res) => {
       expira: Date.now() + 15 * 60 * 1000,
       id_usuario: results[0].id_usuario, // Guardamos el ID para usarlo después
     }
+
+
+
+    const ultimaSolicitud = codigosPendientes[email]?.ultimaSolicitud
+if (ultimaSolicitud && Date.now() - ultimaSolicitud < 60 * 1000) {
+  return res.json({
+    success: false,
+    message: "Debes esperar al menos 1 minuto antes de solicitar otro código.",
+  })
+}
 
     // Configurar el correo
     const mailOptions = {
@@ -140,6 +155,10 @@ exports.cambiarContrasena = (req, res) => {
     if (decoded.tipo !== "reset_password" || decoded.email !== email) {
       return res.json({ success: false, message: "Token inválido" })
     }
+    if (!nuevaContrasena || nuevaContrasena.length < 8) {
+      return res.json({ success: false, message: "La nueva contraseña debe tener al menos 8 caracteres" })
+    }
+    
 
     // Hashear la nueva contraseña
     bcrypt.hash(nuevaContrasena, 10, (hashError, hashedPassword) => {

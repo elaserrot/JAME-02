@@ -14,7 +14,7 @@ import Mascota from "./pages/Cliente/Mascota";
 import ServiciosMedicina from "./pages/Cliente/ServiciosMedicina";
 import AgendamientoGrooming from "./pages/Cliente/AgendamientoGrooming";
 import ClienteHome from "./pages/Cliente/ClienteHome";
-import NuevaContrasena from "./pages/Cliente/NuevaContraseña";
+import NuevaContrasena from "./pages/Cliente/NuevaContrasena";
 import VerificarCodigo from "./pages/Cliente/VerificarCodigo";  
 {/* ----------------------paginas de administrador-------------------- */ }
 import AdminPedidos from "./pages/Admin/AdminPedidos";

@@ -1,8 +1,8 @@
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import Footer from "../../components/Footer"
-import { useEffect } from "react"
+import axios from "axios";
 
 export default function NuevaContrasena() {
   const [contrasena, setContrasena] = useState("")
@@ -12,7 +12,6 @@ export default function NuevaContrasena() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  // Obtener el email y token de los parámetros de la URL
   const searchParams = new URLSearchParams(location.search)
   const email = searchParams.get("email")
   const token = searchParams.get("token")
@@ -23,53 +22,56 @@ export default function NuevaContrasena() {
     }
   }, [email, token, navigate])
 
+  useEffect(() => {
+    if (mensaje) setMensaje("");
+  }, [contrasena, confirmarContrasena]);
+
   const manejarCambioContrasena = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+  
+    setMensaje("");
 
-    // Validar que las contraseñas coincidan
+    console.log("Contrasena:", contrasena);
+    console.log("Longitud:", contrasena.length);
+    console.log("Confirmar:", confirmarContrasena);
+    console.log("Iguales:", contrasena === confirmarContrasena);
+    
+
+    if (contrasena.trim().length <= 8 || confirmarContrasena.trim().length <= 8) {
+      setMensaje("La nueva contraseña debe tener al menos 8 caracteres.");
+      return;
+    }
+  
     if (contrasena !== confirmarContrasena) {
-      setMensaje("Las contraseñas no coinciden.")
-      return
+      setMensaje("Las contraseñas no coinciden.");
+      return;
     }
-
-    // Validar requisitos de contraseña
-    if (contrasena.length < 8) {
-      setMensaje("La contraseña debe tener al menos 8 caracteres.")
-      return
-    }
-
-    setLoading(true)
-
+  
+    setLoading(true);
+  
     try {
-      const response = await fetch("/api/auth/cambiarContrasena", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          token,
-          nuevaContrasena: contrasena,
-        }),
-      })
-
-      const data = await response.json()
-
+      const response = await axios.post("http://localhost:3001/api/auth/cambiarContrasena", {
+        email,
+        token,
+        contrasena,
+      });
+  
+      const data = response.data;
+  
       if (data.success) {
-        setMensaje("¡Contraseña actualizada correctamente!")
-        // Redirigir al login después de 2 segundos
-        setTimeout(() => {
-          navigate("/login")
-        }, 2000)
+        setMensaje("¡Contraseña actualizada correctamente!");
+        setTimeout(() => navigate("/login"), 2000);
       } else {
-        setMensaje(data.message || "Error al cambiar la contraseña. Intenta nuevamente.")
+        setMensaje(data.message || "Error al cambiar la contraseña.");
       }
     } catch (error) {
-      setMensaje("Hubo un error al procesar la solicitud. Intenta nuevamente.")
+      console.error(error);
+      setMensaje("Su tiempo de cambio de contraseña ha expirado. Intenta nuevamente.");
     }
-
-    setLoading(false)
-  }
+  
+    setLoading(false);
+  };
+  
 
   return (
     <div className="">
@@ -99,7 +101,6 @@ export default function NuevaContrasena() {
                     value={contrasena}
                     onChange={(e) => setContrasena(e.target.value)}
                     required
-                    minLength={8}
                   />
                 </div>
                 <div className="mb-3">
@@ -113,14 +114,17 @@ export default function NuevaContrasena() {
                     value={confirmarContrasena}
                     onChange={(e) => setConfirmarContrasena(e.target.value)}
                     required
-                    minLength={8}
                   />
                 </div>
                 {mensaje && (
-                <div className={`alert ${mensaje.includes("correctamente") ? "alert-success" : "alert-danger"}`}>
-                {mensaje}
-                </div>
-)}
+                  <div
+                    className={`alert ${
+                      mensaje.includes("correctamente") ? "alert-success" : "alert-danger"
+                    }`}
+                  >
+                    {mensaje}
+                  </div>
+                )}
                 <div className="d-grid">
                   <button type="submit" className="btn btn-primary" disabled={loading}>
                     {loading ? "Actualizando..." : "Actualizar contraseña"}

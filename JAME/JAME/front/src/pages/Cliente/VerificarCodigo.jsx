@@ -1,7 +1,7 @@
-
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import Footer from "../../components/Footer"
+import axios from "axios"
 
 export default function VerificarCodigo() {
   const [codigo, setCodigo] = useState("")
@@ -10,7 +10,6 @@ export default function VerificarCodigo() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  // Obtener el email de los parámetros de la URL
   const searchParams = new URLSearchParams(location.search)
   const email = searchParams.get("email")
 
@@ -23,33 +22,31 @@ export default function VerificarCodigo() {
   const manejarVerificacion = async (e) => {
     e.preventDefault()
 
-    if (!codigo || codigo.length !== 6) {
-      setMensaje("Por favor, ingresa el código de 6 dígitos completo.")
+    if (!/^\d{6}$/.test(codigo)) {
+      setMensaje("Por favor, ingresa un código de 6 dígitos válido.")
       return
     }
 
     setLoading(true)
 
     try {
-      const response = await fetch("/api/auth/verificarCodigo", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, codigo }),
-      })
-
-      const data = await response.json()
-
+      const response = await axios.post("http://localhost:3001/api/auth/verificarCodigo", {
+        email,
+        codigo,
+      });
+    
+      const data = response.data;
+    
       if (data.success) {
-        // Redirigir a la página para establecer nueva contraseña
-        navigate(`/nueva-contrasena?email=${email}&token=${data.token}`)
+        navigate(`/NuevaContrasena?email=${email}&token=${data.token}`);
       } else {
-        setMensaje(data.message || "Código incorrecto. Intenta nuevamente.")
+        setMensaje(data.message || "Código incorrecto o expirado. Intenta nuevamente.");
       }
     } catch (error) {
-      setMensaje("Hubo un error al verificar el código. Intenta nuevamente.")
+      console.error(error);
+      setMensaje("Hubo un error al verificar el código. Intenta nuevamente.");
     }
+    
 
     setLoading(false)
   }
@@ -84,7 +81,7 @@ export default function VerificarCodigo() {
                     id="codigo"
                     placeholder="Ingresa el código de 6 dígitos"
                     value={codigo}
-                    onChange={(e) => setCodigo(e.target.value)}
+                    onChange={(e) => setCodigo(e.target.value.replace(/\D/, ""))}
                     maxLength={6}
                     required
                   />
