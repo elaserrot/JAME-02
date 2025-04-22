@@ -19,10 +19,10 @@ export default function Navegacion() {
                     <div className="row align-items-center">
                         <div className="col-md-4 d-flex align-items-center">
                             <Link to={"/"}><img src="/src/img/logovet.png" alt="Logo Veterinaria" className=" w-50 rounded-circle me-5" /></Link>
-                            <div className="input-group">
+                            {/* <div className="input-group">
                                 <input type="text" className="form-control" placeholder="Buscar..." />
                                 <button className="btn btn-outline-secondary" type="button"><i className="fas fa-search"></i></button>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="col-md-5 text-center">
                             <h1>Veterinaria Ciudad Canina</h1>

@@ -123,6 +123,7 @@ const ProductView = () => {
                                 <li>Promueve un pelaje brillante</li>
                                 <li>Ayuda a mantenerlo sano y en forma</li>
                             </ul>
+                            <button className="bg-success">Agregar al carrito</button>
                         </div>
                     </div>
                 </div>
