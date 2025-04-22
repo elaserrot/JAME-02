@@ -5,7 +5,7 @@ const doc = {
     title: 'API JAME',
     description: 'Documentación automática de la API',
   },
-  host: 'localhost:3002',
+  host: 'localhost:3001',
   schemes: ['http'],
 };
 
