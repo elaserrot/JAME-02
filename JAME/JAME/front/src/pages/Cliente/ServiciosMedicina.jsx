@@ -1,10 +1,30 @@
-import React from 'react'
-import Footer from '../../components/Footer'
-import NavbarC from '../../components/NavbarC'
+import React, { useEffect, useState } from 'react';
+import Footer from '../../components/Footer';
+import NavbarC from '../../components/NavbarC';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Servicios() {
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(null); // Inicializa como null para saber si ya se verificó el login
+  
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login'); // Redirige a login si no hay token
+    } else {
+      setIsLoggedIn(true); // Si hay token, el usuario está logueado
+    }
+  }, [navigate]);
+
+  // Si isLoggedIn es null, significa que aún estamos verificando el login, así que mostramos un mensaje de carga.
+  if (isLoggedIn === null) {
+    return <div className="text-center mt-5">Verificando sesión...</div>;
+  }
+
+
+
   return (
-    
     <div>
       <NavbarC/>
 
@@ -25,7 +45,7 @@ export default function Servicios() {
                             <p class="card-text mb-4"></p>
                             <h5 class="card-title mb-3">Medicina General</h5>
                             <p class="card-text mb-5">Consulta de medicina veterinaria general para caninos y felinos menores de 7 años.</p>
-                            <button class="btn btn-outline-primary">Agendar cita</button>
+                            <Link to="/AgendamientoMedicina" className="btn btn-outline-primary">Agendar cita</Link>
                         </div>
                     </div>
                 </div>
@@ -40,7 +60,8 @@ export default function Servicios() {
                             <p class="card-text mb-3"></p>
                             <h5 class="card-title mb-3">Consulta Nutricional</h5>
                             <p class="card-text mb-4">Recomendaciones sobre comidas balanceadas respecto a sus nutrientes ajusta para los perros y gatos.</p>
-                            <button class="btn btn-outline-primary">Agendar cita</button>
+                            <Link to="/AgendamientoMedicina" className="btn btn-outline-primary">Agendar cita</Link>
+
                         </div>
                     </div>
                 </div>
@@ -55,7 +76,7 @@ export default function Servicios() {
                             <p class="card-text mb-3"></p>
                             <h5 class="card-title mb-4">Vacunación</h5>
                             <p class="card-text mb-5">Guías para la vacunación de perros (caninos) y gatos (felinos).</p>
-                            <button class="btn btn-outline-primary">Agendar cita</button>
+                            <Link to="/AgendamientoMedicina" className="btn btn-outline-primary">Agendar cita</Link>
                         </div>
                     </div>
                 </div>
@@ -70,7 +91,7 @@ export default function Servicios() {
                             <p class="card-text mb-3"></p>
                             <h5 class="card-title mb-3">Cardiología</h5>
                             <p class="card-text mb-4">Consulta especializada de cardiología veterinaria para seguimiento y control del paciente.</p>
-                            <button class="btn btn-outline-primary">Agendar cita</button>
+                            <Link to="/AgendamientoMedicina" className="btn btn-outline-primary">Agendar cita</Link>
                         </div>
                     </div>
                 </div>
@@ -85,7 +106,7 @@ export default function Servicios() {
                             <p class="card-text mb-4"></p>
                             <h5 class="card-title mb-5">Esterilización</h5>
                             <p class="card-text mb-4">Ofrecemos servicios de esterilización y castración para perros y gatos.</p>
-                            <button class="btn btn-outline-primary">Agendar cita</button>
+                            <Link to="/AgendamientoMedicina" className="btn btn-outline-primary">Agendar cita</Link>
                         </div>
                     </div>
                 </div>

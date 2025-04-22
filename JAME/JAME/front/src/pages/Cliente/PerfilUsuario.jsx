@@ -82,7 +82,7 @@ const UserProfile = () => {
     if (!profile) return <div className="text-center mt-5">Cargando perfil...</div>;
 
     return (
-        <div>
+        <div className="d-flex flex-column min-vh-100">
             <div className="bg-primary text-dark py-2 text-center bg-info">
                 <p className="mb-0">La mejor opción para el cuidado de tu mascota</p>
             </div>
@@ -107,7 +107,7 @@ const UserProfile = () => {
                 </div>
             </header>
 
-            <main>
+            <main className="flex-grow-1">
                 <div className="container mt-4">
                     <div className="row">
                         <div className="col-md-8 mb-4">

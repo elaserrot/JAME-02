@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 import Footer from '../../components/Footer';
-import Navbar from '../../components/Navbar';
+import NavbarC from '../../components/NavbarC';
+import { useNavigate } from 'react-router-dom'; 
 
 const ServiciosGrooming = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -12,6 +13,22 @@ const ServiciosGrooming = () => {
   const [tipoMascota, setTipoMascota] = useState('');
   const [nombreMascota, setNombreMascota] = useState('');
   const [raza, setRaza] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const navigate = useNavigate(); 
+
+  // Verificación de sesión con el useEffect
+  useEffect(() => {
+    const token = localStorage.getItem('token'); // Obtenemos el token de localStorage
+    if (!token) {
+      navigate('/login'); // Si no hay token, redirigimos al login
+    } else {
+      setIsLoggedIn(true); // Si hay token, cambiamos el estado a logueado
+    }
+  }, [navigate]); // Se ejecuta solo cuando 'navigate' cambia
+
+  if (!isLoggedIn) {
+    return <div className="text-center mt-5">Verificando sesión...</div>; // Mensaje mientras se verifica la sesión
+  }
 
   const token = localStorage.getItem('token');
   const decoded_token = JSON.parse(atob(token.split('.')[1]));
@@ -47,13 +64,12 @@ const ServiciosGrooming = () => {
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
 
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <Navbar />
+      <NavbarC />
       <div className="container mt-5" style={{ flex: 1 }}>
         <h2 className="text-center mb-4">Servicios de Grooming</h2>
-  
+
         <div className="row">
           <div className="col-md-6">
             <label>Servicio:</label>
@@ -64,7 +80,7 @@ const ServiciosGrooming = () => {
               <option value="Corte y Baño">Corte y Baño</option>
               <option value="Baño y Uñas">Baño y Uñas</option>
             </select>
-  
+
             <label>Pelaje:</label>
             <select className="form-select mb-3" onChange={(e) => setPelaje(e.target.value)}>
               <option value="">Seleccione el tipo de pelaje</option>
@@ -72,14 +88,14 @@ const ServiciosGrooming = () => {
               <option value="Mediano">Mediano</option>
               <option value="Largo">Largo</option>
             </select>
-  
+
             <label>Tipo de mascota:</label>
             <select className="form-select mb-3" onChange={(e) => setTipoMascota(e.target.value)}>
               <option value="">Seleccione el tipo</option>
               <option value="Perro">Perro</option>
               <option value="Gato">Gato</option>
             </select>
-  
+
             <label>Fecha:</label>
             <input
               className="mb-3 bg-light"
@@ -88,7 +104,7 @@ const ServiciosGrooming = () => {
               value={formatDateToLocalInput(selectedDate)}
             />
           </div>
-  
+
           <div className="col-md-6">
             <label>Nombre de la mascota:</label>
             <input
@@ -97,7 +113,7 @@ const ServiciosGrooming = () => {
               placeholder="Nombre Mascota"
               onChange={(e) => setNombreMascota(e.target.value)}
             />
-  
+
             <label>Raza:</label>
             <input
               type="text"
@@ -105,7 +121,7 @@ const ServiciosGrooming = () => {
               placeholder="Raza"
               onChange={(e) => setRaza(e.target.value)}
             />
-  
+
             <button className="btn btn-success mt-3 w-100" onClick={handleAgendar}>
               AGENDAR
             </button>
@@ -115,6 +131,6 @@ const ServiciosGrooming = () => {
       <Footer />
     </div>
   );
-};  
+};
 
 export default ServiciosGrooming;

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer'
-import Navegacion from '../../components/Navegacion'
+import Navbar from '../../components/Navbar'
+import { useNavigate } from 'react-router-dom';
 export default function CarritoCompras() {
     const [productos, setProductos] = useState([
         {
@@ -38,11 +39,32 @@ export default function CarritoCompras() {
         );
     };
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false); 
+      const navigate = useNavigate(); 
+
+      // Verificación de sesión con el useEffect
+        useEffect(() => {
+          const token = localStorage.getItem('token'); // Obtenemos el token de localStorage
+          if (!token) {
+            navigate('/login'); // Si no hay token, redirigimos al login
+          } else {
+            setIsLoggedIn(true); // Si hay token, cambiamos el estado a logueado
+          }
+        }, [navigate]); // Se ejecuta solo cuando 'navigate' cambia
+      
+        if (!isLoggedIn) {
+          return <div className="text-center mt-5">Verificando sesión...</div>; // Mensaje mientras se verifica la sesión
+        }
+      
+        const token = localStorage.getItem('token');
+        const decoded_token = JSON.parse(atob(token.split('.')[1]));
+        const id = decoded_token.id;
+
     return (
         <div>
             <div>
                 {/* header */}
-                <Navegacion />
+                <Navbar />
 
                 <div className="container my-5">
                     <h1 className="mb-4">Tu Carrito de Compras</h1>

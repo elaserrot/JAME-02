@@ -39,7 +39,7 @@ export default function Navegacion() {
                 <div className="text-center">
                     <nav className="mt-4 bg-info text-center">
                         <ul className="nav d-flex justify-content-center text-center align-items-center">
-                            <li className="nav-item "><a href="/" className="nav-link text-dark">Home</a></li>
+                            <li className="nav-item "><a href="/ClienteHome" className="nav-link text-dark">Home</a></li>
                             <li className="nav-item "><a href={ruta ? "/#productos" : "#productos"} className="nav-link text-dark">Productos</a></li>
                             <li className="nav-item "><a href="#servicios" className="nav-link text-dark">Servicios</a></li>
                             <li className="nav-item "><a href="#contacto" className="nav-link text-dark">Contáctanos</a></li>

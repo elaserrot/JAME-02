@@ -1,6 +1,6 @@
 import React from 'react'
 import Footer from '../../components/Footer'
-import Navegacion from '../../components/Navegacion'
+import NabvarC from '../../components/NavbarC'
 import { Link } from 'react-router-dom'
 
 
@@ -9,7 +9,7 @@ export default function Productos() {
     <div>
 
         {/* Header */}
-        <Navegacion />
+        <NabvarC />
         {/* <!-- Contenido principal --> */}
         <main className="py-4">
           <div className="container">
