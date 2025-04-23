@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 // Middleware para verificar token JWT
-const verificarToken = (req, res, next) => {
+const verificarToken = (req, res) => {
     const authHeader = req.headers['authorization'];
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -15,8 +15,8 @@ const verificarToken = (req, res, next) => {
             return res.status(403).json({ error: "Token inválido o expirado" });
         }
 
-        req.user = decoded; // Información del usuario (id, correo, rol)
-        next();
+        req.user = decoded;
+        res.status(200).json({ decoded: decoded, rol: decoded.rol, success: true, message: "Token válido" });
     });
 };
 

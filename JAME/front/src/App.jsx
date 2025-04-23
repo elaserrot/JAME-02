@@ -15,65 +15,67 @@ import ServiciosMedicina from "./pages/Cliente/ServiciosMedicina";
 import AgendamientoGrooming from "./pages/Cliente/AgendamientoGrooming";
 import ClienteHome from "./pages/Cliente/ClienteHome";
 import NuevaContrasena from "./pages/Cliente/NuevaContrasena";
-import VerificarCodigo from "./pages/Cliente/VerificarCodigo";  
+import VerificarCodigo from "./pages/Cliente/VerificarCodigo";
 import AgendamientoMedicina from "./pages/Cliente/AgendamientoMedicina";
 {/* ----------------------paginas de administrador-------------------- */ }
 import AdminPedidos from "./pages/Admin/AdminPedidos";
 import CalendarioPedidos from "./pages/Admin/CalendarioPedidos";
 import AdminMascotas from "./pages/Admin/AdminMascotas";
 import AdminAgregarMascota from "./pages/Admin/AdminAgregarMascota";
-import AdminVentas  from "./pages/Admin/AdminVentas";
-import AdminClientes  from "./pages/Admin/AdminClientes";
-import AdminVerMascota  from "./pages/Admin/AdminVerMascota";
-import AdminAgregarClientes  from "./pages/Admin/AdminAgregarClientes";
-import AdminAgendamiento  from "./pages/Admin/AdminAgendamiento";
-import AdminReportes  from "./pages/Admin/AdminReportes";
-import AdminConfiguracion  from "./pages/Admin/AdminConfiguracion";
+import AdminVentas from "./pages/Admin/AdminVentas";
+import AdminClientes from "./pages/Admin/AdminClientes";
+import AdminVerMascota from "./pages/Admin/AdminVerMascota";
+import AdminAgregarClientes from "./pages/Admin/AdminAgregarClientes";
+import AdminAgendamiento from "./pages/Admin/AdminAgendamiento";
+import AdminReportes from "./pages/Admin/AdminReportes";
+import AdminConfiguracion from "./pages/Admin/AdminConfiguracion";
 
-
+import RutaPublica from "./components/RutaPublica";
+import RutaPrivada from "./components/RutaPrivada";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Index/>} />
-        <Route path="/login/" element={<Login />} />
-        <Route path="/register/" element={<Register />} />
-        <Route path="/example" element={<Example />} />
-        <Route path="/perfilUsuario" element={<PerfilUsuario/>}/>
-        <Route path="/productos" element={<Productos/>}/>
-        <Route path="/producto" element={<Producto/>}/>
-        <Route path="/carrito" element={<CarritoCompras/>}/>
-        <Route path="/pago" element={<PasarelaPago />} />
-        <Route path="/recuperar" element={<OlvidoContraseña />} />
-        <Route path="/mascota" element={<Mascota/>} />
-        <Route path="/medicina" element={<ServiciosMedicina/>} />
-        <Route path="/grooming" element={<AgendamientoGrooming/>} />
-        <Route path="/clientehome" element={<ClienteHome />} />
-        <Route path="/nuevacontrasena" element={<NuevaContrasena />} />
-        <Route path="/verificarcodigo" element={<VerificarCodigo />} />
-        <Route path="/agendamientomedicina" element={<AgendamientoMedicina />} />
+        <Route element={<RutaPublica />}>
+          <Route path="/" element={<Index />} />
+          <Route path="/login/" element={<Login />} />
+          <Route path="/register/" element={<Register />} />
+          <Route path="/example" element={<Example />} />
+          <Route path="/recuperar" element={<OlvidoContraseña />} />
+          <Route path="/verificarcodigo" element={<VerificarCodigo />} />
+          <Route path="/productos" element={<Productos />} />
+          <Route path="/producto" element={<Producto />} />
+        </Route>
 
-        {/* <Route path="/nosotros" element={<Nosotros />} /> */}
-{/* ----------------------paginas de administrador-------------------- */}
-        <Route path="/administrador/" element={<InicioAdmin />} />
-        <Route path="/pedidos" element={<AdminPedidos />} />
-        <Route path="/calendario" element={<CalendarioPedidos />} />
-        <Route path="/mascotas" element={<AdminMascotas />} />
-        <Route path="/agregarmascota" element={<AdminAgregarMascota />} />
-        <Route path="/ventas" element={<AdminVentas />} />
-        <Route path="/clientes" element={<AdminClientes />} />
-        <Route path="/vermascota" element={<AdminVerMascota />} />
-        <Route path="/agregarcliente" element={<AdminAgregarClientes />} />
-        <Route path="/agendamiento" element={<AdminAgendamiento />} />
-        <Route path="/reportes" element={<AdminReportes />} />
-        <Route path="/configuracion" element={<AdminConfiguracion />} />
-        
+        {/* ----------------------paginas de cliente-------------------- */}
+        <Route element={<RutaPrivada requiredRole={2} />}>
+          <Route path="/perfilUsuario" element={<PerfilUsuario />} />
+          <Route path="/carrito" element={<CarritoCompras />} />
+          <Route path="/pago" element={<PasarelaPago />} />
+          <Route path="/mascota" element={<Mascota />} />
+          <Route path="/medicina" element={<ServiciosMedicina />} />
+          <Route path="/grooming" element={<AgendamientoGrooming />} />
+          <Route path="/clientehome" element={<ClienteHome />} />
+          <Route path="/nuevacontrasena" element={<NuevaContrasena />} />
+          <Route path="/agendamientomedicina" element={<AgendamientoMedicina />} />
+        </Route>
 
-        
-
-
-
+        {/* ----------------------paginas de administrador-------------------- */}
+        <Route element={<RutaPrivada requiredRole={1} />}>
+          <Route path="/administrador/" element={<InicioAdmin />} />
+          <Route path="/pedidos" element={<AdminPedidos />} />
+          <Route path="/calendario" element={<CalendarioPedidos />} />
+          <Route path="/mascotas" element={<AdminMascotas />} />
+          <Route path="/agregarmascota" element={<AdminAgregarMascota />} />
+          <Route path="/ventas" element={<AdminVentas />} />
+          <Route path="/clientes" element={<AdminClientes />} />
+          <Route path="/vermascota" element={<AdminVerMascota />} />
+          <Route path="/agregarcliente" element={<AdminAgregarClientes />} />
+          <Route path="/agendamiento" element={<AdminAgendamiento />} />
+          <Route path="/reportes" element={<AdminReportes />} />
+          <Route path="/configuracion" element={<AdminConfiguracion />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

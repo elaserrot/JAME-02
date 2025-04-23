@@ -137,14 +137,9 @@ exports.actualizar = async (req, res) => {
     });
 };
 
-
-
 // Ruta para iniciar sesión
 exports.login = async (req, res) => {
     const { correo, password } = req.body;
-
-    console.log("Login recibido:", correo, password);
-
 
     if (!correo || !password) {
         return res.status(400).json({ error: "Correo y contraseña requeridos" });
@@ -167,9 +162,11 @@ exports.login = async (req, res) => {
             return res.status(401).json({ error: "Contraseña incorrecta" });
         }
 
+        console.log(`usersControllers : ${process.env.JWT_SECRET}`);
+
         // Generar token
         const token = jwt.sign(
-            { id: usuario.id_usuario, correo: usuario.correo_electronico, rol: usuario.rol },
+            { id: usuario.id_usuario, correo: usuario.correo_electronico, rol: usuario.id_rol },
             process.env.JWT_SECRET,
             { expiresIn: '30d' }
         );
