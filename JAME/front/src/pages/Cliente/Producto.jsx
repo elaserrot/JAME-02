@@ -25,30 +25,29 @@ const ProductView = () => {
     }, [id]);
     return (
         <div>
-            <div className="container my-4">
-                <div className="row">
-                    {/* Columna de imágenes (izquierda) */}
+            <div className="container mb-5 py-5">
+                <div className="row mb-5">
+                    {/* Columna de imágen (izquierda) */}
                     <div className="col-md-8">
-                        {/* Imágenes en miniatura */}
-                        <div className="d-flex" style={{ height: "200px", width: "100%" }}>
+                        {/* Imágen*/}
+                        <div className="d-flex">
                             <img
-                                src="src/img/Royal2.png"
-                                className="img-thumbnail me-2 w-25"
+                                src="https://placehold.co/600x400"
+                                className="img-fluid me-2 "
                                 alt="Imagen pequeña 4"
                                 data-bs-target="#carouselExample"
                                 data-bs-slide-to="3"
                             />
                         </div>
                     </div>
-
                     {/* Columna de descripción (derecha) */}
                     <div className="col-md-4">
                         <div className="mt-4">
-                            <h2>{producto?.nombre_producto}</h2>
-                            <p>
-                                {producto?.descripcion}
-                            </p>
-                            <button className="bg-success">Agregar al carrito</button>
+                            <h2 className="fw-bold display-3">{producto?.nombre_producto}</h2>
+                            <p>{producto?.nombre_Categoria}</p>
+                            <p>{producto?.descripcion}</p>
+                            <p className="display-6">${producto?.precio}</p>
+                            <button className="btn btn-success"> <i className="bi bi-cart-plus me-2"></i>Agregar al carrito</button>
                         </div>
                     </div>
                 </div>

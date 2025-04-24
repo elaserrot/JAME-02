@@ -9,6 +9,7 @@ const citasRoutes = require('./routes/citasRoutes')
 const rolesRoutes = require('./routes/rolesRoutes');
 const productosRoutes = require('./routes/productosRoutes')
 const comprasRoutes = require('./routes/comprasRoutes')
+const contactoRoutes = require('./routes/contactoRoutes')
 const path = require('path');
 
 const pedidoRoutes = require('./routes/pedidoRoutes')
@@ -42,6 +43,7 @@ const createApp = () => {
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     // Rutas
     app.use('/api/auth', authRoutes);
+    app.use('/api/contacto', contactoRoutes);
     app.use('/api/usuarios', usersRoutes);
     app.use('/api/mascota', mascotasRoutes);
     app.use('/api/citas', citasRoutes);

@@ -1,14 +1,16 @@
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const nodemailer = require("nodemailer")
-require ("dotenv").config()
+require("dotenv").config()
 
 // Almacenamiento temporal de códigos (en producción, usa una tabla en la base de datos)
 const codigosPendientes = {}
 
 // Configuración del transporte de correo
 const transporter = nodemailer.createTransport({
-  service: "gmail", // o el que uses
+  service: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -53,12 +55,12 @@ exports.enviarCodigo = (req, res) => {
 
 
     const ultimaSolicitud = codigosPendientes[email]?.ultimaSolicitud
-if (ultimaSolicitud && Date.now() - ultimaSolicitud < 60 * 1000) {
-  return res.json({
-    success: false,
-    message: "Debes esperar al menos 1 minuto antes de solicitar otro código.",
-  })
-}
+    if (ultimaSolicitud && Date.now() - ultimaSolicitud < 60 * 1000) {
+      return res.json({
+        success: false,
+        message: "Debes esperar al menos 1 minuto antes de solicitar otro código.",
+      })
+    }
 
     // Configurar el correo
     const mailOptions = {
@@ -147,7 +149,7 @@ exports.cambiarContrasena = (req, res) => {
     if (!nuevaContrasena || nuevaContrasena.length < 8) {
       return res.json({ success: false, message: "La nueva contraseña debe tener al menos 8 caracteres" })
     }
-    
+
 
     // Hashear la nueva contraseña
     bcrypt.hash(nuevaContrasena, 10, (hashError, hashedPassword) => {

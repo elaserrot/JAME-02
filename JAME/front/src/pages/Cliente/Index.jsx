@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Footer from '../../components/Footer'
-import Navegacion from '../../components/Navegacion'
 import axios from "axios";
-import { use } from "react";
+import Swal from "sweetalert2";
 
 const BACKEND_URL = "http://localhost:3001";
 
@@ -12,18 +10,63 @@ export default function Index() {
 
     const [productos, setProductos] = useState([]);
 
+    const [contacto, setContacto] = useState({
+        nombre: "",
+        email: "",
+        mensaje: ""
+    });
+
+    const [isLoadingProductos, setIsLoadingProductos] = useState(false);
+
     useEffect(() => {
         const fetchProductos = async () => {
             try {
+                setIsLoadingProductos(true);
                 const response = await axios.get(`${BACKEND_URL}/api/productos/listarLimitado`);
                 setProductos(response.data);
+                setIsLoadingProductos(false);
             } catch (error) {
                 console.error("Error al obtener los productos:", error);
+                setIsLoadingProductos(false);
             }
         };
-
         fetchProductos();
     }, []);
+
+    const inputChange = (e) => {
+        setContacto({ ...contacto, [e.target.name]: e.target.value });
+    };
+
+    const [isLoadingContacto, setIsLoadingContacto] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            setIsLoadingContacto(true);
+            const response = await axios.post(`${BACKEND_URL}/api/contacto/enviar`, contacto);
+            setIsLoadingContacto(false);
+            if (response.status === 200) {
+                setContacto({
+                    nombre: "",
+                    email: "",
+                    mensaje: ""
+                });
+                Swal.fire({
+                    icon: "success",
+                    title: "Mensaje enviado",
+                    text: "Tu mensaje ha sido enviado correctamente, nos pondremos en contacto con usted lo mas pronto posible."
+                })
+            }
+        } catch (error) {
+            setIsLoadingContacto(false);
+            console.error("Error al enviar el correo:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Error al enviar el correo",
+                text: "Hubo un problema al enviar el correo. Por favor, intenta nuevamente."
+            })
+        }
+    };
 
     const renderContenido = () => {
         switch (seccionActiva) {
@@ -64,8 +107,6 @@ export default function Index() {
 
     return (
         <div>
-            {/* Header */}
-
             {/* carousel */}
             <div id="carouselExampleIndicators" className="carousel slide position-relative" data-bs-ride="carousel">
                 <div className="carousel-indicators">
@@ -104,6 +145,8 @@ export default function Index() {
                 <div className="container">
                     <h2 className="text-dark text-center mb-4">Productos Nuevos</h2>
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5">
+                        {isLoadingProductos && <p>Cargando productos...</p>}
+                        {productos.length === 0 && <p>No hay productos disponibles</p>}
                         {productos.map((producto) => (
                             <div key={producto.id_producto} className="col mb-4">
                                 <div className="card">
@@ -159,17 +202,30 @@ export default function Index() {
                     <div className="row">
                         <div className="col-md-6 mb-4 mb-md-0">
                             <h3 className="mb-4">CONTACTO</h3>
-                            <form>
-                                <div className="mb-3">
-                                    <input type="text" className="form-control" placeholder="Nombre" />
-                                </div>
-                                <div className="mb-3">
-                                    <input type="email" className="form-control" placeholder="Email" />
-                                </div>
-                                <div className="mb-3">
-                                    <textarea className="form-control" rows="4" placeholder="Mensaje"></textarea>
-                                </div>
-                                <button type="submit" className="btn btn-primary">Enviar</button>
+                            <form onSubmit={handleSubmit}>
+                                {isLoadingContacto ?
+                                    <div className="text-center p-5">
+                                        <p>Enviando...</p>
+                                        <div className="spinner-border" role="status">
+                                            <i className="fa fa-paw"></i>
+                                            <span className="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                    :
+                                    <div>
+                                        <div className="mb-3">
+                                            <input type="text" name="nombre" onChange={inputChange} className="form-control" placeholder="Nombre" />
+                                        </div>
+                                        <div className="mb-3">
+                                            <input type="email" name="email" onChange={inputChange} className="form-control" placeholder="Email" />
+                                        </div>
+                                        <div className="mb-3">
+                                            <textarea name="mensaje" onChange={inputChange} className="form-control" rows="4" placeholder="Mensaje"></textarea>
+                                        </div>
+                                        <button type="submit" className="btn btn-primary">Enviar</button>
+                                    </div>
+                                }
+
                             </form>
                         </div>
                         <div className="col-md-6">
@@ -193,9 +249,6 @@ export default function Index() {
                     </div>
                 </div>
             </section>
-
-            {/* Footer */}
-
         </div>
     );
 }
