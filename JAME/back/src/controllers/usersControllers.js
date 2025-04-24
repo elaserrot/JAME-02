@@ -162,8 +162,6 @@ exports.login = async (req, res) => {
             return res.status(401).json({ error: "Contraseña incorrecta" });
         }
 
-        console.log(`usersControllers : ${process.env.JWT_SECRET}`);
-
         // Generar token
         const token = jwt.sign(
             { id: usuario.id_usuario, correo: usuario.correo_electronico, rol: usuario.id_rol },

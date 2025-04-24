@@ -32,6 +32,7 @@ import AdminConfiguracion from "./pages/Admin/AdminConfiguracion";
 
 import RutaPublica from "./components/RutaPublica";
 import RutaPrivada from "./components/RutaPrivada";
+import AdminLayout from "./layouts/AdminLayout";
 
 function App() {
   return (
@@ -63,18 +64,20 @@ function App() {
 
         {/* ----------------------paginas de administrador-------------------- */}
         <Route element={<RutaPrivada requiredRole={1} />}>
-          <Route path="/administrador/" element={<InicioAdmin />} />
-          <Route path="/pedidos" element={<AdminPedidos />} />
-          <Route path="/calendario" element={<CalendarioPedidos />} />
-          <Route path="/mascotas" element={<AdminMascotas />} />
-          <Route path="/agregarmascota" element={<AdminAgregarMascota />} />
-          <Route path="/ventas" element={<AdminVentas />} />
-          <Route path="/clientes" element={<AdminClientes />} />
-          <Route path="/vermascota" element={<AdminVerMascota />} />
-          <Route path="/agregarcliente" element={<AdminAgregarClientes />} />
-          <Route path="/agendamiento" element={<AdminAgendamiento />} />
-          <Route path="/reportes" element={<AdminReportes />} />
-          <Route path="/configuracion" element={<AdminConfiguracion />} />
+          <Route element={<AdminLayout />}>
+            <Route path="/administrador/" element={<InicioAdmin />} />
+            <Route path="/pedidos" element={<AdminPedidos />} />
+            <Route path="/calendario" element={<CalendarioPedidos />} />
+            <Route path="/mascotas" element={<AdminMascotas />} />
+            <Route path="/agregarmascota" element={<AdminAgregarMascota />} />
+            <Route path="/ventas" element={<AdminVentas />} />
+            <Route path="/clientes" element={<AdminClientes />} />
+            <Route path="/vermascota" element={<AdminVerMascota />} />
+            <Route path="/agregarcliente" element={<AdminAgregarClientes />} />
+            <Route path="/agendamiento" element={<AdminAgendamiento />} />
+            <Route path="/reportes" element={<AdminReportes />} />
+            <Route path="/configuracion" element={<AdminConfiguracion />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

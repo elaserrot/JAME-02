@@ -1,10 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from '../../components/Footer'
 import Navegacion from '../../components/Navegacion'
+import axios from "axios";
+import { use } from "react";
+
+const BACKEND_URL = "http://localhost:3001";
 
 export default function Index() {
     const [seccionActiva, setSeccionActiva] = useState("consulta");
+
+    const [productos, setProductos] = useState([]);
+
+    useEffect(() => {
+        const fetchProductos = async () => {
+            try {
+                const response = await axios.get(`${BACKEND_URL}/api/productos/listarLimitado`);
+                setProductos(response.data);
+            } catch (error) {
+                console.error("Error al obtener los productos:", error);
+            }
+        };
+
+        fetchProductos();
+    }, []);
 
     const renderContenido = () => {
         switch (seccionActiva) {
@@ -45,8 +64,6 @@ export default function Index() {
 
     return (
         <div>
-        
-
             {/* Header */}
             <Navegacion />
             {/* carousel */}
@@ -58,13 +75,13 @@ export default function Index() {
                 </div>
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                        <img src="/src/img/Banner2.png" className="d-block w-100" alt="..."/>
+                        <img src="/src/img/Banner2.png" className="d-block w-100" alt="..." />
                     </div>
                     <div className="carousel-item">
-                        <img src="/src/img/Banner1.png" className="d-block w-100" alt="..."/>
+                        <img src="/src/img/Banner1.png" className="d-block w-100" alt="..." />
                     </div>
                     <div className="carousel-item">
-                        <img src="/src/img/Banner3.png" className="d-block w-100" alt="..."/>
+                        <img src="/src/img/Banner3.png" className="d-block w-100" alt="..." />
                     </div>
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -87,59 +104,23 @@ export default function Index() {
                 <div className="container">
                     <h2 className="text-dark text-center mb-4">Productos Nuevos</h2>
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5">
-                        <div className="col mb-4">
-                            <div className="card">
-                                <img src="https://purina.com.ec/sites/default/files/styles/webp/public/2024-08/Dog%20Chow%20Selecci%C3%B3n%20de%20Prote%C3%ADnas%20Cordero.png.webp?itok=XlX7_b7I" className="card-img-top" alt="Producto 1" />
-                                <div className="card-body text-center">
-                                    <h6>Comida para perros</h6>
-                                    <p></p>
-                                    <button className="btn btn-primary">Comprar ahora</button>
+                        {productos.map((producto) => (
+                            <div key={producto.id_producto} className="col mb-4">
+                                <div className="card">
+                                    <img src="https://purina.com.ec/sites/default/files/styles/webp/public/2024-08/Dog%20Chow%20Selecci%C3%B3n%20de%20Prote%C3%ADnas%20Cordero.png.webp?itok=XlX7_b7I" className="card-img-top" alt="Producto 1" />
+                                    <div className="card-body text-center">
+                                        <h6>{producto.nombre_producto}</h6>
+                                        <button className="btn btn-primary">Comprar ahora</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col mb-4">
-                            <div className="card">
-                                <img src="https://purina.com.ec/sites/default/files/styles/webp/public/2024-08/Dog%20Chow%20Selecci%C3%B3n%20de%20Prote%C3%ADnas%20Cordero.png.webp?itok=XlX7_b7I" className="card-img-top" alt="Producto 2" />
-                                <div className="card-body text-center">
-                                    <h6>Comida para perros</h6>
-                                    <button className="btn btn-primary">Comprar ahora</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col mb-4">
-                            <div className="card">
-                                <img src="https://purina.com.ec/sites/default/files/styles/webp/public/2024-08/Dog%20Chow%20Selecci%C3%B3n%20de%20Prote%C3%ADnas%20Cordero.png.webp?itok=XlX7_b7I" className="card-img-top" alt="Producto 3" />
-                                <div className="card-body text-center">
-                                    <h6>Comida para perros</h6>
-                                    <button className="btn btn-primary">Comprar ahora</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col mb-4">
-                            <div className="card">
-                                <img src="https://purina.com.ec/sites/default/files/styles/webp/public/2024-08/Dog%20Chow%20Selecci%C3%B3n%20de%20Prote%C3%ADnas%20Cordero.png.webp?itok=XlX7_b7I" className="card-img-top" alt="Producto 4" />
-                                <div className="card-body text-center">
-                                    <h6>Comida para perros</h6>
-
-                                    <button className="btn btn-primary">Comprar ahora</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col mb-4">
-                            <div className="card">
-                                <img src="https://purina.com.ec/sites/default/files/styles/webp/public/2024-08/Dog%20Chow%20Selecci%C3%B3n%20de%20Prote%C3%ADnas%20Cordero.png.webp?itok=XlX7_b7I" className="card-img-top" alt="Producto 5" />
-                                <div className="card-body text-center">
-                                    <h6>Comida para perros</h6>
-                                    <button className="btn btn-primary">Comprar ahora</button>
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                     <div className="text-center mt-4">
                         <Link to={"/productos"}> <a href=""><button className="btn btn-light bg-primary text-white">mostrar más</button></a>
                         </Link>
                     </div>
-                    
+
                 </div>
             </section>
 
@@ -155,8 +136,8 @@ export default function Index() {
 
                 </div>
                 <div className="container shadow p-5 rounded-5" id="servicios">
-                <h3 className="text-center mb-5 text-dark">SERVICIOS DISPONIBLES</h3>
-                     <div>
+                    <h3 className="text-center mb-5 text-dark">SERVICIOS DISPONIBLES</h3>
+                    <div>
                         <div className="mt-4">
                             <button className="btn btn-primary me-2 mb-2" onClick={() => setSeccionActiva("consulta")}>Consulta médica</button>
                             <button className="btn btn-primary me-2 mb-2" onClick={() => setSeccionActiva("urgencias")}>Servicio de urgencias</button>
@@ -214,7 +195,7 @@ export default function Index() {
             </section>
 
             {/* Footer */}
-           <Footer />
+            <Footer />
         </div>
     );
 }
