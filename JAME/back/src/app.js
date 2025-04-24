@@ -11,6 +11,7 @@ const requestLogger = require('./middlewares/requestLogger');
 const productosRoutes = require('./routes/productosRoutes')
 const comprasRoutes = require('./routes/comprasRoutes')
 const contactoRoutes = require('./routes/contactoRoutes')
+const carritoRoutes = require('./routes/carritoRoutes')
 const path = require('path');
 
 const pedidoRoutes = require('./routes/pedidoRoutes')
@@ -48,6 +49,7 @@ const createApp = () => {
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     // Rutas
     app.use('/api/auth', authRoutes);
+    app.use('/api/carrito', carritoRoutes);
     app.use('/api/contacto', contactoRoutes);
     app.use('/api/usuarios', usersRoutes);
     app.use('/api/mascota', mascotasRoutes);

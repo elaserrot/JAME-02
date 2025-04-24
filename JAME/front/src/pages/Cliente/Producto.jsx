@@ -1,25 +1,55 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const BACKEND_URL = "http://localhost:3001";
 
-const ProductView = () => {
+export default function ProductView() {
 
     const [producto, setProducto] = useState([]);
-    console.log(producto);
-    const id = window.location.pathname.split("/")[2];
+    const [isLoading, setIsLoading] = useState(true);
+    const id_producto = window.location.pathname.split("/")[2];
+
+    const token = localStorage.getItem("token");
+    const decodedToken = token ? JSON.parse(atob(token.split(".")[1])) : null;
+    const id_usuario = decodedToken ? decodedToken.id : null;
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            setIsLoading(true);
+            const response = await axios.post(`${BACKEND_URL}/api/carrito/agregar/${id_usuario}`, {
+                cantidad: 1,
+                id_producto: id_producto
+            });
+            if (response.status === 200) {
+                Swal.fire({
+                    icon: "success",
+                    title: response.data.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+            setIsLoading(false);
+        } catch (error) {
+            setIsLoading(false);
+            console.error("Error al agregar el producto al carrito:", error);
+        }
+    };
 
     useEffect(() => {
         const fetchProducto = async () => {
             try {
-                const response = await axios.get(`${BACKEND_URL}/api/productos/listar/${id}`);
+                const response = await axios.get(`${BACKEND_URL}/api/productos/listar/${id_producto}`);
                 setProducto(response.data[0]);
             } catch (error) {
                 console.error("Error al obtener los productos:", error);
             }
         };
         fetchProducto();
-    }, [id]);
+    }, [id_producto]);
+
     return (
         <div>
             <div className="container mb-5 py-5">
@@ -44,7 +74,9 @@ const ProductView = () => {
                             <p>{producto?.nombre_Categoria}</p>
                             <p>{producto?.descripcion}</p>
                             <p className="display-6">${producto?.precio}</p>
-                            <button className="btn btn-success"> <i className="bi bi-cart-plus me-2"></i>Agregar al carrito</button>
+                            <form onSubmit={handleSubmit}>
+                                <button type="submit" className="btn btn-success"> <i className="bi bi-cart-plus me-2"></i>Agregar al carrito</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -52,5 +84,3 @@ const ProductView = () => {
         </div>
     );
 };
-
-export default ProductView;

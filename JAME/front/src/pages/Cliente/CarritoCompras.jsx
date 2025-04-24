@@ -1,91 +1,88 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Footer from '../../components/Footer'
-import Navbar from '../../components/Navbar'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+const BACKEND_URL = 'http://localhost:3001';
+
 export default function CarritoCompras() {
-    const [productos, setProductos] = useState([
-        {
-            id: 1,
-            nombre: "Alimento Premium para Perros",
-            descripcion: "5kg, Sabor Pollo",
-            precio: 50900,
-            cantidad: 1,
-            imagen: "/src/img/Royal.jpg"
-        },
-        {
-            id: 2,
-            nombre: "Juguete Interactivo para Gatos",
-            descripcion: "Ratón Electrónico",
-            precio: 38900,
-            cantidad: 2,
-            imagen: "/src/img/black.png"
-        }
-    ]);
-
-    // Función para manejar el cambio de cantidad
-    const manejarCantidad = (id, operacion) => {
-        setProductos((prevProductos) =>
-            prevProductos.map((producto) =>
-                producto.id === id
-                    ? {
-                        ...producto,
-                        cantidad: operacion === "incrementar"
-                            ? producto.cantidad + 1
-                            : Math.max(producto.cantidad - 1, 1) // Evitar cantidades menores a 1
-                    }
-                    : producto
-            )
-        );
-    };
-
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const navigate = useNavigate();
-
-    // Verificación de sesión con el useEffect
-    useEffect(() => {
-        const token = localStorage.getItem('token'); // Obtenemos el token de localStorage
-        if (!token) {
-            navigate('/login'); // Si no hay token, redirigimos al login
-        } else {
-            setIsLoggedIn(true); // Si hay token, cambiamos el estado a logueado
-        }
-    }, [navigate]); // Se ejecuta solo cuando 'navigate' cambia
-
-    if (!isLoggedIn) {
-        return <div className="text-center mt-5">Verificando sesión...</div>; // Mensaje mientras se verifica la sesión
-    }
 
     const token = localStorage.getItem('token');
     const decoded_token = JSON.parse(atob(token.split('.')[1]));
     const id = decoded_token.id;
 
+    const [isDataUpdated, setIsDataUpdated] = useState(false);
+
+    const [carrito, setCarrito] = useState([]);
+
+    useEffect(() => {
+        const fetchCarrito = async () => {
+            try {
+                const response = await axios.get(`${BACKEND_URL}/api/carrito/listar/${id}`);
+                setCarrito(response.data);
+            } catch (error) {
+                console.error("Error al obtener el carrito:", error);
+            }
+        };
+        fetchCarrito();
+        setIsDataUpdated(false);
+    }, [isDataUpdated, id]);
+
+    // Función para manejar el cambio de cantidad
+    const manejarCantidad = (id_producto, operacion) => {
+        try {
+            if (operacion == "incrementar") {
+                axios.put(`${BACKEND_URL}/api/carrito/sumarCantidad/${id}`, { id_producto });
+                setIsDataUpdated(true);
+            } else if (operacion === "decrementar") {
+                axios.put(`${BACKEND_URL}/api/carrito/restarCantidad/${id}`, { id_producto });
+                setIsDataUpdated(true);
+            }
+        }
+        catch (error) {
+            console.error("Error al actualizar la cantidad:", error);
+        }
+    };
+
+    const eliminarProducto = async (id_producto) => {
+        try {
+            await axios.delete(`${BACKEND_URL}/api/carrito/eliminarProducto/${id}`, { data: { id_producto } });
+            setIsDataUpdated(true);
+        } catch (error) {
+            console.error("Error al eliminar el producto:", error);
+        }
+    };
+
+    const formatNumber = (value) => {
+        const formattedValue = value.toString().replace(/\D/g, '');
+        return formattedValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    };
+
     return (
         <div>
             <div>
                 {/* header */}
-
-
                 <div className="container my-5">
                     <h1 className="mb-4">Tu Carrito de Compras</h1>
-
                     <div className="row">
                         <div className="col-md-8">
                             <div className="card mb-4">
                                 <div className="card-body">
                                     <h5 className="card-title">Productos en tu carrito</h5>
                                     <hr />
-                                    {productos.map((producto) => (
-                                        <div className="row mb-3" key={producto.id}>
+                                    {carrito.length === 0 && <p className="text-muted">Tu carrito esta vacio</p>}
+                                    {carrito.map((producto) => (
+                                        <div className="row mb-3" key={producto.id_producto}>
                                             <div className="col-md-3">
                                                 <img
-                                                    src={producto.imagen}
-                                                    alt={producto.nombre}
+                                                    // src={producto.imagen}
+                                                    src="https://placehold.co/600x400"
+                                                    alt={producto.nombre_producto}
                                                     className="img-fluid rounded"
                                                 />
                                             </div>
                                             <div className="col-md-6">
-                                                <h6>{producto.nombre}</h6>
+                                                <h6>{producto.nombre_producto}</h6>
                                                 <p className="text-muted">{producto.descripcion}</p>
                                                 <div
                                                     className="input-group input-group-sm"
@@ -94,7 +91,7 @@ export default function CarritoCompras() {
                                                     <button
                                                         className="btn btn-outline-secondary"
                                                         type="button"
-                                                        onClick={() => manejarCantidad(producto.id, "decrementar")}
+                                                        onClick={() => manejarCantidad(producto.id_producto, "decrementar")}
                                                     >
                                                         -
                                                     </button>
@@ -107,7 +104,7 @@ export default function CarritoCompras() {
                                                     <button
                                                         className="btn btn-outline-secondary"
                                                         type="button"
-                                                        onClick={() => manejarCantidad(producto.id, "incrementar")}
+                                                        onClick={() => manejarCantidad(producto.id_producto, "incrementar")}
                                                     >
                                                         +
                                                     </button>
@@ -115,9 +112,9 @@ export default function CarritoCompras() {
                                             </div>
                                             <div className="col-md-3 text-end">
                                                 <p className="fw-bold">
-                                                    ${(producto.precio * producto.cantidad).toFixed(2)}
+                                                    ${formatNumber(producto.precio * producto.cantidad)}
                                                 </p>
-                                                <button className="btn btn-sm btn-outline-danger">
+                                                <button onClick={() => eliminarProducto(producto.id_producto)} className="btn btn-sm btn-outline-danger">
                                                     <i className="fas fa-trash"></i> Eliminar
                                                 </button>
                                             </div>
@@ -131,38 +128,20 @@ export default function CarritoCompras() {
                                 <div className="card-body">
                                     <h5 className="card-title">Resumen del Pedido</h5>
                                     <hr />
-                                    <div className="d-flex justify-content-between mb-2">
-                                        <span>Subtotal</span>
-                                        <span>
-                                            $
-                                            {productos
-                                                .reduce(
-                                                    (total, producto) =>
-                                                        total + producto.precio * producto.cantidad,
-                                                    0
-                                                )
-                                                .toFixed(2)}
-                                        </span>
-                                    </div>
-                                    <div className="d-flex justify-content-between mb-2">
-                                        <span>Envío</span>
-                                        <span>$5.00</span>
-                                    </div>
-                                    <hr />
                                     <div className="d-flex justify-content-between mb-4">
                                         <span className="fw-bold">Total</span>
                                         <span className="fw-bold">
                                             $
                                             {(
-                                                productos.reduce(
+                                                formatNumber(carrito.reduce(
                                                     (total, producto) =>
                                                         total + producto.precio * producto.cantidad,
                                                     0
-                                                ) + 5.0
-                                            ).toFixed(2)}
+                                                )
+                                                ))}
                                         </span>
                                     </div>
-                                    <button className="btn btn-primary w-100">Proceder al Pago</button>
+                                    <Link to="/pago" className="btn btn-primary w-100">Proceder al Pago</Link>
                                 </div>
                             </div>
                             <div className="mt-3">
@@ -173,7 +152,6 @@ export default function CarritoCompras() {
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     );

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-04-2025 a las 22:39:49
+-- Tiempo de generación: 24-04-2025 a las 23:42:31
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -29,11 +29,19 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `carrito_compras` (
   `ID_CarritoCompras` int(100) NOT NULL,
-  `ID_Venta` int(100) NOT NULL,
   `id_producto` int(100) NOT NULL,
-  `Cantidad_CarritoCompras` int(100) NOT NULL,
-  `PrecioUnitario_CarritoCompras` decimal(60,0) NOT NULL
+  `cantidad` int(100) NOT NULL,
+  `id_usuario` int(255) NOT NULL,
+  `carrito_estado` int(2) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `carrito_compras`
+--
+
+INSERT INTO `carrito_compras` (`ID_CarritoCompras`, `id_producto`, `cantidad`, `id_usuario`, `carrito_estado`) VALUES
+(9, 29, 2, 8, 1),
+(10, 26, 1, 8, 1);
 
 -- --------------------------------------------------------
 
@@ -87,11 +95,7 @@ INSERT INTO `citas` (`ID_Citas`, `ID_Usuario`, `Fecha_Cita`, `Motivo_Cita`, `Est
 CREATE TABLE `compras` (
   `ID_Compra` int(100) NOT NULL,
   `Fecha_Compra` date NOT NULL,
-  `Cantidad_Compra` int(100) NOT NULL,
-  `Descripción_Compra` text NOT NULL,
-  `MetodoPago_Compra` tinyint(1) NOT NULL,
   `NumeroFactura_Compra` int(100) NOT NULL,
-  `PrecioUni_Compra` decimal(15,0) NOT NULL,
   `Precio_Total` decimal(15,0) NOT NULL,
   `ID_producto` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -282,9 +286,8 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre_completo`, `correo_electronico`, `
 --
 ALTER TABLE `carrito_compras`
   ADD PRIMARY KEY (`ID_CarritoCompras`),
-  ADD UNIQUE KEY `ID_Venta` (`ID_Venta`),
-  ADD UNIQUE KEY `ID_Producto` (`id_producto`),
-  ADD UNIQUE KEY `id_producto_2` (`id_producto`);
+  ADD KEY `id usuario` (`id_usuario`),
+  ADD KEY `producto` (`id_producto`);
 
 --
 -- Indices de la tabla `categorias`
@@ -353,7 +356,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `carrito_compras`
 --
 ALTER TABLE `carrito_compras`
-  MODIFY `ID_CarritoCompras` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_CarritoCompras` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -412,6 +415,13 @@ ALTER TABLE `usuarios`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `carrito_compras`
+--
+ALTER TABLE `carrito_compras`
+  ADD CONSTRAINT `id producto` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`),
+  ADD CONSTRAINT `producto` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`);
 
 --
 -- Filtros para la tabla `detalle_pedidos`
