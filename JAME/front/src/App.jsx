@@ -34,6 +34,8 @@ import RutaPrivada from "./components/RutaPrivada";
 import AdminLayout from "./layouts/AdminLayout";
 import ClienteLayout from "./layouts/ClienteLayout";
 import UsersLayout from "./layouts/UsersLayout";
+import Success from "./components/Success";
+import Failure from "./components/Failure";
 
 function App() {
   return (
@@ -53,6 +55,10 @@ function App() {
         {/* ----------------------paginas de cliente-------------------- */}
         <Route element={<RutaPrivada requiredRole={2} />}>
           <Route element={<ClienteLayout />}>
+
+            <Route path="/success" element={<Success />} />
+            <Route path="/failure" element={<Failure />} />
+            <Route path="/perfilUsuario" element={<PerfilUsuario />} />
             <Route path="/perfilUsuario" element={<PerfilUsuario />} />
             <Route path="/carrito" element={<CarritoCompras />} />
             <Route path="/pago" element={<PasarelaPago />} />

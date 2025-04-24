@@ -7,6 +7,7 @@ const usersRoutes = require('./routes/usersRoutes')
 const mascotasRoutes = require('./routes/mascotasRoutes')
 const citasRoutes = require('./routes/citasRoutes')
 const rolesRoutes = require('./routes/rolesRoutes');
+const requestLogger = require('./middlewares/requestLogger');
 const productosRoutes = require('./routes/productosRoutes')
 const comprasRoutes = require('./routes/comprasRoutes')
 const contactoRoutes = require('./routes/contactoRoutes')
@@ -23,17 +24,21 @@ dotenv.config();
 const createApp = () => {
     const app = express();
 
-    const corsOptions = {
-        origin: '*',
+    app.use(cors({
+        origin: (origin, callback) => {
+            console.log('\nrequest origin: ', origin);
+            callback(null, true);
+        },
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         allowedHeaders: 'Content-Type,Authorization',
         credentials: true,
-    };
-
-    app.use(cors(corsOptions));
+    }));
 
     // Middleware para analizar el cuerpo de las solicitudes
     app.use(express.json());
+
+    app.use(requestLogger);
+
 
     app.get('/', (req, res) => {
         res.send('Bienvenido a la API de JAME')
