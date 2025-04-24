@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
-import Footer from '../../components/Footer';
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
+import moment from "moment";
+const BACKEND_URL = "http://localhost:3001";
 
-const UserProfile = () => {
+export default function PerfilUsuario() {
+
+    const [isDataUpdated, setIsDataUpdated] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [profile, setProfile] = useState(null);
     const [newImage, setNewImage] = useState(null);
+    const [mascotas, setMascotas] = useState([]);
     const navigate = useNavigate();
 
     const token = localStorage.getItem('token');
@@ -16,7 +21,7 @@ const UserProfile = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/usuarios/perfil/${id}`, {
+                const response = await axios.get(`${BACKEND_URL}/api/usuarios/perfil/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -24,12 +29,37 @@ const UserProfile = () => {
                 setProfile(response.data.usuario);
             } catch (error) {
                 console.error("Error al obtener perfil:", error);
-                alert("Hubo un error al obtener el perfil.");
-                navigate('/login');
+                Swal.fire({
+                    icon: "error",
+                    title: "Hubo un error al obtener el perfil.",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             }
         };
+        const fetchMascotas = async () => {
+            try {
+                const response = await axios.get(`${BACKEND_URL}/api/mascota/cliente/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                setMascotas(response.data);
+            } catch (error) {
+                console.error("Error al obtener mascotas:", error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Hubo un error al obtener las mascotas.",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        };
+
+        fetchMascotas();
         fetchProfile();
-    }, [navigate, token, id]);
+        setIsDataUpdated(false);
+    }, [token, id, isDataUpdated]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -62,7 +92,7 @@ const UserProfile = () => {
                 formData.append('imagen', newImage);
             }
 
-            await axios.put(`http://localhost:3001/api/usuarios/${profile.id_usuario}`, formData, {
+            await axios.put(`${BACKEND_URL}/api/usuarios/${profile.id_usuario}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data',
@@ -80,6 +110,84 @@ const UserProfile = () => {
         localStorage.removeItem("token");
         navigate("/");
     };
+
+    const eliminarMascota = async (id) => {
+        const confirm = await Swal.fire({
+            icon: 'question',
+            title: 'Eliminar Mascota',
+            text: '¿Estás seguro de eliminar esta mascota?',
+            showCancelButton: true,
+            confirmButtonText: 'Si, eliminar',
+            cancelButtonText: 'Cancelar',
+        });
+        if (!confirm.isConfirmed) {
+            return;
+        }
+        const response = await axios.delete(`${BACKEND_URL}/api/mascota/eliminarMascota/${id}`)
+        if (response.status === 200) {
+            await Swal.fire({
+                icon: 'success',
+                title: 'Mascota eliminada',
+                text: 'La mascota ha sido eliminada con éxito.',
+            })
+            setIsDataUpdated(true);
+        }
+    };
+
+    const [mascotaEditar, setMascotaEditar] = useState({
+        id_mascota: '',
+        nombre: '',
+        edad: '',
+        fecha: '',
+        raza: '',
+        dueño: '',
+    });
+
+    const openModalEditar = async (mascota) => {
+        setMascotaEditar({
+            id_mascota: mascota.ID_Mascota,
+            nombre: mascota.Nombre_Mascota,
+            edad: mascota.Edad_Mascota,
+            raza: mascota.Raza_Mascota,
+            dueño: mascota.ID_Usuario,
+            fecha: mascota.Fecha_nacimiento
+        });
+        setIsDataUpdated(true);
+    };
+
+    const handleModalInputChange = (e) => {
+        const { name, value } = e.target;
+        setMascotaEditar((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleModalSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.put(`${BACKEND_URL}/api/mascota/actualizarMascota/${mascotaEditar.id_mascota}`, mascotaEditar);
+            if (response.status === 200) {
+                setIsDataUpdated(true);
+                const cerrarBoton = document.getElementById('cerrar');
+                cerrarBoton.click();
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Mascota actualizada',
+                    text: 'La mascota ha sido actualizada con éxito.',
+                })
+            }
+        } catch (error) {
+            setIsDataUpdated(true);
+            console.error("Error al actualizar la mascota:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Hubo un error al actualizar la mascota.",
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+    }
 
     if (!profile) return <div className="text-center mt-5">Cargando perfil...</div>;
 
@@ -237,8 +345,57 @@ const UserProfile = () => {
                                     <h5 className="card-title mb-0">Mis Mascotas</h5>
                                 </div>
                                 <div className="card-body">
-                                    <p className="text-muted">No hay mascotas registradas todavía.</p>
-                                    <Link to="/mascota" className="btn btn-primary">Agregar Mascota</Link>
+                                    <Link to="/mascota" className="btn btn-primary mb-3">Agregar Mascota</Link>
+                                    {
+                                        mascotas.map((mascota) => (
+                                            <div key={mascota.ID_Mascota} className="card mb-3">
+                                                <div className="card-body">
+                                                    <h5 className="card-title">{mascota.Nombre_Mascota}</h5>
+                                                    <p className="card-text">Edad: {mascota.Edad_Mascota} {mascota.Edad_Mascota === 1 ? 'año' : 'años'}</p>
+                                                    {mascota.Observaciones_Mascota ?
+                                                        <p className="card-text text-primary">Observaciones: {mascota.Observaciones_Mascota}</p>
+                                                        :
+                                                        <p className="card-text text-muted">No hay observaciones</p>
+                                                    }
+                                                    <div className="d-flex">
+                                                        <button className="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#modalEditar" onClick={() => openModalEditar(mascota)}><i className="bi bi-pencil"></i></button>
+                                                        <button className="btn btn-danger" onClick={() => eliminarMascota(mascota.ID_Mascota)}><i className="bi bi-trash"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="modal fade" id="modalEditar" tabIndex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+                            <div className="modal-dialog">
+                                <div className="modal-content">
+                                    <form onSubmit={handleModalSubmit}>
+                                        <div className="modal-header">
+                                            <h1 className="modal-title fs-5" id="modalEditarLabel">{mascotaEditar?.nombre}</h1>
+                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div className="modal-body">
+                                            <div className="form-group">
+                                                <label htmlFor="nombre">Nombre:</label>
+                                                <input type="text" className="form-control" name="nombre" value={mascotaEditar?.nombre || ''} onChange={handleModalInputChange} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="edad">Edad:</label>
+                                                <input type="number" min={0} max={50} className="form-control" name="edad" value={mascotaEditar?.edad || ''} onChange={handleModalInputChange} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="edad">Fecha de Nacimiento:</label>
+                                                <input type="datetime-local" className="form-control" name="fecha" value={moment(mascotaEditar?.fecha).format('YYYY-MM-DD HH:mm') || ''} onChange={handleModalInputChange} />
+                                            </div>
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button id="cerrar" type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" className="btn btn-primary">Guardar</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -249,5 +406,3 @@ const UserProfile = () => {
         </div>
     );
 };
-
-export default UserProfile;

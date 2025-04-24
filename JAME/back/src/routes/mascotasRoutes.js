@@ -28,6 +28,9 @@ router.get("/listarMascotas", mascotasController.listarMascota);
  *       201:
  *         description: Mascota agregada exitosamente
  */
+
+
+router.get("/cliente/:id", mascotasController.listarMascotaPorCliente);
 router.post("/agregarMascota", mascotasController.agregarMascota);
 
 /**

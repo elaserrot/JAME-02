@@ -39,7 +39,11 @@ const AgregarMascota = () => {
             }
         } catch (error) {
             if (error.response) {
-                alert(error.response.data.message);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error al agregar la mascota',
+                    text: error.response.data.message,
+                })
             } else {
                 console.error('Error al agregar la mascota:', error);
             }

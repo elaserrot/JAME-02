@@ -25,6 +25,7 @@ export default function AdminMascotas() {
             }
         };
         obtenerMascotas();
+        setIsDataUpdated(false);
     }, [isDataUpdated]);
 
     const eliminarMascota = async (id) => {
