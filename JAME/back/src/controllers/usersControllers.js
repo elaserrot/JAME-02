@@ -182,7 +182,7 @@ exports.login = async (req, res) => {
 
 // GET /api/usuarios/perfil
 exports.obtenerPerfil = (req, res) => {
-    const id_usuario = req.user.id;
+    const id_usuario = req.params.id;
 
     conexion.query("SELECT * FROM usuarios WHERE id_usuario = ?", [id_usuario], (err, results) => {
         if (err) {

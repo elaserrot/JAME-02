@@ -10,11 +10,13 @@ const UserProfile = () => {
     const navigate = useNavigate();
 
     const token = localStorage.getItem('token');
+    const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : null;
+    const id = decodedToken ? decodedToken.id : null;
 
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/api/usuarios/perfil', {
+                const response = await axios.get(`http://localhost:3001/api/usuarios/perfil/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -27,7 +29,7 @@ const UserProfile = () => {
             }
         };
         fetchProfile();
-    }, [navigate, token]);
+    }, [navigate, token, id]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;

@@ -59,19 +59,6 @@ export default function Checkout() {
 
     return (
         <div>
-            <div className="bg-primary text-dark py-2 text-center bg-info">
-                <p className="mb-0">La mejor opción para el cuidado de tu mascota</p>
-            </div>
-            <div className="container ">
-                <div className="row align-items-center">
-                    <div className="col-md-4 d-flex align-items-center">
-                        <img src="/src/img/logovet.png" alt="Logo Veterinaria" className="w-25 rounded-circle me-5" />
-                    </div>
-                    <div className="col-md-5 text-center">
-                        <h1>Veterinaria Ciudad Canina</h1>
-                    </div>
-                </div>
-            </div>
             <div className="container my-5 shadow p-5 rounded-5     ">
                 <div className="row">
                     <div className="col-md-8">
@@ -279,7 +266,6 @@ export default function Checkout() {
                     </div>
                 </div>
             </div>
-
         </div>
     );
 }

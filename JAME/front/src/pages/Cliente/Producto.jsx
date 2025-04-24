@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Footer from '../../components/Footer'
-import Navegacion from '../../components/Navegacion'
 import axios from "axios";
-import Swal from 'sweetalert2';
 
 const BACKEND_URL = "http://localhost:3001";
 

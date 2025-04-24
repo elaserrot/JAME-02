@@ -14,7 +14,6 @@ import Mascota from "./pages/Cliente/Mascota";
 import ServiciosMedicina from "./pages/Cliente/ServiciosMedicina";
 import AgendamientoGrooming from "./pages/Cliente/AgendamientoGrooming";
 import ClienteHome from "./pages/Cliente/ClienteHome";
-import NuevaContrasena from "./pages/Cliente/NuevaContrasena";
 import VerificarCodigo from "./pages/Cliente/VerificarCodigo";
 import AgendamientoMedicina from "./pages/Cliente/AgendamientoMedicina";
 {/* ----------------------paginas de administrador-------------------- */ }
@@ -34,18 +33,21 @@ import RutaPublica from "./components/RutaPublica";
 import RutaPrivada from "./components/RutaPrivada";
 import AdminLayout from "./layouts/AdminLayout";
 import ClienteLayout from "./layouts/ClienteLayout";
+import UsersLayout from "./layouts/UsersLayout";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<RutaPublica />}>
-          <Route path="/" element={<Index />} />
-          <Route path="/login/" element={<Login />} />
-          <Route path="/register/" element={<Register />} />
-          <Route path="/example" element={<Example />} />
-          <Route path="/recuperar" element={<OlvidoContraseña />} />
-          <Route path="/verificarcodigo" element={<VerificarCodigo />} />
+          <Route element={<UsersLayout />}>
+            <Route path="/" element={<Index />} />
+            <Route path="/login/" element={<Login />} />
+            <Route path="/register/" element={<Register />} />
+            <Route path="/example" element={<Example />} />
+            <Route path="/recuperar" element={<OlvidoContraseña />} />
+            <Route path="/verificarcodigo" element={<VerificarCodigo />} />
+          </Route>
         </Route>
 
         {/* ----------------------paginas de cliente-------------------- */}
@@ -60,7 +62,6 @@ function App() {
             <Route path="/medicina" element={<ServiciosMedicina />} />
             <Route path="/grooming" element={<AgendamientoGrooming />} />
             <Route path="/clientehome" element={<ClienteHome />} />
-            <Route path="/nuevacontrasena" element={<NuevaContrasena />} />
             <Route path="/agendamientomedicina" element={<AgendamientoMedicina />} />
           </Route>
         </Route>

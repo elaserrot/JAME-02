@@ -24,7 +24,7 @@ router.patch("/actualizar/:id", usersController.actualizar);
 router.post("/login", usersController.login);
 
 // Obtener perfil del usuario autenticado
-router.get("/perfil", usersController.obtenerPerfil);
+router.get("/perfil/:id", usersController.obtenerPerfil);
 
 // Actualizar perfil completo (autenticado)
 router.put("/:id", upload.single("imagen"), usersController.actualizarUsuario);
