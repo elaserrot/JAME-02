@@ -1,17 +1,24 @@
 import { useState, useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import Footer from "../../components/Footer"
 import axios from "axios"
+import Swal from "sweetalert2"
 
 export default function VerificarCodigo() {
-  const [codigo, setCodigo] = useState("")
-  const [mensaje, setMensaje] = useState("")
-  const [loading, setLoading] = useState(false)
   const location = useLocation()
-  const navigate = useNavigate()
-
   const searchParams = new URLSearchParams(location.search)
   const email = searchParams.get("email")
+
+  const [data, setData] = useState({
+    email: email,
+    codigo: "",
+    nuevaContrasena: "",
+    confirmarNuevaContrasena: "",
+  })
+  const [mensaje, setMensaje] = useState("")
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+
+
 
   useEffect(() => {
     if (!email) {
@@ -22,7 +29,7 @@ export default function VerificarCodigo() {
   const manejarVerificacion = async (e) => {
     e.preventDefault()
 
-    if (!/^\d{6}$/.test(codigo)) {
+    if (!/^\d{6}$/.test(data.codigo)) {
       setMensaje("Por favor, ingresa un código de 6 dígitos válido.")
       return
     }
@@ -30,17 +37,18 @@ export default function VerificarCodigo() {
     setLoading(true)
 
     try {
-      const response = await axios.post("http://localhost:3001/api/auth/verificarCodigo", {
-        email,
-        codigo,
-      });
-
-      const data = response.data;
-
-      if (data.success) {
-        navigate(`/NuevaContrasena?email=${email}&token=${data.token}`);
+      const response = await axios.post("http://localhost:3001/api/auth/verificarCodigo", data);
+      if (response.status === 200) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Verificación exitosa',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          navigate('/login')
+        });
       } else {
-        setMensaje(data.message || "Código incorrecto o expirado. Intenta nuevamente.");
+        setMensaje(response.data.message || "Hubo un problema al verificar el código. Intenta nuevamente.");
       }
     } catch (error) {
       console.error(error);
@@ -50,6 +58,10 @@ export default function VerificarCodigo() {
 
     setLoading(false)
   }
+
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className="">
@@ -79,17 +91,46 @@ export default function VerificarCodigo() {
                     type="text"
                     className="form-control"
                     id="codigo"
+                    name="codigo"
                     placeholder="Ingresa el código de 6 dígitos"
-                    value={codigo}
-                    onChange={(e) => setCodigo(e.target.value.replace(/\D/, ""))}
+                    value={data.codigo}
+                    onChange={handleChange}
                     maxLength={6}
+                    required
+                  />
+
+                  <label htmlFor="nuevaContrasena" className="form-label">
+                    Nueva contraseña
+                  </label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="nuevaContrasena"
+                    name="nuevaContrasena"
+                    placeholder="Ingresa la nueva contraseña"
+                    value={data.nuevaContrasena}
+                    onChange={handleChange}
+                    required
+                  />
+
+                  <label htmlFor="confirmarNuevaContrasena" className="form-label">
+                    Confirmar nueva contraseña
+                  </label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    name="confirmarNuevaContrasena"
+                    id="confirmarNuevaContrasena"
+                    placeholder="Confirma la nueva contraseña"
+                    value={data.confirmarNuevaContrasena}
+                    onChange={handleChange}
                     required
                   />
                 </div>
                 {mensaje && <div className="alert alert-info">{mensaje}</div>}
                 <div className="d-grid">
                   <button type="submit" className="btn btn-primary" disabled={loading}>
-                    {loading ? "Verificando..." : "Verificar código"}
+                    {loading ? "Cambiando contraseña..." : "Cambiar contraseña"}
                   </button>
                 </div>
               </form>

@@ -38,6 +38,7 @@ export default function OlvidoContraseña() {
         setMensaje(data.message || "Hubo un problema al enviar el correo. Intenta nuevamente.");
       }
     } catch (error) {
+      console.error(error);
       setMensaje("Hubo un error. Por favor, intenta nuevamente.");
     }
 

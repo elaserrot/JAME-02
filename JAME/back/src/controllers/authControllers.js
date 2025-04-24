@@ -3,12 +3,9 @@ const jwt = require("jsonwebtoken")
 const nodemailer = require("nodemailer")
 require("dotenv").config()
 
-// Almacenamiento temporal de códigos (en producción, usa una tabla en la base de datos)
-const codigosPendientes = {}
-
 // Configuración del transporte de correo
 const transporter = nodemailer.createTransport({
-  service: "smtp.gmail.com",
+  service: "gmail.com",
   port: 465,
   secure: true,
   auth: {
@@ -45,22 +42,14 @@ exports.enviarCodigo = (req, res) => {
     // Generar código aleatorio
     const codigo = Math.floor(100000 + Math.random() * 900000)
 
-    // Guardar el código (con expiración de 15 minutos)
-    codigosPendientes[email] = {
-      codigo: codigo.toString(),
-      expira: Date.now() + 15 * 60 * 1000,
-      id_usuario: results[0].id_usuario, // Guardamos el ID para usarlo después
-    }
-
-
-
-    const ultimaSolicitud = codigosPendientes[email]?.ultimaSolicitud
-    if (ultimaSolicitud && Date.now() - ultimaSolicitud < 60 * 1000) {
-      return res.json({
-        success: false,
-        message: "Debes esperar al menos 1 minuto antes de solicitar otro código.",
-      })
-    }
+    // Guardar el código en la base de datos
+    const query = "UPDATE usuarios SET codigo = ?, codigo_expirate_date = DATE_ADD(NOW(), INTERVAL 20 MINUTE) WHERE correo_electronico = ?"
+    conexion.query(query, [codigo, email], (error, results) => {
+      if (error) {
+        console.error("Error al guardar el código:", error)
+        return res.status(500).json({ success: false, message: "Error al procesar la solicitud" })
+      }
+    })
 
     // Configurar el correo
     const mailOptions = {
@@ -93,41 +82,58 @@ exports.enviarCodigo = (req, res) => {
 
 // Controlador para verificar el código
 exports.verificarCodigo = (req, res) => {
-  const { email, codigo } = req.body
+  const { email, codigo, nuevaContrasena, confirmarNuevaContrasena } = req.body
+
+  if (!email || !codigo || !nuevaContrasena || !confirmarNuevaContrasena) {
+    return res.status(400).json({ success: false, message: "Todos los campos son obligatorios" })
+  }
+
+  if (nuevaContrasena !== confirmarNuevaContrasena) {
+    return res.json({ success: false, message: "Las contrasenas no coinciden" })
+  }
 
   // Verificar si hay un código pendiente para ese email
-  if (!codigosPendientes[email]) {
-    return res.json({ success: false, message: "No hay código pendiente o ha expirado" })
-  }
 
-  const codigoInfo = codigosPendientes[email]
+  conexion.query("SELECT * FROM usuarios WHERE correo_electronico = ?", [email], (error, results) => {
+    if (error) {
+      console.error("Error al buscar usuario:", error)
+      return res.status(500).json({ success: false, message: "Error al procesar la solicitud" })
+    }
 
-  // Verificar si el código ha expirado
-  if (Date.now() > codigoInfo.expira) {
-    delete codigosPendientes[email]
-    return res.json({ success: false, message: "El código ha expirado" })
-  }
+    if (results.length === 0) {
+      return res.json({ success: false, message: "Usuario no encontrado" })
+    }
 
-  // Verificar si el código es correcto
-  if (codigoInfo.codigo !== codigo) {
-    return res.json({ success: false, message: "Código incorrecto" })
-  }
+    const user = results[0]
 
-  // Código correcto, generar token temporal para cambio de contraseña
-  // Usar JWT para generar un token seguro
-  const token = jwt.sign(
-    {
-      id_usuario: codigoInfo.id_usuario,
-      email: email,
-      tipo: "reset_password",
-    },
-    process.env.JWT_SECRET || "clave_secreta_temporal",
-    { expiresIn: "15m" }, // El token expira en 15 minutos
-  )
+    // Verificar si el código ha expirado
+    if (Date.now() > user.codigo_expirate_date) {
+      conexion.query("UPDATE usuarios SET codigo = NULL, codigo_expirate_date = NULL WHERE correo_electronico = ?", [email], (error, results) => {
+        if (error) {
+          console.error("Error al actualizar el código:", error)
+          return res.status(500).json({ success: false, message: "Error al procesar la solicitud" })
+        }
+      })
+      return res.json({ success: false, message: "El código ha expirado" })
+    }
+    if (!user.codigo) {
+      return res.json({ success: false, message: "No se ha enviado un código de recuperación" })
+    }
+    if (user.codigo !== codigo) {
+      return res.json({ success: false, message: "Código incorrecto" })
+    }
 
-  codigosPendientes[email].token = token
+    const contrasenaHash = bcrypt.hashSync(nuevaContrasena, 10)
+    conexion.query("UPDATE usuarios SET contraseña = ?, codigo = NULL, codigo_expirate_date = NULL WHERE correo_electronico = ?", [contrasenaHash, email], (error, results) => {
+      if (error) {
+        console.error("Error al actualizar la contraseña:", error)
+        return res.status(500).json({ success: false, message: "Error al procesar la solicitud" })
+      }
+      res.json({ success: true, message: "Contraseña actualizada correctamente" })
+    })
+  })
 
-  res.json({ success: true, token })
+
 }
 
 // Controlador para cambiar la contraseña
