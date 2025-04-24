@@ -16,6 +16,7 @@ import AgendamientoGrooming from "./pages/Cliente/AgendamientoGrooming";
 import ClienteHome from "./pages/Cliente/ClienteHome";
 import VerificarCodigo from "./pages/Cliente/VerificarCodigo";
 import AgendamientoMedicina from "./pages/Cliente/AgendamientoMedicina";
+import Nosotros from "./pages/Cliente/Nosotros";
 {/* ----------------------paginas de administrador-------------------- */ }
 import AdminPedidos from "./pages/Admin/AdminPedidos";
 import CalendarioPedidos from "./pages/Admin/CalendarioPedidos";
@@ -69,6 +70,7 @@ function App() {
             <Route path="/grooming" element={<AgendamientoGrooming />} />
             <Route path="/clientehome" element={<ClienteHome />} />
             <Route path="/agendamientomedicina" element={<AgendamientoMedicina />} />
+            <Route path="/nosotros" element={<Nosotros />} />
           </Route>
         </Route>
 
