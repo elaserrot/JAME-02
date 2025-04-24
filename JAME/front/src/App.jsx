@@ -50,6 +50,7 @@ function App() {
             <Route path="/example" element={<Example />} />
             <Route path="/recuperar" element={<OlvidoContraseña />} />
             <Route path="/verificarcodigo" element={<VerificarCodigo />} />
+            <Route path="/nosotros" element={<Nosotros />} />
           </Route>
         </Route>
 
@@ -70,7 +71,6 @@ function App() {
             <Route path="/grooming" element={<AgendamientoGrooming />} />
             <Route path="/clientehome" element={<ClienteHome />} />
             <Route path="/agendamientomedicina" element={<AgendamientoMedicina />} />
-            <Route path="/nosotros" element={<Nosotros />} />
           </Route>
         </Route>
 
