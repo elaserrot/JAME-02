@@ -1,161 +1,122 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../../components/Footer'
 import NabvarC from '../../components/NavbarC'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
+const BACKEND_URL = "http://localhost:3001";
 
 export default function Productos() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [allProductos, setAllProductos] = useState([]);
+  const [displayedProductos, setDisplayedProductos] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchProductos = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get(`${BACKEND_URL}/api/productos/listar`);
+        setAllProductos(response.data);
+        setDisplayedProductos(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error al obtener los productos:", error);
+      }
+    };
+
+    const fetchCategorias = async () => {
+      try {
+        const response = await axios.get(`${BACKEND_URL}/api/categorias/listar`);
+        setCategorias(response.data);
+      } catch (error) {
+        console.error("Error al obtener las categorias:", error);
+      }
+    };
+
+    fetchCategorias();
+    fetchProductos();
+  }, []);
+
+  useEffect(() => {
+    if (selectedCategories.length === 0) {
+      setDisplayedProductos(allProductos);
+    } else {
+      const filtered = allProductos.filter(producto =>
+        producto.id_cate && selectedCategories.includes(String(producto.id_cate))
+      );
+      setDisplayedProductos(filtered);
+    }
+  }, [selectedCategories, allProductos]);
+
+  function handleCheckboxChange(event) {
+    const categoriaId = event.target.value;
+    const isChecked = event.target.checked;
+
+    setSelectedCategories(prev => {
+      if (isChecked) {
+        return [...prev, categoriaId];
+      } else {
+        return prev.filter(id => id !== categoriaId);
+      }
+    });
+  }
+
   return (
     <div>
+      <main className="py-4">
+        <div className="container">
+          <div className="row">
+            {/* Filtros */}
+            <aside className="col-md-3">
+              <h5 className="mb-3">Categorias</h5>
+              {categorias.map((categoria) => (
+                <div key={categoria.id_cate} className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value={categoria.id_cate}
+                    id={`categoria-${categoria.id_cate}`}
+                    onChange={handleCheckboxChange}
+                    checked={selectedCategories.includes(String(categoria.id_cate))}
+                  />
+                  <label className="form-check-label" htmlFor={`categoria-${categoria.id_cate}`}>
+                    {categoria.nombre_Categoria}
+                  </label>
+                </div>
+              ))}
+            </aside>
 
-        {/* Header */}
-        <NabvarC />
-        {/* <!-- Contenido principal --> */}
-        <main className="py-4">
-          <div className="container">
-            <div className="row">
-              {/* <!-- Filtros --> */}
-              <aside className="col-md-3">
-                <h5 className="mb-3">Tipo de Comida</h5>
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" id="humedo" />
-                  <label className="form-check-label" htmlFor="humedo">Húmedo</label>
-                </div>
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" id="seco" />
-                  <label className="form-check-label" htmlFor="seco">Seco</label>
-                </div>
-
-
-                <h5 className="mb-3">Especie</h5>
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" id="gato" />
-                  <label className="form-check-label" htmlFor="gato">Gato</label>
-                </div>
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" id="perro" />
-                  <label className="form-check-label" htmlFor="perro">Perro</label>
-                </div>
-
-
-                <h5 className="mb-3">Etapa de Vida</h5>
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" id="adulto" />
-                  <label className="form-check-label" htmlFor="adulto">Adulto</label>
-                </div>
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" id="adultos-mayores" />
-                  <label className="form-check-label" htmlFor="adultos-mayores">Adultos mayores</label>
-                </div>
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" id="cachorro" />
-                  <label className="form-check-label" htmlFor="cachorro">Cachorro</label>
-                </div>
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" id="gatitos" />
-                  <label className="form-check-label" htmlFor="gatitos">Gatitos</label>
-                </div>
-              </aside>
-
-              {/* <!-- Productos --> */}
-              <section className="col-md-9">
-                <div className="row g-4">
-                  <div className="col-md-4">
+            {/* Productos */}
+            <section className="col-md-9">
+              <div className="row g-4">
+                {isLoading && <p>Cargando productos...</p>}
+                {displayedProductos.length === 0 && !isLoading && <p>No hay productos disponibles en las categorías seleccionadas.</p>}
+                {displayedProductos.length > 0 && <p className='text-end text-muted'>{displayedProductos.length} productos disponibles.</p>}
+                {displayedProductos.map((producto) => (
+                  <div key={producto.id_producto} className="col-md-4">
                     <div className="card">
-                      <img src="src/img/Royal.jpg" className="card-img-top" alt="Producto 1" />
+                      <img src={"src/img/Royal.jpg"} className="card-img-top" alt={producto.nombre_producto} />
+                      {/* <img src={producto.imagen || "src/img/Royal.jpg"} className="card-img-top" alt={producto.nombre_producto} /> */}
                       <div className="card-body">
-                        <h6 className="card-title">Adultos Minis y Pequeños Pollo y Salmón</h6>
-                        <p className="card-text text-muted">Alimento balanceado completo para perros adultos minis y pequeños...</p>
-                        <Link to="/producto" className="btn btn-link">Ver más</Link> 
+                        <h6 className="card-title">{producto.nombre_producto}</h6>
+                        <p className="card-text text-muted">
+                          {producto.descripcion.substring(0, 25) + (producto.descripcion.length > 25 ? "..." : "")}
+                        </p>
+                        <p className="card-text">Precio: ${producto.precio?.toLocaleString()}</p>
+                        <Link className="btn btn-primary" to={`/producto/${producto.id_producto}`}>
+                          Ver más
+                        </Link>
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-4">
-                    <div className="card">
-                      <img src="src/img/Royal.jpg" className="card-img-top" alt="Producto 2" />
-                      <div className="card-body">
-                        <h6 className="card-title">Purina One® Gatos Esterilizados</h6>
-                        <p className="card-text text-muted">Alimento balanceado, completo, húmedo, para gatos adultos y...</p>
-                        <Link to="/producto" className="btn btn-link">Ver más</Link> 
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-4">
-                    <div className="card">
-                      <img src="src/img/Royal.jpg" className="card-img-top" alt="Producto 3" />
-                      <div className="card-body">
-                        <h6 className="card-title">Multi Proteínas Salmón, Atún</h6>
-                        <p className="card-text text-muted">Alimento balanceado, completo, húmedo, para gatos adultos y...</p>
-                        <Link to="/producto" className="btn btn-link">Ver más</Link> 
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-4">
-                    <div className="card">
-                      <img src="src/img/Royal.jpg" className="card-img-top" alt="Producto 1" />
-                      <div className="card-body">
-                        <h6 className="card-title">Adultos Minis y Pequeños Pollo y Salmón</h6>
-                        <p className="card-text text-muted">Alimento balanceado completo para perros adultos minis y pequeños...</p>
-                        <Link to="/producto" className="btn btn-link">Ver más</Link> 
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-4">
-                    <div className="card">
-                      <img src="src/img/Royal.jpg" className="card-img-top" alt="Producto 2" />
-                      <div className="card-body">
-                        <h6 className="card-title">Purina One® Gatos Esterilizados</h6>
-                        <p className="card-text text-muted">Alimento balanceado, completo, húmedo, para gatos adultos y...</p>
-                        <Link to="/producto" className="btn btn-link">Ver más</Link> 
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-4">
-                    <div className="card">
-                      <img src="src/img/Royal.jpg" className="card-img-top" alt="Producto 3" />
-                      <div className="card-body">
-                        <h6 className="card-title">Multi Proteínas Salmón, Atún</h6>
-                        <p className="card-text text-muted">Alimento balanceado, completo, húmedo, para gatos adultos y...</p>
-                        <Link to="/producto" className="btn btn-link">Ver más</Link> 
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-4">
-                    <div className="card">
-                      <img src="src/img/Royal.jpg" className="card-img-top" alt="Producto 1" />
-                      <div className="card-body">
-                        <h6 className="card-title">Adultos Minis y Pequeños Pollo y Salmón</h6>
-                        <p className="card-text text-muted">Alimento balanceado completo para perros adultos minis y pequeños...</p>
-                        <Link to="/producto" className="btn btn-link">Ver más</Link> 
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-4">
-                    <div className="card">
-                      <img src="src/img/Royal.jpg" className="card-img-top" alt="Producto 2" />
-                      <div className="card-body">
-                        <h6 className="card-title">Purina One® Gatos Esterilizados</h6>
-                        <p className="card-text text-muted">Alimento balanceado, completo, húmedo, para gatos adultos y...</p>
-                        <Link to="/producto" className="btn btn-link">Ver más</Link> 
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-4">
-                    <div className="card">
-                      <img src="src/img/Royal.jpg" className="card-img-top" alt="Producto 3" />
-                      <div className="card-body">
-                        <h6 className="card-title">Multi Proteínas Salmón, Atún</h6>
-                        <p className="card-text text-muted">Alimento balanceado, completo, húmedo, para gatos adultos y...</p>
-                        <Link to="/producto" className="btn btn-link">Ver más</Link> 
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </div>
+                ))}
+              </div>
+            </section>
           </div>
-        </main>
-        <Footer />
+        </div>
+      </main>
     </div>
   )
 }

@@ -1,99 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from '../../components/Footer'
 import Navegacion from '../../components/Navegacion'
+import axios from "axios";
+import Swal from 'sweetalert2';
+
+const BACKEND_URL = "http://localhost:3001";
 
 const ProductView = () => {
+
+    const [producto, setProducto] = useState([]);
+    console.log(producto);
+    const id = window.location.pathname.split("/")[2];
+
+    useEffect(() => {
+        const fetchProducto = async () => {
+            try {
+                const response = await axios.get(`${BACKEND_URL}/api/productos/listar/${id}`);
+                setProducto(response.data[0]);
+            } catch (error) {
+                console.error("Error al obtener los productos:", error);
+            }
+        };
+        fetchProducto();
+    }, [id]);
     return (
         <div>
-            {/* Navbar personal */}
-            <Navegacion />
             <div className="container my-4">
-                <div className="row">   
+                <div className="row">
                     {/* Columna de imágenes (izquierda) */}
                     <div className="col-md-8">
-                        {/* Carrusel de imágenes */}
-                        <div id="carouselExample" className="carousel slide">
-                            <div className="carousel-inner">
-                                <div className="carousel-item active">
-                                    <img
-                                        src="src/img/Royal.jpg"
-                                        className="d-block w-75"
-                                        alt="Imagen grande 1"
-                                    />
-                                </div>
-                                <div className="carousel-item">
-                                    <img
-                                        src="src/img/Royal2.png"
-                                        className="d-block w-75"
-                                        alt="Imagen grande 2"
-                                    />
-                                </div>  
-                                <div className="carousel-item">
-                                    <img
-                                        src="src/img/Royal.jpg"
-                                        className="d-block w-75 "
-                                        alt="Imagen grande 3"
-                                    />
-                                </div>
-                                <div className="carousel-item">
-                                    <img
-                                        src="src/img/Royal2.png"
-                                        className="d-block w-75"
-                                        alt="Imagen grande 4"
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Controles del carrusel */}
-                            <button
-                                className="carousel-control-prev"
-                                type="button"
-                                data-bs-target="#carouselExample"
-                                data-bs-slide="prev"
-                            >
-                                <span
-                                    className="carousel-control-prev-icon"
-                                    aria-hidden="true"
-                                ></span>
-                                <span className="visually-hidden">Previous</span>
-                            </button>
-                            <button
-                                className="carousel-control-next"
-                                type="button"
-                                data-bs-target="#carouselExample"
-                                data-bs-slide="next"
-                            >
-                                <span
-                                    className="carousel-control-next-icon"
-                                    aria-hidden="true"
-                                ></span>
-                                <span className="visually-hidden">Next</span>
-                            </button>
-                        </div>
-
                         {/* Imágenes en miniatura */}
                         <div className="d-flex" style={{ height: "200px", width: "100%" }}>
-                            <img
-                                src="src/img/Royal.jpg"
-                                className="img-thumbnail me-2"
-                                alt="Imagen pequeña 1"
-                                data-bs-target="#carouselExample"
-                                data-bs-slide-to="0"
-                            />
-                            <img
-                                src="src/img/Royal2.png"
-                                className="img-thumbnail me-2"
-                                alt="Imagen pequeña 2"
-                                data-bs-target="#carouselExample"
-                                data-bs-slide-to="1"
-                            />
-                            <img
-                                src="src/img/Royal.jpg"
-                                className="img-thumbnail me-2"
-                                alt="Imagen pequeña 3"
-                                data-bs-target="#carouselExample"
-                                data-bs-slide-to="2"
-                            />
                             <img
                                 src="src/img/Royal2.png"
                                 className="img-thumbnail me-2 w-25"
@@ -107,28 +44,15 @@ const ProductView = () => {
                     {/* Columna de descripción (derecha) */}
                     <div className="col-md-4">
                         <div className="mt-4">
-                            <h2>Purina® Dog Chow® Alta Proteína</h2>
+                            <h2>{producto?.nombre_producto}</h2>
                             <p>
-                                <strong>Tamaños disponibles:</strong> 1 kg, 2 kg, 7.5 kg, 20 kg
+                                {producto?.descripcion}
                             </p>
-                            <p>
-                                Alimento completo y balanceado para perros adultos de todos los
-                                tamaños, fórmula de alta proteína a base de carnes, pollo y huevo.
-                            </p>
-                            <h5>Beneficios:</h5>
-                            <ul>
-                                <li>Ayuda a mantener sus dientes limpios para una salud oral</li>
-                                <li>Ayuda a mantener su corazón sano</li>
-                                <li>Músculos y huesos más fuertes</li>
-                                <li>Promueve un pelaje brillante</li>
-                                <li>Ayuda a mantenerlo sano y en forma</li>
-                            </ul>
                             <button className="bg-success">Agregar al carrito</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <Footer/>
         </div>
     );
 };

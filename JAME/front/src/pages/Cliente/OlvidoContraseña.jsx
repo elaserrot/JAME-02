@@ -23,30 +23,31 @@ export default function OlvidoContraseña() {
     setMensaje("")
 
     try {
-        const response = await axios.post("http://localhost:3001/api/auth/enviarCodigo", {
-            email
-        });
+      const response = await axios.post("http://localhost:3001/api/auth/enviarCodigo", {
+        email
+      });
 
-        const data = response.data;
-        if (data.success) {
-            setMensaje("Te hemos enviado un correo con el código de recuperación.");
-            setTimeout(() => {
-            navigate(`/VerificarCodigo?email=${encodeURIComponent(email)}`);
-            0   }, 2000);
-        } else {
-            setMensaje(data.message || "Hubo un problema al enviar el correo. Intenta nuevamente.");
-        }
-        } catch (error) {
-        setMensaje("Hubo un error. Por favor, intenta nuevamente.");
-        }
+      const data = response.data;
+      if (data.success) {
+        setMensaje("Te hemos enviado un correo con el código de recuperación.");
+        setTimeout(() => {
+          navigate(`/VerificarCodigo?email=${encodeURIComponent(email)}`);
+          0
+        }, 2000);
+      } else {
+        setMensaje(data.message || "Hubo un problema al enviar el correo. Intenta nuevamente.");
+      }
+    } catch (error) {
+      setMensaje("Hubo un error. Por favor, intenta nuevamente.");
+    }
 
 
     setLoading(false)
-    }
+  }
 
-    return (
+  return (
     <div className="">
-        <div
+      <div
         className="vh-100 d-flex justify-content-center align-items-center"
         style={{
           backgroundImage: `url("https://hoylecohen.com/wp-content/uploads/login-page-bg.jpg")`,
@@ -95,7 +96,7 @@ export default function OlvidoContraseña() {
           </div>
         </div>
       </div>
-      <Footer />
+
     </div>
   )
 }

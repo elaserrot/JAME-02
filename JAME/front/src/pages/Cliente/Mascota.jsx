@@ -53,7 +53,7 @@ function RegistrarMascota() {
 
     return (
         <div>
-            <Navegacion />
+
             <div className="container py-5">
                 <div className="row justify-content-center">
                     <div className="col-md-10">
@@ -221,7 +221,7 @@ function RegistrarMascota() {
                     </div>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
     );
 }

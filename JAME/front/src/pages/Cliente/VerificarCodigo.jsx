@@ -34,9 +34,9 @@ export default function VerificarCodigo() {
         email,
         codigo,
       });
-    
+
       const data = response.data;
-    
+
       if (data.success) {
         navigate(`/NuevaContrasena?email=${email}&token=${data.token}`);
       } else {
@@ -46,7 +46,7 @@ export default function VerificarCodigo() {
       console.error(error);
       setMensaje("Hubo un error al verificar el código. Intenta nuevamente.");
     }
-    
+
 
     setLoading(false)
   }
@@ -102,7 +102,7 @@ export default function VerificarCodigo() {
           </div>
         </div>
       </div>
-      <Footer />
+
     </div>
   )
 }

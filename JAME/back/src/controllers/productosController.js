@@ -2,7 +2,19 @@
 
 // Listar todos los productos
 exports.listarProductos = (req, res) => {
-    const sql = 'SELECT * FROM productos';
+    const sql = 'SELECT * FROM productos ORDER BY id_producto DESC';
+    conexion.query(sql, (error, resultado) => {
+        if (error) return console.error(error.message);
+        if (resultado.length > 0) {
+            res.json(resultado);
+        } else {
+            res.json('No hay registros');
+        }
+    });
+};
+
+exports.listarLimitado = (req, res) => {
+    const sql = 'SELECT * FROM productos ORDER BY id_producto DESC LIMIT 5 ';
     conexion.query(sql, (error, resultado) => {
         if (error) return console.error(error.message);
         if (resultado.length > 0) {

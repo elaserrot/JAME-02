@@ -65,7 +65,7 @@ export default function Index() {
     return (
         <div>
             {/* Header */}
-            <Navegacion />
+
             {/* carousel */}
             <div id="carouselExampleIndicators" className="carousel slide position-relative" data-bs-ride="carousel">
                 <div className="carousel-indicators">
@@ -195,7 +195,7 @@ export default function Index() {
             </section>
 
             {/* Footer */}
-            <Footer />
+
         </div>
     );
 }

@@ -28,36 +28,36 @@ export default function NuevaContrasena() {
 
   const manejarCambioContrasena = async (e) => {
     e.preventDefault();
-  
+
     setMensaje("");
 
     console.log("Contrasena:", contrasena);
     console.log("Longitud:", contrasena.length);
     console.log("Confirmar:", confirmarContrasena);
     console.log("Iguales:", contrasena === confirmarContrasena);
-    
+
 
     if (contrasena.trim().length <= 8 || confirmarContrasena.trim().length <= 8) {
       setMensaje("La nueva contraseña debe tener al menos 8 caracteres.");
       return;
     }
-  
+
     if (contrasena !== confirmarContrasena) {
       setMensaje("Las contraseñas no coinciden.");
       return;
     }
-  
+
     setLoading(true);
-  
+
     try {
       const response = await axios.post("http://localhost:3001/api/auth/cambiarContrasena", {
         email,
         token,
         contrasena,
       });
-  
+
       const data = response.data;
-  
+
       if (data.success) {
         setMensaje("¡Contraseña actualizada correctamente!");
         setTimeout(() => navigate("/login"), 2000);
@@ -68,10 +68,10 @@ export default function NuevaContrasena() {
       console.error(error);
       setMensaje("Su tiempo de cambio de contraseña ha expirado. Intenta nuevamente.");
     }
-  
+
     setLoading(false);
   };
-  
+
 
   return (
     <div className="">
@@ -118,9 +118,8 @@ export default function NuevaContrasena() {
                 </div>
                 {mensaje && (
                   <div
-                    className={`alert ${
-                      mensaje.includes("correctamente") ? "alert-success" : "alert-danger"
-                    }`}
+                    className={`alert ${mensaje.includes("correctamente") ? "alert-success" : "alert-danger"
+                      }`}
                   >
                     {mensaje}
                   </div>
@@ -135,7 +134,7 @@ export default function NuevaContrasena() {
           </div>
         </div>
       </div>
-      <Footer />
+
     </div>
   )
 }

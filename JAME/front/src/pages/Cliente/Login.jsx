@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import Footer from '../../components/Footer'
 import axios from 'axios'
@@ -17,7 +17,7 @@ export default function Login() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setUser((prevUser) => ( {
+        setUser((prevUser) => ({
             ...prevUser,
             [name]: value,
         }));
@@ -26,9 +26,9 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3001/api/usuarios/login', { 
+            const response = await axios.post('http://localhost:3001/api/usuarios/login', {
                 correo: user.correo,
-                password: user.password 
+                password: user.password
             });
 
             if (response.status === 200) {
@@ -42,7 +42,7 @@ export default function Login() {
                     showConfirmButton: false,
                     timer: 1500
                 }).then(() => {
-                    navigate('/ClienteHome'); 
+                    navigate('/ClienteHome');
                 });
             }
         } catch (error) {
@@ -90,7 +90,7 @@ export default function Login() {
                     </div>
                 </div>
             </div>
-            <Footer />
+
         </div>
     )
 }

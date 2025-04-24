@@ -33,6 +33,7 @@ import AdminConfiguracion from "./pages/Admin/AdminConfiguracion";
 import RutaPublica from "./components/RutaPublica";
 import RutaPrivada from "./components/RutaPrivada";
 import AdminLayout from "./layouts/AdminLayout";
+import ClienteLayout from "./layouts/ClienteLayout";
 
 function App() {
   return (
@@ -45,21 +46,23 @@ function App() {
           <Route path="/example" element={<Example />} />
           <Route path="/recuperar" element={<OlvidoContraseña />} />
           <Route path="/verificarcodigo" element={<VerificarCodigo />} />
-          <Route path="/productos" element={<Productos />} />
-          <Route path="/producto" element={<Producto />} />
         </Route>
 
         {/* ----------------------paginas de cliente-------------------- */}
         <Route element={<RutaPrivada requiredRole={2} />}>
-          <Route path="/perfilUsuario" element={<PerfilUsuario />} />
-          <Route path="/carrito" element={<CarritoCompras />} />
-          <Route path="/pago" element={<PasarelaPago />} />
-          <Route path="/mascota" element={<Mascota />} />
-          <Route path="/medicina" element={<ServiciosMedicina />} />
-          <Route path="/grooming" element={<AgendamientoGrooming />} />
-          <Route path="/clientehome" element={<ClienteHome />} />
-          <Route path="/nuevacontrasena" element={<NuevaContrasena />} />
-          <Route path="/agendamientomedicina" element={<AgendamientoMedicina />} />
+          <Route element={<ClienteLayout />}>
+            <Route path="/perfilUsuario" element={<PerfilUsuario />} />
+            <Route path="/carrito" element={<CarritoCompras />} />
+            <Route path="/pago" element={<PasarelaPago />} />
+            <Route path="/mascota" element={<Mascota />} />
+            <Route path="/productos" element={<Productos />} />
+            <Route path="/producto/:id" element={<Producto />} />
+            <Route path="/medicina" element={<ServiciosMedicina />} />
+            <Route path="/grooming" element={<AgendamientoGrooming />} />
+            <Route path="/clientehome" element={<ClienteHome />} />
+            <Route path="/nuevacontrasena" element={<NuevaContrasena />} />
+            <Route path="/agendamientomedicina" element={<AgendamientoMedicina />} />
+          </Route>
         </Route>
 
         {/* ----------------------paginas de administrador-------------------- */}
@@ -79,6 +82,7 @@ function App() {
             <Route path="/configuracion" element={<AdminConfiguracion />} />
           </Route>
         </Route>
+        <Route path="*" element={<div className="text-center mt-5">404 Not Found</div>} />
       </Routes>
     </BrowserRouter>
   )

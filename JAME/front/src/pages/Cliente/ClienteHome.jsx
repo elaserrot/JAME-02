@@ -64,10 +64,8 @@ export default function ClienteHome() {
 
     return (
         <div>
-
-
             {/* Header */}
-            <Navegacion />
+
             {/* carousel */}
             <div id="carouselExampleIndicators" className="carousel slide position-relative" data-bs-ride="carousel">
                 <div className="carousel-indicators">
@@ -195,9 +193,6 @@ export default function ClienteHome() {
                     </div>
                 </div>
             </section>
-
-            {/* Footer */}
-            <Footer />
         </div>
     );
 }

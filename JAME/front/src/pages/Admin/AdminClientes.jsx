@@ -5,7 +5,7 @@ import Footer from '../../components/Footer';
 import Navbar from '../../components/Navbar';
 
 export default function AdminClientes() {
-    
+
     const [clientes, setClientes] = useState([]);
     const [busqueda, setBusqueda] = useState('');
     const [clienteEncontrada, setClienteEncontrada] = useState(null);
@@ -13,14 +13,14 @@ export default function AdminClientes() {
     useEffect(() => {
         // Simulación de carga de datos
         const data = [
-            {  id: 1, nombre: 'Alisson', documento: 1025532382, telefono:3214138943, mascota: 'keyla'},
-            {  id: 2, nombre: 'Juan', documento: 1589634527 , telefono:3163578945 , mascota: 'napoleon'},
-            {  id: 3, nombre: 'Gilma', documento: 1563289612, telefono: 3130456982 , mascota: 'rocky'},
-            {  id: 4, nombre: 'Martin', documento: 1896423584, telefono:3138956722, mascota: 'toby'},
-            {  id: 5, nombre: 'Diego', documento: 1089532475, telefono:3172304896, mascota: 'jack'},
-            {  id: 6, nombre: 'carlos', documento: 1524861357, telefono:3154892176, mascota: 'max'}
-           
-          
+            { id: 1, nombre: 'Alisson', documento: 1025532382, telefono: 3214138943, mascota: 'keyla' },
+            { id: 2, nombre: 'Juan', documento: 1589634527, telefono: 3163578945, mascota: 'napoleon' },
+            { id: 3, nombre: 'Gilma', documento: 1563289612, telefono: 3130456982, mascota: 'rocky' },
+            { id: 4, nombre: 'Martin', documento: 1896423584, telefono: 3138956722, mascota: 'toby' },
+            { id: 5, nombre: 'Diego', documento: 1089532475, telefono: 3172304896, mascota: 'jack' },
+            { id: 6, nombre: 'carlos', documento: 1524861357, telefono: 3154892176, mascota: 'max' }
+
+
         ];
         console.log("Cargando clientes:", data);
         setClientes(data);
@@ -72,32 +72,32 @@ export default function AdminClientes() {
                         </a>
                     </div>
                 </div>
-                
+
                 <div className="flex-grow-1 bg-light p-4">
                     <h2 className="mb-4"> Clientes</h2>
                     <div className="d-flex gap-2 mt-2">
-                    <Link to='/agregarcliente'><button className="btn btn-primary mb-4">Agregar Nuevo Cliente</button></Link>
-                    <Link to='/administrador'><button className="btn btn-primary mb-4">Volver a Inicio</button></Link>
+                        <Link to='/agregarcliente'><button className="btn btn-primary mb-4">Agregar Nuevo Cliente</button></Link>
+                        <Link to='/administrador'><button className="btn btn-primary mb-4">Volver a Inicio</button></Link>
                     </div>
                     {/* Buscador de cliente */}
                     <div className="mb-3 d-flex gap-2">
-                        <input 
-                            type="number" 
-                            className="form-control" 
-                            placeholder="Buscar cliente por ID" 
-                            value={busqueda} 
-                            onChange={(e) => setBusqueda(e.target.value)} 
+                        <input
+                            type="number"
+                            className="form-control"
+                            placeholder="Buscar cliente por ID"
+                            value={busqueda}
+                            onChange={(e) => setBusqueda(e.target.value)}
                         />
                         <button className="btn btn-info" onClick={buscarCliente}>Buscar Cliente</button>
                     </div>
-                    
+
                     {clienteEncontrada && (
                         <div className="alert alert-success">
                             <h5>{clienteEncontrada.nombre}</h5>
-                            <p><strong>Id:</strong> {clienteEncontrada.id}</p> 
+                            <p><strong>Id:</strong> {clienteEncontrada.id}</p>
                             <p><strong>documento:</strong> {clienteEncontrada.documento}</p>
                             <p><strong>telefono:</strong> {clienteEncontrada.telefono}</p>
-                            <p><strong>mascota:</strong> {clienteEncontrada.mascota}</p>                         
+                            <p><strong>mascota:</strong> {clienteEncontrada.mascota}</p>
                         </div>
                     )}
                     <div className="row">
@@ -105,27 +105,27 @@ export default function AdminClientes() {
                             clientes.map(cliente => (
                                 <div key={cliente.id} className="col-md-12">
                                     <div className="card mb-4">
-                                    <div className="card-body d-flex flex-row justify-content-between align-items-center">
-                                        <div>
-                                        </div>
-                                        <div className="d-flex flex-column gap-2">
-                                            <h4 className="card-title">{cliente.nombre}</h4>
+                                        <div className="card-body d-flex flex-row justify-content-between align-items-center">
+                                            <div>
                                             </div>
                                             <div className="d-flex flex-column gap-2">
-                                            <p className="card-text"><strong>Id:</strong> {cliente.id}</p>
+                                                <h4 className="card-title">{cliente.nombre}</h4>
                                             </div>
                                             <div className="d-flex flex-column gap-2">
-                                            <p className="card-text"><strong>documento:</strong> {cliente.documento}</p>
+                                                <p className="card-text"><strong>Id:</strong> {cliente.id}</p>
                                             </div>
                                             <div className="d-flex flex-column gap-2">
-                                            <p className="card-text"><strong>telefono:</strong> {cliente.telefono}</p>
+                                                <p className="card-text"><strong>documento:</strong> {cliente.documento}</p>
                                             </div>
                                             <div className="d-flex flex-column gap-2">
-                                            <p className="card-text"><strong>mascota:</strong> {cliente.mascota}</p>
+                                                <p className="card-text"><strong>telefono:</strong> {cliente.telefono}</p>
                                             </div>
                                             <div className="d-flex flex-column gap-2">
-                                             <button className="btn btn-danger mt-2" onClick={() => eliminarCliente(cliente.id)}>Eliminar</button>
-                                        </div>
+                                                <p className="card-text"><strong>mascota:</strong> {cliente.mascota}</p>
+                                            </div>
+                                            <div className="d-flex flex-column gap-2">
+                                                <button className="btn btn-danger mt-2" onClick={() => eliminarCliente(cliente.id)}>Eliminar</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -135,11 +135,11 @@ export default function AdminClientes() {
                                 <p>No hay clientes registrados</p>
                             </div>
                         )}
-                        
+
                     </div>
                 </div>
-        </div>
-            <Footer />
+            </div>
+
         </div>
     );
 }

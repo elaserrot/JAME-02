@@ -1,8 +1,19 @@
 // Controlador para listar citas
 exports.listarCitas = async (req, res) => {
-    const q = "SELECT * FROM citas";
-    conexion.query(q, (err, resultado) =>{
-        if (err){
+    const q = `SELECT 
+    ID_Citas, 
+    citas.ID_Usuario, 
+    Fecha_Cita, 
+    Motivo_Cita, 
+    Estado_Cita, 
+    citas.ID_Mascota, 
+    mascota.Nombre_Mascota, 
+    usuarios.nombre_completo 
+    FROM citas 
+    INNER JOIN usuarios ON citas.ID_Usuario = usuarios.id_usuario 
+    INNER JOIN mascota ON citas.ID_Mascota = mascota.ID_Mascota`;
+    conexion.query(q, (err, resultado) => {
+        if (err) {
             console.log(err)
             res.status(500).json("Error al obtener los resultados")
         }
@@ -106,7 +117,7 @@ exports.actualizarCitaUnica = async (req, res) => {
         WHERE ID_Citas = ?
     `;
 
-    valores.push(id); 
+    valores.push(id);
 
     conexion.query(q, valores, (err, resultado) => {
         if (err) {
@@ -118,4 +129,4 @@ exports.actualizarCitaUnica = async (req, res) => {
     });
 };
 
-            
+

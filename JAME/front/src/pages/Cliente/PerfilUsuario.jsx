@@ -40,7 +40,7 @@ const UserProfile = () => {
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setNewImage(file); 
+            setNewImage(file);
             setProfile((prev) => ({
                 ...prev,
                 imagen: URL.createObjectURL(file),
@@ -55,15 +55,15 @@ const UserProfile = () => {
             formData.append('usuario', profile.usuario);
             formData.append('telefono', profile.telefono);
             formData.append('direccion', profile.direccion);
-    
+
             if (newImage) {
                 formData.append('imagen', newImage);
             }
-    
+
             await axios.put(`http://localhost:3001/api/usuarios/${profile.id_usuario}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data', 
+                    'Content-Type': 'multipart/form-data',
                 },
             });
             setIsEditing(false);
@@ -243,7 +243,7 @@ const UserProfile = () => {
                     </div>
                 </div>
             </main>
-            <Footer />
+
         </div>
     );
 };

@@ -4,7 +4,7 @@ export default function InicioAdmin() {
     return (
         <div className="container-fluid vh-100">
             {/* <!-- Header --> */}
-            <Navegacion />
+
 
             <div className="row vh-100">
                 {/* <!-- Sidebar --> */}

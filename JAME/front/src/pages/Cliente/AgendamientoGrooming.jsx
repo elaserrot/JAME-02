@@ -4,7 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 import Footer from '../../components/Footer';
 import NavbarC from '../../components/NavbarC';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
 const ServiciosGrooming = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -13,8 +13,8 @@ const ServiciosGrooming = () => {
   const [tipoMascota, setTipoMascota] = useState('');
   const [nombreMascota, setNombreMascota] = useState('');
   const [raza, setRaza] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false); 
-  const navigate = useNavigate(); 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   // Verificación de sesión con el useEffect
   useEffect(() => {
@@ -66,7 +66,7 @@ const ServiciosGrooming = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <NavbarC />
+
       <div className="container mt-5" style={{ flex: 1 }}>
         <h2 className="text-center mb-4">Servicios de Grooming</h2>
 
@@ -128,7 +128,7 @@ const ServiciosGrooming = () => {
           </div>
         </div>
       </div>
-      <Footer />
+
     </div>
   );
 };

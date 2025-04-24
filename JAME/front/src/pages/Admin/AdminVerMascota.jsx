@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Modal, Button } from "react-bootstrap";
 import Footer from '../../components/Footer';
@@ -55,63 +55,63 @@ const ListaMascotas = () => {
                 </div>
                 <div className="col-md-8">
                     {mascotas.map((mascota) => (
-                    <div key={mascota.id} className="card mb-3 p-3">
-                        <h4>{mascota.nombre}</h4>
-                        <p><b>Especie:</b> {mascota.especie} | <b>Raza:</b> {mascota.raza}</p>
-                        <p><b>Género:</b> {mascota.genero} | <b>Edad:</b> {mascota.edad} años | <b>Dueño:</b> {mascota.dueño}</p>
-                        <button className="btn btn-primary" onClick={() => setMascotaSeleccionada(mascota)}>Ver mascota</button>
+                        <div key={mascota.id} className="card mb-3 p-3">
+                            <h4>{mascota.nombre}</h4>
+                            <p><b>Especie:</b> {mascota.especie} | <b>Raza:</b> {mascota.raza}</p>
+                            <p><b>Género:</b> {mascota.genero} | <b>Edad:</b> {mascota.edad} años | <b>Dueño:</b> {mascota.dueño}</p>
+                            <button className="btn btn-primary" onClick={() => setMascotaSeleccionada(mascota)}>Ver mascota</button>
                         </div>
-                        ))}
+                    ))}
                 </div>
             </div>
 
-           {/* Modal para mostrar información de la mascota */}
-<Modal show={mascotaSeleccionada !== null} onHide={() => setMascotaSeleccionada(null)}>
-    <Modal.Header closeButton>
-        <Modal.Title>{mascotaSeleccionada?.nombre}</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-        <div className="row">
-            {/* Sección de imagen y acciones */}
-            <div className="col-md-4 text-center">
-                <img 
-                    src="/src/img/dog_placeholder.png" 
-                    alt="Mascota" 
-                    className="img-fluid rounded mb-2" 
-                />
-                <h3>{mascotaSeleccionada?.nombre}</h3>
-                <p>Número de historial: 1521</p>
-                <div className="d-flex gap-2 mt-2">
-                    <button className="btn btn-success btn-sm mb-2">Subir foto</button>
-                </div>
-                <div className="d-flex gap-2 mt-2">
-                    <button className="btn btn-primary btn-sm mb-2">Tomar Foto</button>
-                </div>
-                <div className="d-flex gap-2 mt-2">
-                    <button className="btn btn-warning btn-sm mb-2">Cambiar foto</button>
-                </div>
-                <div className="d-flex gap-2 mt-2">
-                    <button className="btn btn-danger btn-sm">Eliminar foto</button>
-                </div>
-            </div>
+            {/* Modal para mostrar información de la mascota */}
+            <Modal show={mascotaSeleccionada !== null} onHide={() => setMascotaSeleccionada(null)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{mascotaSeleccionada?.nombre}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="row">
+                        {/* Sección de imagen y acciones */}
+                        <div className="col-md-4 text-center">
+                            <img
+                                src="/src/img/dog_placeholder.png"
+                                alt="Mascota"
+                                className="img-fluid rounded mb-2"
+                            />
+                            <h3>{mascotaSeleccionada?.nombre}</h3>
+                            <p>Número de historial: 1521</p>
+                            <div className="d-flex gap-2 mt-2">
+                                <button className="btn btn-success btn-sm mb-2">Subir foto</button>
+                            </div>
+                            <div className="d-flex gap-2 mt-2">
+                                <button className="btn btn-primary btn-sm mb-2">Tomar Foto</button>
+                            </div>
+                            <div className="d-flex gap-2 mt-2">
+                                <button className="btn btn-warning btn-sm mb-2">Cambiar foto</button>
+                            </div>
+                            <div className="d-flex gap-2 mt-2">
+                                <button className="btn btn-danger btn-sm">Eliminar foto</button>
+                            </div>
+                        </div>
 
-            {/* Sección de información */}
-            <div className="col-md-8">
-                <p><b>Especie:</b> {mascotaSeleccionada?.especie}</p>
-                <p><b>Raza:</b> {mascotaSeleccionada?.raza}</p>
-                <p><b>Género:</b> {mascotaSeleccionada?.genero}</p>
-                <p><b>Edad:</b> {mascotaSeleccionada?.edad} años</p>
-                <p><b>Dueño:</b> {mascotaSeleccionada?.dueño}</p>
-            </div>
-        </div>
-    </Modal.Body>
-    <Modal.Footer>
-        <Button variant="secondary" onClick={() => setMascotaSeleccionada(null)}>Cerrar</Button>
-    </Modal.Footer>
-</Modal>
+                        {/* Sección de información */}
+                        <div className="col-md-8">
+                            <p><b>Especie:</b> {mascotaSeleccionada?.especie}</p>
+                            <p><b>Raza:</b> {mascotaSeleccionada?.raza}</p>
+                            <p><b>Género:</b> {mascotaSeleccionada?.genero}</p>
+                            <p><b>Edad:</b> {mascotaSeleccionada?.edad} años</p>
+                            <p><b>Dueño:</b> {mascotaSeleccionada?.dueño}</p>
+                        </div>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setMascotaSeleccionada(null)}>Cerrar</Button>
+                </Modal.Footer>
+            </Modal>
 
 
-            <Footer />
+
         </div>
     );
 };
