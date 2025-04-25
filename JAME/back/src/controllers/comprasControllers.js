@@ -133,7 +133,6 @@ exports.crearPago = async (req, res) => {
 
     try {
         const response = await preference.create({ body });
-        console.log("Preferencia de pago creada:", response);
         res.status(200).json({ id: response.id, init_point: response.init_point });
     } catch (error) {
         console.error("Error al crear preferencia de pago:", error);

@@ -68,7 +68,7 @@ export default function Checkout() {
 
             const data = await response.json();
             console.log('Preferencia de pago creada:', data);
-            window.location.href = data.init_point;
+            setPreferenceId(data.id);
         } catch (error) {
             console.error('Error al crear preferencia de pago:', error);
             alert('Hubo un problema al iniciar el pago.');
