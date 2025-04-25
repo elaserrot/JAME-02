@@ -10,9 +10,10 @@ router.post("/agregar", comprasController.agregarCompra);
 
 router.put("/:id", comprasController.actualizarCompra);
 
-router.delete("/:id", comprasController.eliminarCompra);   
+router.delete("/:id", comprasController.eliminarCompra);
 
 router.post("/crear-pago", comprasController.crearPago);
 
+router.post("/confirmar-pago", comprasController.confirmarPago);
 
-module.exports= router;
+module.exports = router;

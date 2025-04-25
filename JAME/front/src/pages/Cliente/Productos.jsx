@@ -97,8 +97,7 @@ export default function Productos() {
                 {displayedProductos.map((producto) => (
                   <div key={producto.id_producto} className="col-md-4">
                     <div className="card">
-                      <img src={"src/img/Royal.jpg"} className="card-img-top" alt={producto.nombre_producto} />
-                      {/* <img src={producto.imagen || "src/img/Royal.jpg"} className="card-img-top" alt={producto.nombre_producto} /> */}
+                      <img src={`${BACKEND_URL}/PRODUCTOS_FOTOS/${producto.imagen}`} style={{ width: "100%", height: "200px", objectFit: "cover" }} className="card-img-top" alt={producto.nombre_producto} />
                       <div className="card-body">
                         <h6 className="card-title">{producto.nombre_producto}</h6>
                         <p className="card-text text-muted">

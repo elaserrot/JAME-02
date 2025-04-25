@@ -19,7 +19,7 @@ export default function SidebarAdmin() {
                 <a href="/ventas" className={rutaActiva("ventas") ? "list-group-item list-group-item-action bg-success text-white py-3" : "list-group-item list-group-item-action bg-dark text-white py-3"}>
                     <i className="bi bi-cart me-2"></i> Ventas
                 </a>
-                <a href="/productosadmin" className={rutaActiva("productosadmin") || rutaActiva("agregarproducto") ? "list-group-item list-group-item-action bg-success text-white py-3" : "list-group-item list-group-item-action bg-dark text-white py-3"}>
+                <a href="/productosadmin" className={rutaActiva("productosadmin") || rutaActiva("agregarProducto") ? "list-group-item list-group-item-action bg-success text-white py-3" : "list-group-item list-group-item-action bg-dark text-white py-3"}>
                     <i className="bi bi-boxes me-2"></i> Productos
                 </a>
                 <a href="/mascotas" className={rutaActiva("mascotas") || rutaActiva("agregarmascota") ? "list-group-item list-group-item-action bg-success text-white py-3" : "list-group-item list-group-item-action bg-dark text-white py-3"}>

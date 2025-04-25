@@ -60,7 +60,7 @@ const createApp = () => {
     app.use('/api/roles', rolesRoutes);
     app.use('/api/usuarios', usersRoutes);
     app.use('/USUARIOS_FOTOS', express.static(path.join(__dirname, 'USUARIOS_FOTOS')));
-    app.use('/USUARIOS_FOTOS', express.static(path.join(__dirname, 'USUARIOS_FOTOS')));
+    app.use('/PRODUCTOS_FOTOS', express.static(path.join(__dirname, 'PRODUCTOS_FOTOS')));
     app.use("/uploads", express.static("uploads"));
 
     return app

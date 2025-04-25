@@ -75,8 +75,7 @@ export default function CarritoCompras() {
                                         <div className="row mb-3" key={producto.id_producto}>
                                             <div className="col-md-3">
                                                 <img
-                                                    // src={producto.imagen}
-                                                    src="https://placehold.co/600x400"
+                                                    src={`${BACKEND_URL}/PRODUCTOS_FOTOS/${producto.imagen}`}
                                                     alt={producto.nombre_producto}
                                                     className="img-fluid rounded"
                                                 />
@@ -128,20 +127,30 @@ export default function CarritoCompras() {
                                 <div className="card-body">
                                     <h5 className="card-title">Resumen del Pedido</h5>
                                     <hr />
-                                    <div className="d-flex justify-content-between mb-4">
-                                        <span className="fw-bold">Total</span>
-                                        <span className="fw-bold">
-                                            $
-                                            {(
-                                                formatNumber(carrito.reduce(
-                                                    (total, producto) =>
-                                                        total + producto.precio * producto.cantidad,
-                                                    0
-                                                )
-                                                ))}
-                                        </span>
-                                    </div>
-                                    <Link to="/pago" className="btn btn-primary w-100">Proceder al Pago</Link>
+                                    {carrito.length === 0 ?
+                                        <p className="text-muted">Tu carrito esta vacio</p>
+                                        :
+                                        <div className="d-flex justify-content-between mb-4">
+                                            <span className="fw-bold">Total</span>
+                                            <span className="fw-bold">
+                                                $
+                                                {(
+                                                    formatNumber(carrito.reduce(
+                                                        (total, producto) =>
+                                                            total + producto.precio * producto.cantidad,
+                                                        0
+                                                    )
+                                                    ))}
+                                            </span>
+                                        </div>
+                                    }
+                                    {carrito.length === 0 ?
+                                        <div>
+                                            <Link to="/productos" className="btn btn-primary w-100">Añadir Productos</Link>
+                                        </div>
+                                        :
+                                        <Link to="/pago" className="btn btn-primary w-100">Proceder al Pago</Link>
+                                    }
                                 </div>
                             </div>
                             <div className="mt-3">

@@ -59,7 +59,7 @@ export default function ProductView() {
                         {/* Imágen*/}
                         <div className="d-flex">
                             <img
-                                src="https://placehold.co/600x400"
+                                src={`${BACKEND_URL}/PRODUCTOS_FOTOS/${producto?.imagen}`}
                                 className="img-fluid me-2 "
                                 alt="Imagen pequeña 4"
                                 data-bs-target="#carouselExample"

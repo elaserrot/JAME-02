@@ -47,6 +47,13 @@ export default function Checkout() {
     };
 
     const iniciarPago = async (e) => {
+        if (!formData.nombre || !formData.correo || !formData.apellidos || !formData.telefono) {
+            return Swal.fire('Error', 'Todos los campos personales son obligatorios.', 'error');
+        }
+        if (carrito.length === 0) {
+            return Swal.fire('Carrito vacío', 'Agrega al menos un producto al carrito para continuar.', 'warning');
+        }
+
         e.preventDefault();
         const totalFinal = total;
         try {
@@ -60,7 +67,8 @@ export default function Checkout() {
             });
 
             const data = await response.json();
-            setPreferenceId(data.id);
+            console.log('Preferencia de pago creada:', data);
+            window.location.href = data.init_point;
         } catch (error) {
             console.error('Error al crear preferencia de pago:', error);
             alert('Hubo un problema al iniciar el pago.');
@@ -136,7 +144,7 @@ export default function Checkout() {
                         carrito.map((producto, index) => (
                             <div key={index} className="card mb-3">
                                 <div className="card-body d-flex justify-content-between align-items-center">
-                                    <img className='w-25 rounded' src="https://placehold.co/600x400" alt="" />
+                                    <img className='w-25 rounded' src={`${BACKEND_URL}/PRODUCTOS_FOTOS/${producto.imagen}`} alt="" />
                                     <span className=''>{producto.nombre_producto.substring(0, 25) + (producto.nombre_producto.length > 25 ? "..." : "")}</span>
                                     <span>${formatNumber(producto.precio)}</span>
                                 </div>

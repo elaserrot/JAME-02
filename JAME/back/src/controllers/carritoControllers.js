@@ -80,3 +80,14 @@ exports.eliminarProducto = (req, res) => {
         res.status(200).json({ message: "Producto eliminado del carrito" });
     });
 }
+
+exports.eliminarCarrito = (req, res) => {
+    const id_usuario = req.params.id
+    conexion.query('DELETE FROM carrito_compras WHERE id_usuario = ?', [id_usuario], (error, resultado) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).json({ error: "Error al eliminar el producto del carrito" });
+        }
+        res.status(200).json({ message: "Carrito eliminado" });
+    });
+}

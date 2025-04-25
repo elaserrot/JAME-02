@@ -24,13 +24,12 @@ export default function Index() {
                 setIsLoadingProductos(true);
                 const response = await axios.get(`${BACKEND_URL}/api/productos/listarLimitado`);
                 setProductos(response.data);
-                setIsLoadingProductos(false);
             } catch (error) {
                 console.error("Error al obtener los productos:", error);
-                setIsLoadingProductos(false);
             }
         };
         fetchProductos();
+        setIsLoadingProductos(false);
     }, []);
 
     const inputChange = (e) => {
@@ -146,18 +145,21 @@ export default function Index() {
                     <h2 className="text-dark text-center mb-4">Productos Nuevos</h2>
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5">
                         {isLoadingProductos && <p>Cargando productos...</p>}
-                        {productos.length === 0 && <p>No hay productos disponibles</p>}
-                        {productos.map((producto) => (
-                            <div key={producto.id_producto} className="col mb-4">
-                                <div className="card">
-                                    <img src="https://purina.com.ec/sites/default/files/styles/webp/public/2024-08/Dog%20Chow%20Selecci%C3%B3n%20de%20Prote%C3%ADnas%20Cordero.png.webp?itok=XlX7_b7I" className="card-img-top" alt="Producto 1" />
-                                    <div className="card-body text-center">
-                                        <h6>{producto.nombre_producto}</h6>
-                                        <button className="btn btn-primary">Comprar ahora</button>
+                        {productos.length > 0 ?
+                            <p className="text-center w-100">No hay productos disponibles</p>
+                            :
+                            productos.map((producto) => (
+                                <div key={producto.id_producto} className="col mb-4">
+                                    <div className="card">
+                                        <img src="https://purina.com.ec/sites/default/files/styles/webp/public/2024-08/Dog%20Chow%20Selecci%C3%B3n%20de%20Prote%C3%ADnas%20Cordero.png.webp?itok=XlX7_b7I" className="card-img-top" alt="Producto 1" />
+                                        <div className="card-body text-center">
+                                            <h6>{producto.nombre_producto}</h6>
+                                            <button className="btn btn-primary">Comprar ahora</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                        }
                     </div>
                     <div className="text-center mt-4">
                         <Link to={"/productos"}> <a href=""><button className="btn btn-light bg-primary text-white">mostrar más</button></a>

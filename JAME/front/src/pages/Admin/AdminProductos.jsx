@@ -85,11 +85,16 @@ export default function AdminProductos() {
             </div>
             {/* Lista de productos */}
             <div className="row">
-                {productos.length > 0 ? (
+                {productosFiltrados.length > 0 ? (
                     productosFiltrados.map(producto => (
                         <div id={producto.id_producto} key={producto.id_producto} className="col-md-12">
                             <div className="card mb-4">
                                 <div className="card-body d-flex justify-content-between align-items-center">
+                                    <img
+                                        src={`${BACKEND_URL}/PRODUCTOS_FOTOS/${producto?.imagen}`}
+                                        alt={producto?.nombre_producto}
+                                        className="rounded"
+                                        style={{ height: "100px", width: "100px", objectFit: "cover" }} />
                                     <h4 className="card-title">{producto.nombre_producto}</h4>
                                     <div className="d-flex gap-2 mt-2">
                                         <button className="btn btn-primary" onClick={() => setProductoSeleccionado(producto)}>Ver producto</button>
@@ -116,7 +121,7 @@ export default function AdminProductos() {
                         <div className="row d-flex align-items-start">
                             <div className="col-md-4">
                                 <img
-                                    src={productoSeleccionado?.imagen || "/src/img/dog_placeholder.png"}
+                                    src={`${BACKEND_URL}/PRODUCTOS_FOTOS/${productoSeleccionado?.imagen}`}
                                     alt={productoSeleccionado?.nombre_producto}
                                     className="img-fluid rounded"
                                     style={{ height: "300px", objectFit: "cover" }} />

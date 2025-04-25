@@ -93,7 +93,7 @@ export default function AdminMascotas() {
             )}
             {/* Lista de mascotas */}
             <div className="row">
-                {mascotas.length > 0 ? (
+                {mascotasFiltradas.length > 0 ? (
                     mascotasFiltradas.map(mascota => (
                         <div id={mascota.ID_Mascota} key={mascota.ID_Mascota} className="col-md-12">
                             <div className="card mb-4">

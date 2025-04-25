@@ -8,6 +8,7 @@ router.post('/agregar/:id', carritoController.agregarProducto);
 router.put('/restarCantidad/:id', carritoController.restarCantidad);
 router.put('/sumarCantidad/:id', carritoController.sumarCantidad);
 router.delete('/eliminarProducto/:id', carritoController.eliminarProducto);
+router.delete('/eliminarCarrito/:id', carritoController.eliminarCarrito);
 
 
 module.exports = router;

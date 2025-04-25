@@ -12,10 +12,4 @@ router.put("/actualizarCita/:id", citasController.actualizarCita);
 
 router.patch("/actualizarCitaUnica/:id", citasController.actualizarCitaUnica);
 
-
-
- 
-
-
-
 module.exports = router;     

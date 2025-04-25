@@ -1,4 +1,4 @@
-const { MercadoPagoConfig, Preference } = require("mercadopago");
+const { MercadoPagoConfig, Preference, Payment } = require("mercadopago");
 const nodemailer = require("nodemailer")
 require("dotenv").config()
 
@@ -124,11 +124,11 @@ exports.crearPago = async (req, res) => {
             },
         ],
         back_urls: {
-            success: "http://localhost:5173/success",  // Aunque sea localhost
+            success: "http://localhost:5173/success",
             failure: "http://localhost:5173/failure",
             pending: "http://localhost:5173/pending",
         },
-        // auto_return: "approved",  // ¡Comenta o elimina esta línea!
+        // auto_return: "approved",
     };
 
     try {
@@ -138,5 +138,65 @@ exports.crearPago = async (req, res) => {
     } catch (error) {
         console.error("Error al crear preferencia de pago:", error);
         res.status(500).json({ error: "Error al crear preferencia de pago" });
+    }
+};
+
+exports.confirmarPago = async (req, res) => {
+    const { paymentId, status } = req.body;
+
+    try {
+        // 1. Verificar el pago con MercadoPago
+        const payment = new Payment(client);
+        const paymentData = await payment.get({ id: paymentId });
+
+        console.log("Datos del pago:", paymentData);
+
+        // 2. Validar el estado del pago
+        if (paymentData.status !== 'approved') {
+            return res.status(400).json({
+                error: "El pago no fue aprobado",
+                status: paymentData.status
+            });
+        }
+
+        // 3. Extraer información relevante
+        const {
+            id: mpPaymentId,
+            status: mpStatus,
+            date_approved,
+            payment_method_id,
+            transaction_amount,
+            description
+        } = paymentData;
+
+        // 4. Registrar en tu base de datos
+        const q = `
+            INSERT INTO pagos 
+            (payment_id, status, fecha_aprobacion, metodo_pago, monto, descripcion)
+            VALUES (?, ?, ?, ?, ?, ?)
+        `;
+
+        conexion.query(q, [
+            mpPaymentId,
+            mpStatus,
+            new Date(date_approved),
+            payment_method_id,
+            transaction_amount,
+            description
+        ], (err, resultado) => {
+            if (err) {
+                console.error("Error al registrar pago:", err);
+                return res.status(500).json({ error: "Error al registrar pago" });
+            }
+
+            res.status(200).json({ message: "Pago registrado con exito" });
+        });
+
+    } catch (error) {
+        console.error("Error confirmando pago:", error);
+        res.status(500).json({
+            error: "Error confirmando pago",
+            details: error.message
+        });
     }
 };

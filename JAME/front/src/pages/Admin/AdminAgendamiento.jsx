@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
-import Footer from '../../components/Footer';
-import { useState } from 'react';
 import Calendar from 'react-calendar';
-
-
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import moment from 'moment';
+const BACKEND_URL = 'http://localhost:3001';
 
 export default function AdminAgendamiento() {
+
+    const [citas, setCitas] = useState([]);
+
+    const [isDataUpdated, setIsDataUpdated] = useState(false);
+
+    useEffect(() => {
+        const fetchCitas = async () => {
+            try {
+                setIsDataUpdated(true);
+                const response = await axios.get(`${BACKEND_URL}/api/citas/listarCitas`);
+                setCitas(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchCitas();
+        setIsDataUpdated(false);
+    }, [isDataUpdated]);
+
     return (
         <div className='row row-cols-2'>
             <div className="col">
@@ -54,7 +72,7 @@ export default function AdminAgendamiento() {
                 <div className="card mt-4">
                     <div className="card-header bg-primary text-white">Citas Agendadas</div>
                     <div className="card-body">
-                        <table className="w-full border-collapse border border-gray-300">
+                        <table className="w-100 border-collapse border border-gray-300">
                             <thead>
                                 <tr className="bg-gray-200 text-gray-700">
                                     <th className="border p-2">Cliente</th>
@@ -66,17 +84,18 @@ export default function AdminAgendamiento() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr className="text-center">
-                                    <td className="border p-2">Juan Pérez</td>
-                                    <td className="border p-2">Firulais</td>
-                                    <td className="border p-2">2025-03-20</td>
-                                    <td className="border p-2">10:00 AM</td>
-                                    <td className="border p-2">Vacunación</td>
-                                    <td className="border p-2">
-                                        <button className="bg-blue-500 bg-primary text-white px-3 py-1 rounded mr-2">Editar</button>
-                                        <button className="bg-red-500 bg-danger text-white px-3 py-1 rounded">Eliminar</button>
-                                    </td>
-                                </tr>
+                                {citas.map((cita) => (
+                                    <tr key={cita.id} className="text-center">
+                                        <td className="border p-2">{cita.nombre_completo}</td>
+                                        <td className="border p-2">{cita.Nombre_Mascota}</td>
+                                        <td className="border p-2">{moment(cita.Fecha_Cita).format('YYYY-MM-DD')}</td>
+                                        <td className="border p-2">{moment(cita.Fecha_Cita).format('HH:mm')}</td>
+                                        <td className="border p-2">{cita.Motivo_Cita}</td>
+                                        <td className="border p-2">
+                                            <button className="bg-red-500 bg-danger text-white px-3 py-1 rounded">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
