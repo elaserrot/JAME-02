@@ -50,17 +50,19 @@ const createApp = () => {
     // Rutas
     app.use('/api/auth', authRoutes);
     app.use('/api/carrito', carritoRoutes);
-    app.use('/api/contacto', contactoRoutes);
-    app.use('/api/usuarios', usersRoutes);
-    app.use('/api/mascota', mascotasRoutes);
-    app.use('/api/citas', citasRoutes);
-    app.use('/api/roles', rolesRoutes);
-    app.use('/api/productos', productosRoutes);
-    app.use('/api/compras', comprasRoutes);
-    app.use("/uploads", express.static("uploads"));
-    app.use('/USUARIOS_FOTOS', express.static(path.join(__dirname, 'USUARIOS_FOTOS')));
-    app.use('/api/pedidos', pedidoRoutes);
     app.use('/api/categorias', categoriaRoutes);
+    app.use('/api/citas', citasRoutes);
+    app.use('/api/compras', comprasRoutes);
+    app.use('/api/contacto', contactoRoutes);
+    app.use('/api/mascota', mascotasRoutes);
+    app.use('/api/pedidos', pedidoRoutes);
+    app.use('/api/productos', productosRoutes);
+    app.use('/api/roles', rolesRoutes);
+    app.use('/api/usuarios', usersRoutes);
+    app.use('/USUARIOS_FOTOS', express.static(path.join(__dirname, 'USUARIOS_FOTOS')));
+    app.use('/USUARIOS_FOTOS', express.static(path.join(__dirname, 'USUARIOS_FOTOS')));
+    app.use("/uploads", express.static("uploads"));
+
     return app
 }
 

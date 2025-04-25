@@ -2,7 +2,7 @@
 
 // Listar todos los productos
 exports.listarProductos = (req, res) => {
-    const sql = 'SELECT * FROM productos ORDER BY id_producto DESC';
+    const sql = 'SELECT * FROM productos INNER JOIN categorias ON productos.id_cate = categorias.id_cate ORDER BY id_producto DESC';
     conexion.query(sql, (error, resultado) => {
         if (error) return console.error(error.message);
         if (resultado.length > 0) {
@@ -41,19 +41,31 @@ exports.listarProductoPorId = (req, res) => {
 
 // Agregar un producto
 exports.agregarProducto = (req, res) => {
-    const { nombre_producto, descripcion, precio, stock } = req.body;
+    const { nombre_producto, descripcion, precio, stock, categoria } = req.body;
+    const imagen = req.file ? req.file.filename : null;
+    console.log(imagen);
 
-    if (!nombre_producto || !precio || !stock) {
+    if (!nombre_producto | !descripcion || !precio || !stock, !req.file, !categoria) {
         return res.status(400).json({ message: "Faltan datos requeridos" });
     }
 
-    const sql = "INSERT INTO productos (nombre_producto, descripcion, precio, stock) VALUES (?, ?, ?, ?)";
-    conexion.query(sql, [nombre_producto, descripcion, precio, stock], (error, resultado) => {
+    conexion.query('SELECT * FROM productos WHERE nombre_producto = ?', [nombre_producto], (error, resultado) => {
         if (error) {
-            console.log("Error SQL:", error.sqlMessage);
-            return res.status(500).json({ message: "Error al agregar el producto", error: error.sqlMessage });
+            console.error(error.message);
+            return res.status(500).json({ message: "Error al agregar el producto", error: error.message });
         }
-        res.status(201).json({ message: "Producto añadido correctamente", id: resultado.insertId });
+        if (resultado.length > 0) {
+            return res.status(400).json({ message: "Ya existe un producto con ese nombre" });
+        }
+
+        const sql = "INSERT INTO productos (nombre_producto, descripcion, precio, stock, imagen, id_cate) VALUES (?, ?, ?, ?, ?, ?)";
+        conexion.query(sql, [nombre_producto, descripcion, precio, stock, imagen, categoria], (error, resultado) => {
+            if (error) {
+                console.log("Error SQL:", error.sqlMessage);
+                return res.status(500).json({ message: "Error al agregar el producto", error: error.sqlMessage });
+            }
+            res.status(200).json({ message: "Producto añadido correctamente", id: resultado.insertId });
+        });
     });
 };
 

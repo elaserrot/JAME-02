@@ -37,6 +37,8 @@ import ClienteLayout from "./layouts/ClienteLayout";
 import UsersLayout from "./layouts/UsersLayout";
 import Success from "./components/Success";
 import Failure from "./components/Failure";
+import AdminProductos from "./pages/Admin/AdminProductos";
+import AdminAgregarProducto from "./pages/Admin/AdminAgregarProducto";
 
 function App() {
   return (
@@ -80,6 +82,8 @@ function App() {
             <Route path="/administrador/" element={<InicioAdmin />} />
             <Route path="/pedidos" element={<AdminPedidos />} />
             <Route path="/calendario" element={<CalendarioPedidos />} />
+            <Route path="/productosadmin" element={<AdminProductos />} />
+            <Route path="/agregarProducto" element={<AdminAgregarProducto />} />
             <Route path="/mascotas" element={<AdminMascotas />} />
             <Route path="/agregarmascota" element={<AdminAgregarMascota />} />
             <Route path="/ventas" element={<AdminVentas />} />

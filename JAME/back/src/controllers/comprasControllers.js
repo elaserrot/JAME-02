@@ -1,8 +1,35 @@
+const { MercadoPagoConfig, Preference } = require("mercadopago");
+const nodemailer = require("nodemailer")
+require("dotenv").config()
+
+// Configuración del transporte de correo
+const transporter = nodemailer.createTransport({
+    service: "gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+    },
+    tls: {
+        rejectUnauthorized: false, // ⚠️ Desactiva la verificación del certificado
+    },
+})
+
+// Inicialización del cliente
+const client = new MercadoPagoConfig({
+    accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
+    options: { timeout: 5000 },
+});
+
+// Instancia de Preferencia
+const preference = new Preference(client);
+
 // Controlador para listar las compras 
 exports.listarCompras = async (req, res) => {
     const q = "SELECT * FROM compras";
-    conexion.query(q, (err, resultado) =>{
-        if (err){
+    conexion.query(q, (err, resultado) => {
+        if (err) {
             console.log(err)
             res.status(500).json("Error al obtener los resultados")
         }
@@ -11,9 +38,9 @@ exports.listarCompras = async (req, res) => {
 };
 
 // Controlador para agregar compras
-exports.agregarCompra = async (req, res) => {    
+exports.agregarCompra = async (req, res) => {
     const {
-        ID_Compra,Fecha,Cantidad,Descripción,MetodoPago,NumeroFactura,PrecioUnitario,Precio_Total,ID_producto
+        ID_Compra, Fecha, Cantidad, Descripción, MetodoPago, NumeroFactura, PrecioUnitario, Precio_Total, ID_producto
     } = req.body;
 
     if (
@@ -30,7 +57,7 @@ exports.agregarCompra = async (req, res) => {
     `;
 
     conexion.query(q, [
-        ID_Compra,Fecha,Cantidad,Descripción,MetodoPago,NumeroFactura,PrecioUnitario,Precio_Total,ID_producto
+        ID_Compra, Fecha, Cantidad, Descripción, MetodoPago, NumeroFactura, PrecioUnitario, Precio_Total, ID_producto
     ], (err, resultado) => {
         if (err) {
             console.error(err);
@@ -80,8 +107,36 @@ exports.eliminarCompra = async (req, res) => {
             return res.status(404).json({ error: "Compra no encontrada" });
         }
 
-        res.status(200).json("Compra eliminada correctamente");  
+        res.status(200).json("Compra eliminada correctamente");
     });
 };
 
+exports.crearPago = async (req, res) => {
+    const { title, unit_price } = req.body;
 
+    const body = {
+        items: [
+            {
+                title,
+                quantity: 1,
+                unit_price: parseFloat(unit_price),
+                currency_id: "COP",
+            },
+        ],
+        back_urls: {
+            success: "http://localhost:5173/success",  // Aunque sea localhost
+            failure: "http://localhost:5173/failure",
+            pending: "http://localhost:5173/pending",
+        },
+        // auto_return: "approved",  // ¡Comenta o elimina esta línea!
+    };
+
+    try {
+        const response = await preference.create({ body });
+        console.log("Preferencia de pago creada:", response);
+        res.status(200).json({ id: response.id, init_point: response.init_point });
+    } catch (error) {
+        console.error("Error al crear preferencia de pago:", error);
+        res.status(500).json({ error: "Error al crear preferencia de pago" });
+    }
+};

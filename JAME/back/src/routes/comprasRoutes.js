@@ -12,9 +12,7 @@ router.put("/:id", comprasController.actualizarCompra);
 
 router.delete("/:id", comprasController.eliminarCompra);   
 
-
-
-
+router.post("/crear-pago", comprasController.crearPago);
 
 
 module.exports= router;

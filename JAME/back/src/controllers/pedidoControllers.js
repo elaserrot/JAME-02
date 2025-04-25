@@ -1,14 +1,3 @@
-const { MercadoPagoConfig, Preference } = require("mercadopago");
-require("dotenv").config()
-// Inicialización del cliente
-const client = new MercadoPagoConfig({
-    accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
-    options: { timeout: 5000 },
-});
-
-// Instancia de Preferencia
-const preference = new Preference(client);
-
 // Controlador para obtener todos los pedidos
 exports.listarPedidos = (req, res) => {
     const query = `SELECT id_pedido, pedidos.id_usuario, usuarios.nombre_completo, fecha_pedido, MetodoPago_Pedido, Descripcion_Pedido FROM pedidos INNER JOIN usuarios ON pedidos.id_usuario = usuarios.id_usuario ORDER BY id_pedido DESC`;
@@ -95,34 +84,4 @@ exports.actualizarPedido = async (req, res) => {
 
         res.status(200).json({ message: "Pedido actualizado correctamente" });
     });
-};
-
-
-exports.crearPago = async (req, res) => {
-    const { title, unit_price } = req.body;
-
-    const body = {
-        items: [
-            {
-                title,
-                quantity: 1,
-                unit_price: parseFloat(unit_price),
-                currency_id: "COP",
-            },
-        ],
-        back_urls: {
-            success: "http://localhost:5173/success",  // Aunque sea localhost
-            failure: "http://localhost:5173/failure",
-            pending: "http://localhost:5173/pending",
-        },
-        // auto_return: "approved",  // ¡Comenta o elimina esta línea!
-    };
-
-    try {
-        const response = await preference.create({ body });
-        res.json({ id: response.id, init_point: response.init_point });
-    } catch (error) {
-        console.error("Error al crear preferencia de pago:", error);
-        res.status(500).json({ error: "Error al crear preferencia de pago" });
-    }
 };

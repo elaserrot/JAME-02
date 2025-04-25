@@ -9,7 +9,6 @@ router.post("/agregarPedido", pedidoController.agregarPedido);
 router.get("/agregarDetallesPedido/", pedidoController.agregarDetallesPedido);
 router.delete("/eliminarPedido/:id", pedidoController.eliminarPedido);
 router.put("/actualizarPedido/:id", pedidoController.actualizarPedido);
-router.post("/crear-pago", pedidoController.crearPago);
 
 
 
