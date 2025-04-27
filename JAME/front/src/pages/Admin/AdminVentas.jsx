@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
+import moment from 'moment';
 
 const BACKEND_URL = 'http://localhost:3001';
 
@@ -9,6 +10,7 @@ const BACKEND_URL = 'http://localhost:3001';
 export default function AdminVentas() {
 
     const [productos, setProductos] = useState([]);
+    const [ventas, setVentas] = useState([]);
     const [isDataUpdated, setIsDataUpdated] = useState(false);
 
     useEffect(() => {
@@ -20,19 +22,19 @@ export default function AdminVentas() {
                 console.error('Error al obtener productos:', error);
             }
         };
+
+        const obtenerVentas = async () => {
+            try {
+                const response = await axios.get(`${BACKEND_URL}/api/compras/listar`);
+                setVentas(response.data);
+            } catch (error) {
+                console.error('Error al obtener ventas:', error);
+            }
+        }
         obtenerProductos();
+        obtenerVentas();
         setIsDataUpdated(false);
     }, [isDataUpdated]);
-
-    const data = [
-        { name: 'Lunes', ventas: 200 },
-        { name: 'Martes', ventas: 80 },
-        { name: 'Miércoles', ventas: 65 },
-        { name: 'Jueves', ventas: 90 },
-        { name: 'Viernes', ventas: 120 },
-        { name: 'Sábado', ventas: 150 },
-        { name: 'Domingo', ventas: 100 }
-    ];
 
     return (
         <div>
@@ -56,28 +58,41 @@ export default function AdminVentas() {
                         <div className="card-header bg-primary text-white">Últimas Ventas</div>
                         <div className="card-body">
                             <ul className="list-group list-group-flush">
-                                <li className="list-group-item">Cliente: Alisson Torres - $80.000</li>
-                                <li className="list-group-item">Cliente: Juan José - $45.000</li>
-                                <li className="list-group-item">Cliente: Diego - $60.000</li>
+                                {ventas.slice(0, 5).map(venta => (
+                                    <li key={venta.id} className="list-group-item">
+                                        {venta.descripcion} - ${venta.monto}
+                                    </li>
+                                ))}
                             </ul>
-                            <Link to='/clientes'><a href="#" className="btn btn-link">Ver historial completo...</a></Link>
+                            <a href="#historial" className="btn btn-link">Ver historial completo...</a>
                         </div>
                     </div>
                 </div>
-            </div>
-            {/* Gráfico de Ventas */}
-            <div className="card mt-4">
-                <div className="card-header bg-primary text-white">Ventas de la Semana</div>
-                <div className="card-body">
-                    <ResponsiveContainer width="100%" height={300}>
-                        <BarChart data={data}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="name" />
-                            <YAxis />
-                            <Tooltip />
-                            <Bar dataKey="ventas" fill="#8884d8" />
-                        </BarChart>
-                    </ResponsiveContainer>
+                <div id="historial" className="table-responsive">
+                    <table className="table table-striped">
+                        <thead>
+                            <tr>
+                                <th className="fw-bold">Fecha</th>
+                                <th>Cliente</th>
+                                <th>Descripción</th>
+                                <th>Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {ventas.map(venta => (
+                                <tr key={venta.id}>
+                                    <td>
+                                        <span className="fw-bold">
+                                            {moment(venta.created_at).format('DD/MM/YYYY')}
+                                        </span>
+                                    </td>
+                                    <td>{venta.nombre_completo}</td>
+                                    <td>{venta.descripcion}</td>
+                                    <td>${venta.monto}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -345,6 +345,7 @@ export default function PerfilUsuario() {
                                     <h5 className="card-title mb-0">Mis Mascotas</h5>
                                 </div>
                                 <div className="card-body">
+                                    {mascotas.length === 0 && <p>No tienes mascotas registradas.</p>}
                                     <Link to="/mascota" className="btn btn-primary mb-3">Agregar Mascota</Link>
                                     {
                                         mascotas.map((mascota) => (

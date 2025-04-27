@@ -1,26 +1,55 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Footer from '../../components/Footer';
-import Navbar from '../../components/Navbar';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, LineChart, Line } from "recharts";
+import moment from 'moment';
+import Swal from 'sweetalert2';
 
-const dataVentas = [
-    { mes: "Enero", total: 4000 },
-    { mes: "Febrero", total: 3000 },
-    { mes: "Marzo", total: 5000 },
-    { mes: "Abril", total: 4500 },
-    { mes: "Mayo", total: 6000 },
-];
-
-const dataCitas = [
-    { mes: "Enero", citas: 20 },
-    { mes: "Febrero", citas: 15 },
-    { mes: "Marzo", citas: 25 },
-    { mes: "Abril", citas: 22 },
-    { mes: "Mayo", citas: 30 },
-];
+const BACKEND_URL = 'http://localhost:3001';
 
 export default function AdminReportes() {
+
+    const [citas, setCitas] = useState([]);
+    const [ventas, setVentas] = useState([]);
+    const [isDataUpdated, setIsDataUpdated] = useState(false);
+
+    useEffect(() => {
+        const obtenerProductos = async () => {
+            try {
+                const response = await axios.get(`${BACKEND_URL}/api/citas/listarCitas`);
+                setCitas(response.data);
+            } catch (error) {
+                console.error('Error al obtener citas:', error);
+            }
+        };
+
+        const obtenerVentas = async () => {
+            try {
+                const response = await axios.get(`${BACKEND_URL}/api/compras/listar`);
+                setVentas(response.data);
+            } catch (error) {
+                console.error('Error al obtener ventas:', error);
+            }
+        }
+        obtenerProductos();
+        obtenerVentas();
+        setIsDataUpdated(false);
+    }, [isDataUpdated]);
+
+    const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+    const ventasPorMes = meses.map((mes, index) => {
+        const total = ventas
+            .filter(venta => moment(venta.created_at).month() === index)
+            .reduce((suma, venta) => suma + venta.monto, 0);
+        const citasMes = citas.filter(cita => moment(cita.created_at).month() === index).length;
+        return { mes, total, citas: citasMes };
+    });
+
+    const citasPorMes = meses.map((mes, index) => {
+        const citasMes = citas.filter(cita => moment(cita.Fecha_Cita).month() === index).length;
+        return { mes, citas: citasMes };
+    });
+
     return (
         <div>
             <h3 className="mb-4 text-gray-800 font-bold text-xl">Reportes</h3>
@@ -30,12 +59,12 @@ export default function AdminReportes() {
                 <div className="card-header bg-primary text-white">Ventas de la Semana</div>
                 <div className="card-body">
                     <ResponsiveContainer width="100%" height={300}>
-                        <BarChart data={dataVentas}>
+                        <BarChart data={ventasPorMes}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="mes" />
                             <YAxis />
                             <Tooltip />
-                            <Bar dataKey="total" fill="#8884d8" />
+                            <Bar dataKey="total" fill="#82ca9d" />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
@@ -43,10 +72,10 @@ export default function AdminReportes() {
             <br />
             {/* Gráfico de Citas */}
             <div className="card mt-4">
-                <div className="card-header bg-primary text-white">Citas de la Semana</div>
+                <div className="card-header bg-primary text-white">Citas mensuales</div>
                 <div className="card-body">
                     <ResponsiveContainer width="100%" height={300}>
-                        <LineChart data={dataCitas}>
+                        <LineChart data={citasPorMes}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="mes" />
                             <YAxis />
@@ -61,7 +90,7 @@ export default function AdminReportes() {
             <div className="card mt-4">
                 <div className="card-header bg-primary text-white">Reporte General</div>
                 <div className="card-body">
-                    <table className="w-full border-collapse border border-gray-300">
+                    <table className="w-100 border-collapse border border-gray-300">
                         <thead>
                             <tr className="bg-gray-200 text-gray-700">
                                 <th className="border p-2">Mes</th>
@@ -70,11 +99,11 @@ export default function AdminReportes() {
                             </tr>
                         </thead>
                         <tbody>
-                            {dataVentas.map((venta, index) => (
+                            {ventasPorMes.map((venta, index) => (
                                 <tr key={index} className="text-center">
                                     <td className="border p-2">{venta.mes}</td>
                                     <td className="border p-2">${venta.total}</td>
-                                    <td className="border p-2">{dataCitas[index].citas}</td>
+                                    <td className="border p-2">{venta.citas}</td>
                                 </tr>
                             ))}
                         </tbody>

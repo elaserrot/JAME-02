@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-04-2025 a las 03:23:53
+-- Tiempo de generación: 27-04-2025 a las 06:20:09
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Versión de PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -68,8 +68,27 @@ CREATE TABLE `citas` (
   `Fecha_Cita` datetime DEFAULT NULL,
   `Motivo_Cita` varchar(50) NOT NULL,
   `Estado_Cita` varchar(50) NOT NULL,
-  `ID_Mascota` int(11) NOT NULL DEFAULT 2
+  `ID_Mascota` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `citas`
+--
+
+INSERT INTO `citas` (`ID_Citas`, `ID_Usuario`, `Fecha_Cita`, `Motivo_Cita`, `Estado_Cita`, `ID_Mascota`) VALUES
+(1, 10, '2025-04-27 04:13:17', 'Corte', 'pendiente', 12),
+(2, 10, '2025-03-29 04:13:00', 'Corte', 'pendiente', 12),
+(3, 10, '2025-04-27 04:14:13', 'Corte', 'pendiente', 12),
+(4, 10, '2025-04-27 04:14:32', 'Corte', 'pendiente', 12),
+(5, 10, '2025-04-29 23:17:00', 'Corte', 'pendiente', 12),
+(6, 10, '2025-04-29 23:17:00', 'Corte', 'pendiente', 12),
+(7, 10, '2025-04-26 23:18:00', 'Baño', 'pendiente', 12),
+(8, 10, '2025-04-30 23:18:00', 'Baño', 'pendiente', 12),
+(9, 10, '2025-04-30 14:18:00', 'Baño', 'pendiente', 12),
+(10, 10, '2025-04-26 23:18:00', 'Vacunacion', 'pendiente', 12),
+(11, 10, '2025-04-26 23:18:00', 'Vacunacion', 'pendiente', 12),
+(12, 10, '2025-04-26 23:18:00', 'Esterilizacion', 'pendiente', 12),
+(13, 10, '2025-04-30 14:18:00', 'Vacunacion', 'pendiente', 12);
 
 -- --------------------------------------------------------
 
@@ -89,13 +108,6 @@ CREATE TABLE `compras` (
   `id_user` int(11) NOT NULL,
   `codigo_verificacion` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `compras`
---
-
-INSERT INTO `compras` (`id`, `payment_id`, `status`, `fecha_aprobacion`, `metodo_pago`, `monto`, `descripcion`, `created_at`, `id_user`, `codigo_verificacion`) VALUES
-(1, '109629825904', 'approved', '2025-04-26 20:19:55', 'master', 10000.00, 'Orden - drivers 360', '2025-04-27 01:19:58', 10, '530284');
 
 -- --------------------------------------------------------
 
@@ -129,6 +141,13 @@ CREATE TABLE `mascota` (
   `Estado_Mascota` int(2) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `mascota`
+--
+
+INSERT INTO `mascota` (`ID_Mascota`, `Nombre_Mascota`, `Edad_Mascota`, `Fecha_nacimiento`, `Raza_Mascota`, `imagen`, `Observaciones_Mascota`, `ID_Usuario`, `Estado_Mascota`) VALUES
+(12, 'Gema', 4, '2021-05-23', 'Gato', '', 'Ninguna', 10, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -156,15 +175,17 @@ CREATE TABLE `productos` (
   `precio` decimal(10,0) NOT NULL,
   `stock` int(11) NOT NULL,
   `imagen` varchar(200) DEFAULT NULL,
-  `id_cate` int(11) NOT NULL
+  `id_cate` int(11) NOT NULL,
+  `estado` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `productos`
 --
 
-INSERT INTO `productos` (`id_producto`, `nombre_producto`, `descripcion`, `precio`, `stock`, `imagen`, `id_cate`) VALUES
-(1, 'auto ', 'Nissan gtr', 10000, 3, 'producto_1745716742012-453187649.jpg', 2);
+INSERT INTO `productos` (`id_producto`, `nombre_producto`, `descripcion`, `precio`, `stock`, `imagen`, `id_cate`, `estado`) VALUES
+(1, 'auto ', 'Nissan gtr', 10000, 3, 'producto_1745716742012-453187649.jpg', 2, 1),
+(2, 'Muñoz', '1 muñoz', 100, 10, 'producto_1745719417105-707138866.png', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -203,23 +224,24 @@ CREATE TABLE `usuarios` (
   `codigo` varchar(10) DEFAULT NULL,
   `codigo_expirate_date` datetime DEFAULT NULL,
   `fecha_registro` datetime NOT NULL,
-  `id_rol` int(11) NOT NULL DEFAULT 2
+  `id_rol` int(11) NOT NULL DEFAULT 2,
+  `estado` int(3) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `nombre_completo`, `correo_electronico`, `usuario`, `contraseña`, `direccion`, `telefono`, `imagen`, `codigo`, `codigo_expirate_date`, `fecha_registro`, `id_rol`) VALUES
-(1, 'Juan José Uparela Sosa', 'uparelajuan2@gmail.com', 'juanjo', '1111', '94 B 130a-67', 3138332309, 'USUARIOS_FOTOS/1.jpg', NULL, NULL, '2024-10-08 19:33:21', 1),
-(2, 'Diego esteban sanchez', 'diego@gmail.com', 'Diego', '1111', 'kenedy', 3209207777, 'USUARIOS_FOTOS/2.jpg', '', NULL, '2024-09-07 20:59:42', 2),
-(3, 'Alisson', 'alison@gmail.com', 'Alisson', '1111', 'Dirección', 3109999999, 'USUARIOS_FOTOS/3.jpg', '', NULL, '2024-10-03 19:33:21', 1),
-(4, 'martin', 'misterlee272006@gmail.com', 'martinlee', '$2y$10$PdVFzzhsC.EUo8C/V5F.h.SODYF9e2fCLveDcOiKxn1/.AefPSdm6', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '2024-09-29 22:53:38', 1),
-(5, 'Martin Lee Moya Llano ', 'misterlee272006@gmail.com', 'lee', '$2b$10$GxLv4KzNDuKi7W6AWibV/.H0vynm.9uCqV5X2WG/M1mY5algdHUVa', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 2),
-(6, 'Martin Lee Moya Llano ', 'misterlee272006@gmail.com', 'leetosky', '$2b$10$OcPis7W/rDNOGXEIseeGhuTCvvqt/8/e03QAQPx82xanvQLLtZxxK', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 2),
-(7, 'JuanJo', 'uparelajuan2@gmail.com', 'jj', '$2b$10$Mgg58VT6B.pWprsg14xJ9Oswc7xS.Y2jo6KL/81vSLO9SMQvno36G', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 2),
-(9, 'Admin', 'admin@gmail.com', 'Admin', '$2b$10$zbgPu3YYZ8I53Hm61s6KaepYek81lI6hdVsFQvjPZ7yWqerMxs6va', 'san cristobal', NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 1),
-(10, 'Diego Esteban', 'egoessanrero@gmail.com', 'Diego', '$2b$10$qx0a82T.tJKarF9GcOcIruX/j9emEQk.g3juqmLRmcO8Je25we1kC', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', NULL, NULL, '0000-00-00 00:00:00', 2);
+INSERT INTO `usuarios` (`id_usuario`, `nombre_completo`, `correo_electronico`, `usuario`, `contraseña`, `direccion`, `telefono`, `imagen`, `codigo`, `codigo_expirate_date`, `fecha_registro`, `id_rol`, `estado`) VALUES
+(1, 'Juan José Uparela Sosa', 'uparelajuan2@gmail.com', 'juanjo', '1111', '94 B 130a-67', 3138332309, 'USUARIOS_FOTOS/1.jpg', NULL, NULL, '2024-10-08 19:33:21', 1, 1),
+(2, 'Diego esteban sanchez', 'diego@gmail.com', 'Diego', '1111', 'kenedy', 3209207777, 'USUARIOS_FOTOS/2.jpg', '', NULL, '2024-09-07 20:59:42', 2, 1),
+(3, 'Alisson', 'alison@gmail.com', 'Alisson', '1111', 'Dirección', 3109999999, 'USUARIOS_FOTOS/3.jpg', '', NULL, '2024-10-03 19:33:21', 1, 1),
+(4, 'martin', 'misterlee272006@gmail.com', 'martinlee', '$2y$10$PdVFzzhsC.EUo8C/V5F.h.SODYF9e2fCLveDcOiKxn1/.AefPSdm6', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '2024-09-29 22:53:38', 1, 1),
+(5, 'Martin Lee Moya Llano ', 'misterlee272006@gmail.com', 'lee', '$2b$10$GxLv4KzNDuKi7W6AWibV/.H0vynm.9uCqV5X2WG/M1mY5algdHUVa', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 2, 1),
+(6, 'Martin Lee Moya Llano ', 'misterlee272006@gmail.com', 'leetosky', '$2b$10$OcPis7W/rDNOGXEIseeGhuTCvvqt/8/e03QAQPx82xanvQLLtZxxK', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 2, 1),
+(7, 'JuanJo', 'uparelajuan2@gmail.com', 'jj', '$2b$10$Mgg58VT6B.pWprsg14xJ9Oswc7xS.Y2jo6KL/81vSLO9SMQvno36G', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 2, 1),
+(9, 'Admin', 'admin@gmail.com', 'Admin', '$2b$10$zbgPu3YYZ8I53Hm61s6KaepYek81lI6hdVsFQvjPZ7yWqerMxs6va', 'san cristobal', NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 1, 1),
+(10, 'Diego Esteban', 'egoessanrero@gmail.com', 'Diego', '$2b$10$qx0a82T.tJKarF9GcOcIruX/j9emEQk.g3juqmLRmcO8Je25we1kC', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', NULL, NULL, '0000-00-00 00:00:00', 2, 1);
 
 --
 -- Índices para tablas volcadas
@@ -244,7 +266,8 @@ ALTER TABLE `categorias`
 --
 ALTER TABLE `citas`
   ADD PRIMARY KEY (`ID_Citas`),
-  ADD KEY `mascota` (`ID_Mascota`);
+  ADD KEY `mascota` (`ID_Mascota`),
+  ADD KEY `id_usuario_citas` (`ID_Usuario`);
 
 --
 -- Indices de la tabla `compras`
@@ -304,7 +327,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `carrito_compras`
 --
 ALTER TABLE `carrito_compras`
-  MODIFY `ID_CarritoCompras` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `ID_CarritoCompras` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -316,13 +339,13 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `citas`
 --
 ALTER TABLE `citas`
-  MODIFY `ID_Citas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID_Citas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_pedidos`
@@ -334,7 +357,7 @@ ALTER TABLE `detalle_pedidos`
 -- AUTO_INCREMENT de la tabla `mascota`
 --
 ALTER TABLE `mascota`
-  MODIFY `ID_Mascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID_Mascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
@@ -346,7 +369,7 @@ ALTER TABLE `pedidos`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -358,7 +381,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Restricciones para tablas volcadas
@@ -374,6 +397,7 @@ ALTER TABLE `carrito_compras`
 -- Filtros para la tabla `citas`
 --
 ALTER TABLE `citas`
+  ADD CONSTRAINT `id_usuario_citas` FOREIGN KEY (`ID_Usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `mascota` FOREIGN KEY (`ID_Mascota`) REFERENCES `mascota` (`ID_Mascota`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

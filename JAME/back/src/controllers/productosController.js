@@ -2,7 +2,7 @@
 
 // Listar todos los productos
 exports.listarProductos = (req, res) => {
-    const sql = 'SELECT * FROM productos INNER JOIN categorias ON productos.id_cate = categorias.id_cate ORDER BY id_producto DESC';
+    const sql = 'SELECT * FROM productos INNER JOIN categorias ON productos.id_cate = categorias.id_cate WHERE productos.estado = 1 ORDER BY id_producto DESC';
     conexion.query(sql, (error, resultado) => {
         if (error) return console.error(error.message);
         res.status(200).json(resultado);
@@ -10,7 +10,7 @@ exports.listarProductos = (req, res) => {
 };
 
 exports.listarLimitado = (req, res) => {
-    const sql = 'SELECT * FROM productos ORDER BY id_producto DESC LIMIT 5 ';
+    const sql = 'SELECT * FROM productos WHERE productos.estado = 1 ORDER BY id_producto DESC LIMIT 5 ';
     conexion.query(sql, (error, resultado) => {
         if (error) return console.error(error.message);
         res.status(200).json(resultado);
@@ -60,7 +60,7 @@ exports.agregarProducto = (req, res) => {
 // Eliminar un producto
 exports.eliminarProducto = (req, res) => {
     const { id } = req.params;
-    const query = `DELETE FROM productos WHERE id_producto = ?`;
+    const query = `UPDATE productos SET estado = 0 WHERE id_producto = ?`;
     conexion.query(query, [id], (error, resultado) => {
         if (error) {
             console.error(error.message);

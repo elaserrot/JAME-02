@@ -25,19 +25,18 @@ export default function SidebarAdmin() {
                 <a href="/mascotas" className={rutaActiva("mascotas") || rutaActiva("agregarmascota") ? "list-group-item list-group-item-action bg-success text-white py-3" : "list-group-item list-group-item-action bg-dark text-white py-3"}>
                     <i className="fa fa-paw me-2"></i> Mascotas
                 </a>
+                <a href="/clientes" className={rutaActiva("clientes") || rutaActiva("agregarcliente") ? "list-group-item list-group-item-action bg-success text-white py-3" : "list-group-item list-group-item-action bg-dark text-white py-3"}>
+                    <i className="bi bi-people me-2"></i> Clientes
+                </a>
                 <a href="/agendamiento" className={rutaActiva("agendamiento") ? "list-group-item list-group-item-action bg-success text-white py-3" : "list-group-item list-group-item-action bg-dark text-white py-3"}>
                     <i className="bi bi-calendar2 me-2"></i> Agendamientos
-                </a>
-                <a href="/pedidos" className={rutaActiva("pedidos") ? "list-group-item list-group-item-action bg-success text-white py-3" : "list-group-item list-group-item-action bg-dark text-white py-3"}>
-                    <i className="bi bi-box me-2"></i> Pedidos
                 </a>
                 <a href="/reportes" className={rutaActiva("reportes") ? "list-group-item list-group-item-action bg-success text-white py-3" : "list-group-item list-group-item-action bg-dark text-white py-3"}>
                     <i className="bi bi-bar-chart-line"></i> Reportes
                 </a>
-                <a href="/configuracion" className={rutaActiva("configuracion") ? "list-group-item list-group-item-action bg-success text-white py-3" : "list-group-item list-group-item-action bg-dark text-white py-3"}>
+                {/* <a href="/configuracion" className={rutaActiva("configuracion") ? "list-group-item list-group-item-action bg-success text-white py-3" : "list-group-item list-group-item-action bg-dark text-white py-3"}>
                     <i className="bi bi-gear me-2"></i> Configuración
-                </a>
-
+                </a> */}
             </div>
         </div>
     )

@@ -27,7 +27,7 @@ const preference = new Preference(client);
 
 // Controlador para listar las compras 
 exports.listarCompras = async (req, res) => {
-    const q = "SELECT * FROM compras";
+    const q = "SELECT compras.*, usuarios.nombre_completo FROM compras INNER JOIN usuarios ON compras.id_user = usuarios.id_usuario";
     conexion.query(q, (err, resultado) => {
         if (err) {
             console.log(err)
@@ -127,9 +127,9 @@ exports.crearPago = async (req, res) => {
             },
         ],
         back_urls: {
-            success: "https://4755-190-24-56-223.ngrok-free.app/success",
-            failure: "https://4755-190-24-56-223.ngrok-free.app/failure",
-            pending: "https://4755-190-24-56-223.ngrok-free.app/pending",
+            success: "https://8ace-190-24-56-223.ngrok-free.app/success",
+            failure: "https://8ace-190-24-56-223.ngrok-free.app/failure",
+            pending: "https://8ace-190-24-56-223.ngrok-free.app/pending",
         },
         auto_return: "approved",
     };

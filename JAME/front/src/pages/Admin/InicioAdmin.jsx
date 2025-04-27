@@ -32,9 +32,16 @@ export default function InicioAdmin() {
 
     return (
         <div>
+            <div className="container text-center my-5">
+                <h1>Bienvenido administrador</h1>
+                <p>Esperamos que tengas un buen dia</p>
+                {/* <div className="row">
+                    <div className="col"></div>
+                </div> */}
+            </div>
             <div className="row mb-5">
                 {/* Appointments Box */}
-                <div className="col-6">
+                <div className="col-12">
                     <div className="card">
                         <div className="card-header bg-primary text-white">Agendados</div>
                         <div className="card-body">
@@ -42,23 +49,6 @@ export default function InicioAdmin() {
                                 {agendados.map((cita) => (
                                     <li className="list-group-item" key={cita._id}>
                                         {cita.Nombre_Mascota} - {cita.nombre_completo} - {moment(cita.Fecha_Cita).format('HH:mm')}
-                                    </li>
-                                ))}
-                            </ul>
-                            <a href="#" className="btn btn-link">Ver más...</a>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Orders Box */}
-                <div className="col-6">
-                    <div className="card">
-                        <div className="card-header bg-primary text-white">Pedidos</div>
-                        <div className="card-body">
-                            <ul className="list-group list-group-flush">
-                                {pedidos.map((pedido) => (
-                                    <li className="list-group-item" key={pedido._id}>
-                                        {pedido.Descripcion_Pedido} - {pedido.nombre_completo} - {moment(pedido.Fecha_Pedido).format('HH:mm')}
                                     </li>
                                 ))}
                             </ul>

@@ -14,6 +14,28 @@ exports.listarUsuarios = async (req, res) => {
         res.status(200).json(resultado)
     })
 };
+
+exports.listarClientes = async (req, res) => {
+    const q = "SELECT * FROM usuarios WHERE id_rol = 2 AND estado = 1";
+    conexion.query(q, (err, resultado) => {
+        if (err) {
+            console.log(err)
+            res.status(500).json("Error al obtener los resultados")
+        }
+        res.status(200).json(resultado)
+    })
+}
+
+exports.listarClientesLimitado = async (req, res) => {
+    const q = "SELECT * FROM usuarios WHERE id_rol = 2 AND estado = 1 LIMIT 5";
+    conexion.query(q, (err, resultado) => {
+        if (err) {
+            console.log(err)
+            res.status(500).json("Error al obtener los resultados")
+        }
+        res.status(200).json(resultado)
+    })
+}
 /* registrar usuario */
 exports.registrar = async (req, res) => {
     const { nombreCompleto, correoElectronico, usuario, contrasena } = req.body;
@@ -45,8 +67,7 @@ exports.registrar = async (req, res) => {
 
 exports.eliminar = async (req, res) => {
     const { id } = req.params;
-    const q = "DELETE FROM usuarios WHERE id_usuario = ?";
-
+    const q = "UPDATE usuarios SET estado = 0 WHERE id_usuario = ?";
     conexion.query(q, [id], (err, result) => {
         if (err) {
 

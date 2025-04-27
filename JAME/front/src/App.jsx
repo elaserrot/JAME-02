@@ -74,7 +74,7 @@ function App() {
             <Route path="/medicina" element={<ServiciosMedicina />} />
             <Route path="/grooming" element={<AgendamientoGrooming />} />
             <Route path="/clientehome" element={<ClienteHome />} />
-            <Route path="/agendamientomedicina" element={<AgendamientoMedicina />} />
+            <Route path="/agendamientomedicina/:tipo" element={<AgendamientoMedicina />} />
           </Route>
         </Route>
 

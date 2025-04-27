@@ -8,6 +8,11 @@ const upload = require("../middlewares/uploadMiddleware");
 // Rutas protegidas solo para admin
 router.get("/listar", usersController.listarUsuarios);
 
+// Rutas protegidas solo para admin
+router.get("/clientes/", usersController.listarClientes);
+
+router.get("/clientesLimitado/", usersController.listarClientesLimitado);
+
 // Registro de usuario (público)
 router.post("/agregar", usersController.registrar);
 

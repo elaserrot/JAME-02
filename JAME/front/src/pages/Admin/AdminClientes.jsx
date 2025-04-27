@@ -1,145 +1,132 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Footer from '../../components/Footer';
-import Navbar from '../../components/Navbar';
+import { Modal, Button } from "react-bootstrap";
+import axios from 'axios';
+import moment from 'moment';
+import Swal from 'sweetalert2';
+
+const BACKEND_URL = 'http://localhost:3001';
 
 export default function AdminClientes() {
 
     const [clientes, setClientes] = useState([]);
     const [busqueda, setBusqueda] = useState('');
-    const [clienteEncontrada, setClienteEncontrada] = useState(null);
+    const [clienteSeleccionado, setClienteSeleccionado] = useState(null);
+    const [isDataUpdated, setIsDataUpdated] = useState(false);
 
     useEffect(() => {
-        // Simulación de carga de datos
-        const data = [
-            { id: 1, nombre: 'Alisson', documento: 1025532382, telefono: 3214138943, mascota: 'keyla' },
-            { id: 2, nombre: 'Juan', documento: 1589634527, telefono: 3163578945, mascota: 'napoleon' },
-            { id: 3, nombre: 'Gilma', documento: 1563289612, telefono: 3130456982, mascota: 'rocky' },
-            { id: 4, nombre: 'Martin', documento: 1896423584, telefono: 3138956722, mascota: 'toby' },
-            { id: 5, nombre: 'Diego', documento: 1089532475, telefono: 3172304896, mascota: 'jack' },
-            { id: 6, nombre: 'carlos', documento: 1524861357, telefono: 3154892176, mascota: 'max' }
+        const obtenerClientes = async () => {
+            try {
+                const response = await axios.get(`${BACKEND_URL}/api/usuarios/clientes/`);
+                setClientes(response.data);
+            } catch (error) {
+                console.error('Error al obtener clientes:', error);
+            }
+        };
+        obtenerClientes();
+        setIsDataUpdated(false);
+    }, [isDataUpdated]);
 
+    const eliminarCliente = async (id) => {
+        const confirm = await Swal.fire({
+            icon: 'question',
+            title: 'Eliminar Cliente',
+            text: '¿Estás seguro de eliminar este cliente?',
+            showCancelButton: true,
+            confirmButtonText: 'Si, eliminar',
+            cancelButtonText: 'Cancelar',
+        });
+        if (!confirm.isConfirmed) {
+            return;
+        }
+        const response = await axios.delete(`${BACKEND_URL}/api/usuarios/eliminar/${id}`)
+        if (response.status === 200) {
+            await Swal.fire({
+                icon: 'success',
+                title: 'Cliente eliminado',
+                text: 'El cliente ha sido eliminado con éxito.',
+            })
+            setIsDataUpdated(true);
+        }
+    };
 
-        ];
-        console.log("Cargando clientes:", data);
-        setClientes(data);
-    }, []);
-    const eliminarCliente = (id) => {
-        setClientes(clientes.filter(cliente => cliente.id !== id));
-    };
-    const buscarCliente = () => {
-        const cliente = clientes.find(c => c.id === parseInt(busqueda));
-        setClienteEncontrada(cliente);
-    };
+    const clientesFiltrados = clientes
+        .filter(cliente => {
+            const term = busqueda.toLowerCase();
+            const nombre_completo = cliente.nombre_completo.toLowerCase();
+            return (
+                nombre_completo.toLowerCase().includes(term)
+            );
+        });
 
 
     return (
-        <div className="vh-100 d-flex flex-column">
-            <header className="bg-primary text-white py-3 px-4 d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center">
-                    <Link to="/administrador">
-                        <img src="/src/img/logovet.png" alt="Logo Veterinaria" className="rounded-circle me-3" style={{ width: '90px', height: '90px' }} />
-                    </Link>
-                    <h2 className="m-0 text-center flex-grow-1">Administración Ciudad Canina</h2>
-                </div>
-                <div>
-                    <button className="btn btn-outline-light me-2">Perfil</button>
-                    <button className="btn btn-danger">Cerrar Sesión</button>
-                </div>
-            </header>
-
-            <div className="d-flex flex-grow-1">
-                <div className="bg-dark text-white p-0 d-flex flex-column" style={{ width: '200px' }}>
-                    <div className="list-group list-group-flush">
-                        <a href="/administrador" className="list-group-item list-group-item-action bg-success text-white py-3">
-                            <i className="bi bi-house me-2"></i> Inicio
-                        </a>
-                        <a href="/ventas" className="list-group-item list-group-item-action bg-dark text-white py-3">
-                            <i className="bi bi-cart me-2"></i> Ventas
-                        </a>
-                        <a href="/agendamiento" className="list-group-item list-group-item-action bg-dark text-white py-3">
-                            <i className="bi bi-calendar2 me-2"></i> Agendamientos
-                        </a>
-                        <a href="/pedidos" className="list-group-item list-group-item-action bg-dark text-white py-3">
-                            <i className="bi bi-box me-2"></i> Pedidos
-                        </a>
-                        <a href="/reportes" className="list-group-item list-group-item-action bg-dark text-white py-3">
-                            <i className="bi bi-bar-chart-line"></i> Reportes
-                        </a>
-                        <a href="/configuracion" className="list-group-item list-group-item-action bg-dark text-white py-3 mt-auto">
-                            <i className="bi bi-gear me-2"></i> Configuración
-                        </a>
-                    </div>
-                </div>
-
-                <div className="flex-grow-1 bg-light p-4">
-                    <h2 className="mb-4"> Clientes</h2>
-                    <div className="d-flex gap-2 mt-2">
-                        <Link to='/agregarcliente'><button className="btn btn-primary mb-4">Agregar Nuevo Cliente</button></Link>
-                        <Link to='/administrador'><button className="btn btn-primary mb-4">Volver a Inicio</button></Link>
-                    </div>
-                    {/* Buscador de cliente */}
-                    <div className="mb-3 d-flex gap-2">
-                        <input
-                            type="number"
-                            className="form-control"
-                            placeholder="Buscar cliente por ID"
-                            value={busqueda}
-                            onChange={(e) => setBusqueda(e.target.value)}
-                        />
-                        <button className="btn btn-info" onClick={buscarCliente}>Buscar Cliente</button>
-                    </div>
-
-                    {clienteEncontrada && (
-                        <div className="alert alert-success">
-                            <h5>{clienteEncontrada.nombre}</h5>
-                            <p><strong>Id:</strong> {clienteEncontrada.id}</p>
-                            <p><strong>documento:</strong> {clienteEncontrada.documento}</p>
-                            <p><strong>telefono:</strong> {clienteEncontrada.telefono}</p>
-                            <p><strong>mascota:</strong> {clienteEncontrada.mascota}</p>
-                        </div>
-                    )}
-                    <div className="row">
-                        {Array.isArray(clientes) && clientes.length > 0 ? (
-                            clientes.map(cliente => (
-                                <div key={cliente.id} className="col-md-12">
-                                    <div className="card mb-4">
-                                        <div className="card-body d-flex flex-row justify-content-between align-items-center">
-                                            <div>
-                                            </div>
-                                            <div className="d-flex flex-column gap-2">
-                                                <h4 className="card-title">{cliente.nombre}</h4>
-                                            </div>
-                                            <div className="d-flex flex-column gap-2">
-                                                <p className="card-text"><strong>Id:</strong> {cliente.id}</p>
-                                            </div>
-                                            <div className="d-flex flex-column gap-2">
-                                                <p className="card-text"><strong>documento:</strong> {cliente.documento}</p>
-                                            </div>
-                                            <div className="d-flex flex-column gap-2">
-                                                <p className="card-text"><strong>telefono:</strong> {cliente.telefono}</p>
-                                            </div>
-                                            <div className="d-flex flex-column gap-2">
-                                                <p className="card-text"><strong>mascota:</strong> {cliente.mascota}</p>
-                                            </div>
-                                            <div className="d-flex flex-column gap-2">
-                                                <button className="btn btn-danger mt-2" onClick={() => eliminarCliente(cliente.id)}>Eliminar</button>
-                                            </div>
-                                        </div>
+        <div>
+            <h2 className="mb-4">Clientes</h2>
+            <div className="d-flex gap-2 mt-2">
+                <Link to='/administrador'><button className="btn btn-primary mb-4">Volver a Inicio</button></Link>
+            </div>
+            {/* Buscador de mascota */}
+            <div className="mb-3 d-flex gap-2">
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Buscar cliente..."
+                    value={busqueda}
+                    onChange={(e) => setBusqueda(e.target.value)}
+                />
+            </div>
+            {/* Lista de mascotas */}
+            <div className="row">
+                {clientesFiltrados.length > 0 ? (
+                    clientesFiltrados.map(cliente => (
+                        <div id={cliente.id_usuario} key={cliente.id_usuario} className="col-md-12">
+                            <div className="card mb-4">
+                                <div className="card-body d-flex justify-content-between align-items-center">
+                                    <h4 className="card-title">{cliente.nombre_completo}</h4>
+                                    <div className="d-flex gap-2 mt-2">
+                                        <button className="btn btn-primary" onClick={() => setClienteSeleccionado(cliente)}>Ver cliente</button>
+                                        <button className="btn btn-danger" onClick={() => eliminarCliente(cliente.id_usuario)}>Eliminar</button>
                                     </div>
                                 </div>
-                            ))
-                        ) : (
-                            <div className="col-12 text-center">
-                                <p>No hay clientes registrados</p>
                             </div>
-                        )}
-
+                        </div>
+                    ))
+                ) : (
+                    <div className="col-12 text-center">
+                        <p>No hay clientes registrados</p>
                     </div>
-                </div>
+                )}
             </div>
 
+            {/* Modal para mostrar información de la mascota */}
+            <Modal show={clienteSeleccionado !== null} onHide={() => setClienteSeleccionado(null)} size="xl">
+                <Modal.Header closeButton className="bg-primary text-white">
+                    <Modal.Title><h1>{clienteSeleccionado?.Nombre_Mascota}</h1></Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="container">
+                        <div className="row d-flex align-items-start">
+                            <div className="col-md-4">
+                                <img
+                                    src={clienteSeleccionado?.imagen || "/src/img/dog_placeholder.png"}
+                                    alt={clienteSeleccionado?.nombre_completo}
+                                    className="img-fluid rounded"
+                                    style={{ height: "300px", objectFit: "cover" }} />
+                            </div>
+                            <div className="col-md-4">
+                                <p><b><strong>Dueño:</strong></b> {clienteSeleccionado?.nombre_completo}</p>
+                                <p><b><strong>Telefono:</strong></b> {clienteSeleccionado?.telefono}</p>
+                                <p><b><strong>Email:</strong></b> {clienteSeleccionado?.correo_electronico}</p>
+                                <p><b><strong>Direccion:</strong></b> {clienteSeleccionado?.direccion}</p>
+                            </div>
+                        </div>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setClienteSeleccionado(null)}>Cerrar</Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 }

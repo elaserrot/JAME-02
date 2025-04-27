@@ -21,6 +21,30 @@ exports.listarCitas = async (req, res) => {
     })
 };
 
+exports.listarCitasUsuario = async (req, res) => {
+    const id = req.params.id;
+    const q = `SELECT 
+    ID_Citas, 
+    citas.ID_Usuario, 
+    Fecha_Cita, 
+    Motivo_Cita, 
+    Estado_Cita, 
+    citas.ID_Mascota, 
+    mascota.Nombre_Mascota, 
+    usuarios.nombre_completo 
+    FROM citas 
+    INNER JOIN usuarios ON citas.ID_Usuario = usuarios.id_usuario 
+    INNER JOIN mascota ON citas.ID_Mascota = mascota.ID_Mascota
+    WHERE citas.ID_Usuario = ?`;
+    conexion.query(q, [id], (err, resultado) => {
+        if (err) {
+            console.log(err)
+            res.status(500).json("Error al obtener los resultados")
+        }
+        res.status(200).json(resultado)
+    })
+};
+
 //controlador para agregar citas
 exports.agregarCita = async (req, res) => {
     const { Usuario, Fecha, Motivo, Estado, Mascota } = req.body;
@@ -129,4 +153,15 @@ exports.actualizarCitaUnica = async (req, res) => {
     });
 };
 
-
+exports.cambiarEstado = async (req, res) => {
+    const { id } = req.params;
+    const estado = req.body.Estado_Cita;
+    const q = `UPDATE citas SET Estado_Cita = ? WHERE ID_Citas = ?`;
+    conexion.query(q, [estado, id], (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({ error: "Error al aceptar la cita" });
+        }
+        res.status(200).json({ message: "Cita aceptada con éxito" });
+    });
+}

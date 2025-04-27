@@ -1,34 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import Calendar from 'react-calendar';
+import React, { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
-import Footer from '../../components/Footer';
-import NavbarC from '../../components/NavbarC';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import moment from 'moment';
 
-const ServiciosGrooming = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+const BACKEND_URL = 'http://localhost:3001';
+
+const AgendamientoGrooming = () => {
+  const [selectedDate, setSelectedDate] = useState(moment().format('YYYY-MM-DDTHH:mm'));
   const [servicio, setServicio] = useState('');
-  const [pelaje, setPelaje] = useState('');
-  const [tipoMascota, setTipoMascota] = useState('');
-  const [nombreMascota, setNombreMascota] = useState('');
-  const [raza, setRaza] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
-
-  // Verificación de sesión con el useEffect
-  useEffect(() => {
-    const token = localStorage.getItem('token'); // Obtenemos el token de localStorage
-    if (!token) {
-      navigate('/login'); // Si no hay token, redirigimos al login
-    } else {
-      setIsLoggedIn(true); // Si hay token, cambiamos el estado a logueado
-    }
-  }, [navigate]); // Se ejecuta solo cuando 'navigate' cambia
-
-  if (!isLoggedIn) {
-    return <div className="text-center mt-5">Verificando sesión...</div>; // Mensaje mientras se verifica la sesión
-  }
+  const [mascota, setMascota] = useState('');
+  const [mascotas, setMascotas] = useState([]);
+  const [citas, setCitas] = useState([]);
+  const [isDataUpdated, setIsDataUpdated] = useState(false);
 
   const token = localStorage.getItem('token');
   const decoded_token = JSON.parse(atob(token.split('.')[1]));
@@ -38,99 +23,156 @@ const ServiciosGrooming = () => {
     try {
       const nuevaCita = {
         Usuario: id,
-        Fecha: selectedDate.toISOString().split('T')[0],
+        Fecha: selectedDate,
         Motivo: servicio,
         Estado: 'pendiente',
-        Mascota: nombreMascota
+        Mascota: mascota
       };
 
+      console.log(nuevaCita);
+
       const response = await axios.post('http://localhost:3001/api/citas/agregarCita', nuevaCita);
-      alert('Cita agendada con éxito');
+      Swal.fire({
+        icon: 'success',
+        title: 'Cita agendada con éxito',
+        showConfirmButton: false,
+        timer: 1500
+      });
     } catch (error) {
       console.error('Error al agendar la cita:', error);
-      alert('Hubo un error al agendar la cita');
+      Swal.fire({
+        icon: 'error',
+        title: 'Hubo un error al agendar la cita',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    } finally {
+      setIsDataUpdated(true);
     }
   };
 
-  function formatDateToLocalInput(date) {
-    const pad = (n) => n.toString().padStart(2, '0');
 
-    const year = date.getFullYear();
-    const month = pad(date.getMonth() + 1);
-    const day = pad(date.getDate());
-    const hours = pad(date.getHours());
-    const minutes = pad(date.getMinutes());
+  useEffect(() => {
+    const fetchMascotas = async () => {
+      try {
+        const response = await axios.get(`${BACKEND_URL}/api/mascota/cliente/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setMascotas(response.data);
+      } catch (error) {
+        console.error("Error al obtener mascotas:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Hubo un error al obtener las mascotas.",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    };
 
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
-  }
+    const fetchCitas = async () => {
+      try {
+        const response = await axios.get(`${BACKEND_URL}/api/citas/listarCitas/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setCitas(response.data);
+      } catch (error) {
+        console.error("Error al obtener citas:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Hubo un error al obtener las citas.",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    };
+
+    fetchMascotas();
+    fetchCitas();
+    setIsDataUpdated(false);
+  }, [token, id, isDataUpdated]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-
-      <div className="container mt-5" style={{ flex: 1 }}>
-        <h2 className="text-center mb-4">Servicios de Grooming</h2>
-
-        <div className="row">
-          <div className="col-md-6">
+    <div style={{ minHeight: '100vh' }}>
+      <div className="container rounded border shadow my-5">
+        <div className="row row-cols-1 row-cols-md-2 p-5 mt-5 align-items-center ">
+          <div className="col justify-content-center p-5 rounded">
+            <h2 className="text-center mb-4">Agendamiento de grooming</h2>
             <label>Servicio:</label>
-            <select className="form-select mb-3" onChange={(e) => setServicio(e.target.value)}>
-              <option value="">Seleccione el servicio</option>
+            <select
+              value={servicio}
+              className="form-select mb-3"
+              onChange={(e) => setServicio(e.target.value)}
+              required
+            >
+              <option disabled value="">Seleccione el servicio</option>
               <option value="Corte">Corte</option>
               <option value="Baño">Baño</option>
               <option value="Corte y Baño">Corte y Baño</option>
               <option value="Baño y Uñas">Baño y Uñas</option>
             </select>
 
-            <label>Pelaje:</label>
-            <select className="form-select mb-3" onChange={(e) => setPelaje(e.target.value)}>
-              <option value="">Seleccione el tipo de pelaje</option>
-              <option value="Corto">Corto</option>
-              <option value="Mediano">Mediano</option>
-              <option value="Largo">Largo</option>
-            </select>
-
-            <label>Tipo de mascota:</label>
-            <select className="form-select mb-3" onChange={(e) => setTipoMascota(e.target.value)}>
-              <option value="">Seleccione el tipo</option>
-              <option value="Perro">Perro</option>
-              <option value="Gato">Gato</option>
+            <label>Mascota:</label>
+            <select
+              value={mascota}
+              className="form-select mb-3"
+              onChange={(e) => setMascota(e.target.value)}
+              required
+            >
+              <option disabled value="">Seleccione la mascota</option>
+              {mascotas.map((mascota) => (
+                <option key={mascota.ID_Mascota} value={mascota.ID_Mascota}>
+                  {mascota.Nombre_Mascota}
+                </option>
+              ))}
             </select>
 
             <label>Fecha:</label>
             <input
-              className="mb-3 bg-light"
+              className="form-control mb-3 bg-light"
               type="datetime-local"
-              onChange={(e) => setSelectedDate(new Date(e.target.value))}
-              value={formatDateToLocalInput(selectedDate)}
+              min={moment().format('YYYY-MM-DDTHH:mm')}
+              onChange={(e) => setSelectedDate(moment(e.target.value).format('YYYY-MM-DDTHH:mm'))}
+              value={selectedDate}
+              required
             />
-          </div>
-
-          <div className="col-md-6">
-            <label>Nombre de la mascota:</label>
-            <input
-              type="text"
-              className="form-control mb-3 bg-light"
-              placeholder="Nombre Mascota"
-              onChange={(e) => setNombreMascota(e.target.value)}
-            />
-
-            <label>Raza:</label>
-            <input
-              type="text"
-              className="form-control mb-3 bg-light"
-              placeholder="Raza"
-              onChange={(e) => setRaza(e.target.value)}
-            />
-
-            <button className="btn btn-success mt-3 w-100" onClick={handleAgendar}>
+            <button className="btn btn-success mt-3" onClick={handleAgendar}>
               AGENDAR
             </button>
           </div>
+          <div className="container my-5 border-start rounded p-5">
+            <h2 className="text-center mb-4">Citas</h2>
+            <div className="d-flex justify-content-center">
+              <table className="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Servicio</th>
+                    <th scope="col">Mascota</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Hora</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {citas.map((cita) => (
+                    <tr key={cita.ID_Cita}>
+                      <td>{cita.Motivo_Cita}</td>
+                      <td>{cita.Nombre_Mascota}</td>
+                      <td>{moment(cita.Fecha_Cita).format('DD/MM/YYYY')}</td>
+                      <td>{moment(cita.Fecha_Cita).format('hh:mm A')}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
-
     </div>
   );
 };
 
-export default ServiciosGrooming;
+export default AgendamientoGrooming;

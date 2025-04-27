@@ -57,14 +57,17 @@ export default function Checkout() {
         e.preventDefault();
         const totalFinal = total;
         try {
+            const body = {
+                title: `Orden - ${carrito.map((producto) => `${producto.cantidad} ${producto.nombre_producto}`).join(', ')}`,
+                unit_price: totalFinal,
+            }
+            console.log(body);
             const response = await fetch('http://localhost:3001/api/compras/crear-pago', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    title: `Orden - ${formData.nombre}`,
-                    unit_price: totalFinal,
-                }),
+                body: JSON.stringify(body),
             });
+
 
             const data = await response.json();
             console.log('Preferencia de pago creada:', data);
