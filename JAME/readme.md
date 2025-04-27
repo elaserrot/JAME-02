@@ -1,4 +1,4 @@
-# 🐾 JAME - Sistema Veterinario Integral
+# 🐾 JAME - Sistema Veterinario
 
 Este proyecto requiere la configuración de un entorno fullstack con conexión segura mediante Ngrok para pruebas en red, incluyendo pasarela de pagos con MercadoPago.
 
