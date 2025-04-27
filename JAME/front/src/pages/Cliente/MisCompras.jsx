@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 const BACKEND_URL = 'http://localhost:3001'
 
@@ -42,7 +43,7 @@ export default function MisCompras() {
                                 <div className="card-body">
                                     <h5 className="card-title">{compra.descripcion}</h5>
                                     <p className="card-text">Total: ${compra.monto}</p>
-                                    <p className='card-text'>Fecha: {compra.fecha_aprobacion}</p>
+                                    <p className='card-text'>Fecha: {moment(compra.created_at).format('DD/MM/YYYY')}</p>
                                     <p className='card-text'>Estado: {compra.status}</p>
                                     <p className='card-text'>Codigo de verificacion: {compra.codigo_verificacion}</p>
                                 </div>
