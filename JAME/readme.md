@@ -1,4 +1,4 @@
-# 🚀 Proyecto E-commerce con Backend, Frontend y Ngrok
+# 🐾 JAME - Sistema Veterinario Integral
 
 Este proyecto requiere la configuración de un entorno fullstack con conexión segura mediante Ngrok para pruebas en red, incluyendo pasarela de pagos con MercadoPago.
 
