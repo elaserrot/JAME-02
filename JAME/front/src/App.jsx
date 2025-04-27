@@ -39,6 +39,7 @@ import Success from "./components/Success";
 import Failure from "./components/Failure";
 import AdminProductos from "./pages/Admin/AdminProductos";
 import AdminAgregarProducto from "./pages/Admin/AdminAgregarProducto";
+import MisCompras from "./pages/Cliente/MisCompras";
 
 function App() {
   return (
@@ -67,6 +68,7 @@ function App() {
             <Route path="/carrito" element={<CarritoCompras />} />
             <Route path="/pago" element={<PasarelaPago />} />
             <Route path="/mascota" element={<Mascota />} />
+            <Route path="/miscompras" element={<MisCompras />} />
             <Route path="/productos" element={<Productos />} />
             <Route path="/producto/:id" element={<Producto />} />
             <Route path="/medicina" element={<ServiciosMedicina />} />
