@@ -6,25 +6,25 @@ import Swal from "sweetalert2";
 const BACKEND_URL = "http://localhost:3001";
 
 export default function Success() {
-    const navigate = useNavigate();
-    const token = localStorage.getItem('token');
-    const decoded_token = JSON.parse(atob(token.split('.')[1]));
-    const userId = decoded_token.id;
+
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         const confirmPayment = async () => {
-            const queryParams = new URLSearchParams(window.location.search);
-            const paymentId = queryParams.get('payment_id');
-            const status = queryParams.get('status');
+            const queryParams = await new URLSearchParams(window.location.search);
+            const paymentId = await queryParams.get('payment_id');
+            const status = await queryParams.get('status');
 
             if (!paymentId) {
                 await Swal.fire('Error', 'No se recibió información de pago', 'error');
-                return navigate('/');
+                return window.location.href = '/';
             }
 
             try {
                 setIsLoading(true);
+                const token = await localStorage.getItem('token');
+                const decoded_token = await JSON.parse(atob(token.split('.')[1]));
+                const userId = await decoded_token.id;
                 // 1. Confirmar el pago con el backend
                 const confirmResponse = await axios.post(`${BACKEND_URL}/api/compras/confirmar-pago/${userId}`, {
                     paymentId,
@@ -41,7 +41,7 @@ export default function Success() {
                         text: 'Tu pago ha sido confirmado con exito.',
                         icon: 'success'
                     });
-                    navigate('/miscompras');
+                    window.location.href = '/miscompras';
                 }
             } catch (error) {
                 console.error("Error en confirmación de pago:", error);
@@ -50,7 +50,7 @@ export default function Success() {
                     text: 'Hubo un problema confirmando tu pago. Por favor contacta a soporte.',
                     icon: 'error'
                 });
-                navigate('/');
+                window.location.href = '/';
             } finally {
                 setIsLoading(false);
             }
@@ -60,7 +60,7 @@ export default function Success() {
         confirmPayment().catch(error => {
             console.error("Error no manejado en confirmPayment:", error);
         });
-    }, [navigate, userId]);
+    }, [userId]);
 
     return (
         <div className="container my-5 text-center">
