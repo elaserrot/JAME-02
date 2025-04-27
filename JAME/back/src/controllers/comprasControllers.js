@@ -116,6 +116,7 @@ exports.eliminarCompra = async (req, res) => {
 
 exports.crearPago = async (req, res) => {
     const { title, unit_price } = req.body;
+    const url = "https://8ace-190-24-56-223.ngrok-free.app"; 
 
     const body = {
         items: [
@@ -126,11 +127,11 @@ exports.crearPago = async (req, res) => {
                 currency_id: "COP",
             },
         ],
-        back_urls: {
-            success: "https://8ace-190-24-56-223.ngrok-free.app/success",
-            failure: "https://8ace-190-24-56-223.ngrok-free.app/failure",
-            pending: "https://8ace-190-24-56-223.ngrok-free.app/pending",
-        },
+            back_urls: {
+                success: `${url}/success`,
+                failure: `${url}/failure`,
+                pending: `${url}/pending`,
+            },
         auto_return: "approved",
     };
 
