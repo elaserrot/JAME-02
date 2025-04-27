@@ -27,12 +27,19 @@ export default function Navegacion() {
                         <div className="col-md-5 text-center">
                             <h1>Veterinaria Ciudad Canina</h1>
                         </div>
-                        <div className="col-md-3 text-end">
-                            <i className="bi bi-person"></i>
-                            <Link to={"/PerfilUsuario"} className="text-decoration-none text-secondary me-3">PERFIL</Link>
-
-                            <Link to={"/carrito"} className="text-decoration-none text-secondary">CARRITO</Link>
-                            <i className="bi bi-cart4"></i>
+                        <div className="col-md-3 text-end d-flex">
+                            <div>
+                                <i className="bi bi-person"></i>
+                                <Link to={"/PerfilUsuario"} className="text-decoration-none text-secondary">PERFIL</Link>
+                            </div>
+                            <div className='mx-3'>
+                                <i className="bi bi-cart4"></i>
+                                <Link to={"/carrito"} className="text-decoration-none text-secondary">CARRITO</Link>
+                            </div>
+                            <div>
+                                <i className="bi bi-bag"></i>
+                                <Link to={"/miscompras"} className="text-decoration-none text-secondary">MIS COMPRAS</Link>
+                            </div>
                         </div>
                     </div>
                 </div>
