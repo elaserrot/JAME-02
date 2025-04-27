@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-04-2025 a las 03:09:53
+-- Tiempo de generación: 27-04-2025 a las 03:23:53
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -90,6 +90,13 @@ CREATE TABLE `compras` (
   `codigo_verificacion` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `compras`
+--
+
+INSERT INTO `compras` (`id`, `payment_id`, `status`, `fecha_aprobacion`, `metodo_pago`, `monto`, `descripcion`, `created_at`, `id_user`, `codigo_verificacion`) VALUES
+(1, '109629825904', 'approved', '2025-04-26 20:19:55', 'master', 10000.00, 'Orden - drivers 360', '2025-04-27 01:19:58', 10, '530284');
+
 -- --------------------------------------------------------
 
 --
@@ -152,6 +159,13 @@ CREATE TABLE `productos` (
   `id_cate` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`id_producto`, `nombre_producto`, `descripcion`, `precio`, `stock`, `imagen`, `id_cate`) VALUES
+(1, 'auto ', 'Nissan gtr', 10000, 3, 'producto_1745716742012-453187649.jpg', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -204,7 +218,8 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre_completo`, `correo_electronico`, `
 (5, 'Martin Lee Moya Llano ', 'misterlee272006@gmail.com', 'lee', '$2b$10$GxLv4KzNDuKi7W6AWibV/.H0vynm.9uCqV5X2WG/M1mY5algdHUVa', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 2),
 (6, 'Martin Lee Moya Llano ', 'misterlee272006@gmail.com', 'leetosky', '$2b$10$OcPis7W/rDNOGXEIseeGhuTCvvqt/8/e03QAQPx82xanvQLLtZxxK', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 2),
 (7, 'JuanJo', 'uparelajuan2@gmail.com', 'jj', '$2b$10$Mgg58VT6B.pWprsg14xJ9Oswc7xS.Y2jo6KL/81vSLO9SMQvno36G', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 2),
-(9, 'Admin', 'admin@gmail.com', 'Admin', '$2b$10$zbgPu3YYZ8I53Hm61s6KaepYek81lI6hdVsFQvjPZ7yWqerMxs6va', 'san cristobal', NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 1);
+(9, 'Admin', 'admin@gmail.com', 'Admin', '$2b$10$zbgPu3YYZ8I53Hm61s6KaepYek81lI6hdVsFQvjPZ7yWqerMxs6va', 'san cristobal', NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 1),
+(10, 'Diego Esteban', 'egoessanrero@gmail.com', 'Diego', '$2b$10$qx0a82T.tJKarF9GcOcIruX/j9emEQk.g3juqmLRmcO8Je25we1kC', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', NULL, NULL, '0000-00-00 00:00:00', 2);
 
 --
 -- Índices para tablas volcadas
@@ -289,7 +304,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `carrito_compras`
 --
 ALTER TABLE `carrito_compras`
-  MODIFY `ID_CarritoCompras` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `ID_CarritoCompras` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -307,7 +322,7 @@ ALTER TABLE `citas`
 -- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_pedidos`
@@ -331,7 +346,7 @@ ALTER TABLE `pedidos`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -343,7 +358,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas
