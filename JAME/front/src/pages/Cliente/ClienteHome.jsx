@@ -48,6 +48,7 @@ export default function ClienteHome() {
     const [seccionActiva, setSeccionActiva] = useState("consulta");
 
     const [productos, setProductos] = useState([]);
+    console.log(productos);
 
     const [contacto, setContacto] = useState({
         nombre: "",
@@ -67,6 +68,7 @@ export default function ClienteHome() {
             } catch (error) {
                 console.error("Error al obtener los productos:", error);
                 setIsLoadingProductos(false);
+                setProductos([]);
             }
         };
         fetchProductos();
@@ -149,7 +151,7 @@ export default function ClienteHome() {
                 <div className="container">
                     <h2 className="text-dark text-center mb-4">Productos Nuevos</h2>
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5">
-                        {productos.length < 0 ?
+                        {productos.length <= 0 ?
                             <p className="text-center w-100">No hay productos disponibles</p>
                             :
                             productos.map((producto) => (
