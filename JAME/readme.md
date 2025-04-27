@@ -38,6 +38,7 @@ Contraseña: 21O6OGks76
 ```bash
 git clone https://github.com/tu-usuario/tu-repositorio.git
 cd tu-repositorio
+```
 2. Instalar dependencias
 Backend
 bash
