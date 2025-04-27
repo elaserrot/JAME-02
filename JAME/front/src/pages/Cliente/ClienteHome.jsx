@@ -48,6 +48,7 @@ export default function ClienteHome() {
     const [seccionActiva, setSeccionActiva] = useState("consulta");
 
     const [productos, setProductos] = useState([]);
+    console.log(productos);
 
     const [contacto, setContacto] = useState({
         nombre: "",
@@ -67,6 +68,7 @@ export default function ClienteHome() {
             } catch (error) {
                 console.error("Error al obtener los productos:", error);
                 setIsLoadingProductos(false);
+                setProductos([]);
             }
         };
         fetchProductos();
@@ -149,16 +151,16 @@ export default function ClienteHome() {
                 <div className="container">
                     <h2 className="text-dark text-center mb-4">Productos Nuevos</h2>
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5">
-                        {productos.length > 0 ?
+                        {productos.length <= 0 ?
                             <p className="text-center w-100">No hay productos disponibles</p>
                             :
                             productos.map((producto) => (
                                 <div key={producto.id_producto} className="col mb-4">
                                     <div className="card">
-                                        <img src={`${BACKEND_URL}/PRODUCTOS_FOTOS/${producto.imagen}`} className="card-img-top" alt="Producto 1" />
+                                        <img src={`${BACKEND_URL}/PRODUCTOS_FOTOS/${producto.imagen}`} className="card-img-top" style={{ height: "200px", width: "100%", objectFit: "cover" }} alt="Producto 1" />
                                         <div className="card-body text-center">
                                             <h6>{producto.nombre_producto}</h6>
-                                            <button className="btn btn-primary">Comprar ahora</button>
+                                            <Link to={`/producto/${producto.id_producto}`} className="btn btn-primary">Comprar ahora</Link>
                                         </div>
                                     </div>
                                 </div>

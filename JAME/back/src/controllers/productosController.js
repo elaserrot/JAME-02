@@ -5,11 +5,7 @@ exports.listarProductos = (req, res) => {
     const sql = 'SELECT * FROM productos INNER JOIN categorias ON productos.id_cate = categorias.id_cate ORDER BY id_producto DESC';
     conexion.query(sql, (error, resultado) => {
         if (error) return console.error(error.message);
-        if (resultado.length > 0) {
-            res.json(resultado);
-        } else {
-            res.json('No hay registros');
-        }
+        res.status(200).json(resultado);
     });
 };
 
@@ -17,11 +13,7 @@ exports.listarLimitado = (req, res) => {
     const sql = 'SELECT * FROM productos ORDER BY id_producto DESC LIMIT 5 ';
     conexion.query(sql, (error, resultado) => {
         if (error) return console.error(error.message);
-        if (resultado.length > 0) {
-            res.json(resultado);
-        } else {
-            res.json('No hay registros');
-        }
+        res.status(200).json(resultado);
     });
 };
 
@@ -31,11 +23,7 @@ exports.listarProductoPorId = (req, res) => {
     const query = `SELECT * FROM productos WHERE id_producto = ${id}`;
     conexion.query(query, (error, resultado) => {
         if (error) return console.error(error.message);
-        if (resultado.length > 0) {
-            res.json(resultado);
-        } else {
-            res.json('No hay registros con ese ID');
-        }
+        res.status(200).json(resultado);
     });
 };
 

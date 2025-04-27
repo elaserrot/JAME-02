@@ -37,59 +37,62 @@ exports.listarCompras = async (req, res) => {
     })
 };
 
+exports.listarComprasUsuario = async (req, res) => {
+    const { id } = req.params;
+    const q = "SELECT * FROM compras WHERE id_user = ?";
+    conexion.query(q, [id], (err, resultado) => {
+        if (err) {
+            console.log(err)
+            res.status(500).json("Error al obtener los resultados")
+        }
+        res.status(200).json(resultado)
+    })
+}
+
 // Controlador para agregar compras
 exports.agregarCompra = async (req, res) => {
-    const {
-        ID_Compra, Fecha, Cantidad, Descripción, MetodoPago, NumeroFactura, PrecioUnitario, Precio_Total, ID_producto
-    } = req.body;
-
-    if (
-        !ID_Compra || !Fecha || !Cantidad || !Descripción || !MetodoPago ||
-        !NumeroFactura || !PrecioUnitario || !Precio_Total || !ID_producto
-    ) {
-        return res.status(400).json({ error: "Todos los campos son obligatorios" });
-    }
-
     const q = `
-        INSERT INTO compras 
-        (ID_Compra, Fecha, Cantidad, Descripción, MetodoPago, NumeroFactura, PrecioUnitario, Precio_Total, ID_producto) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
+            INSERT INTO compras 
+            (payment_id, status, fecha_aprobacion, metodo_pago, monto, descripcion)
+            VALUES (?, ?, ?, ?, ?, ?)
+        `;
 
-    conexion.query(q, [
-        ID_Compra, Fecha, Cantidad, Descripción, MetodoPago, NumeroFactura, PrecioUnitario, Precio_Total, ID_producto
-    ], (err, resultado) => {
+    const payment_id = req.body.payment_id;
+    const status = req.body.status;
+    const fecha_aprobacion = req.body.fecha_aprobacion;
+    const metodo_pago = req.body.metodo_pago;
+    const monto = req.body.monto;
+    const descripcion = req.body.descripcion;
+
+    conexion.query(q, [payment_id, status, fecha_aprobacion, metodo_pago, monto, descripcion], (err, result) => {
         if (err) {
             console.error(err);
-            return res.status(500).json("Error al agregar la compra");
+            res.status(500).json("Error al agregar la compra");
+        } else {
+            res.status(200).json("Compra agregada correctamente");
         }
-
-        res.status(200).json("Compra agregada con éxito");
     });
 };
 
 exports.actualizarCompra = async (req, res) => {
     const { id } = req.params;
-    const { NumeroFactura } = req.body;
+    const { payment_id, status, fecha_aprobacion, metodo_pago, monto, descripcion } = req.body;
 
-    if (!NumeroFactura) {
-        return res.status(400).json({ error: "El campo NumeroFactura es obligatorio" });
-    }
+    const q = `
+            UPDATE compras
+            SET payment_id = ?, status = ?, fecha_aprobacion = ?, metodo_pago = ?, monto = ?, descripcion = ?
+            WHERE ID_Compra = ?
+        `;
 
-    const q = "UPDATE compras SET NumeroFactura = ? WHERE ID_Compra = ?";
-    conexion.query(q, [NumeroFactura, id], (err, resultado) => {
+    conexion.query(q, [payment_id, status, fecha_aprobacion, metodo_pago, monto, descripcion, id], (err, result) => {
         if (err) {
             console.error(err);
-            return res.status(500).json("Error al actualizar la compra");
+            res.status(500).json("Error al actualizar la compra");
+        } else {
+            res.status(200).json("Compra actualizada correctamente");
         }
-
-        if (resultado.affectedRows === 0) {
-            return res.status(404).json({ error: "Compra no encontrada" });
-        }
-
-        res.status(200).json("Compra actualizada correctamente");
     });
-};
+}
 
 // Controlador para eliminar una compra por ID_Compra
 exports.eliminarCompra = async (req, res) => {
@@ -124,11 +127,11 @@ exports.crearPago = async (req, res) => {
             },
         ],
         back_urls: {
-            success: "http://localhost:5173/success",
-            failure: "http://localhost:5173/failure",
-            pending: "http://localhost:5173/pending",
+            success: "https://4755-190-24-56-223.ngrok-free.app/success",
+            failure: "https://4755-190-24-56-223.ngrok-free.app/failure",
+            pending: "https://4755-190-24-56-223.ngrok-free.app/pending",
         },
-        // auto_return: "approved",
+        auto_return: "approved",
     };
 
     try {
@@ -168,11 +171,13 @@ exports.confirmarPago = async (req, res) => {
             description
         } = paymentData;
 
+        const userId = req.params.id;
+
         // 4. Registrar en tu base de datos
         const q = `
-            INSERT INTO pagos 
-            (payment_id, status, fecha_aprobacion, metodo_pago, monto, descripcion)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO compras 
+            (payment_id, status, fecha_aprobacion, metodo_pago, monto, descripcion, id_user)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
 
         conexion.query(q, [
@@ -181,7 +186,8 @@ exports.confirmarPago = async (req, res) => {
             new Date(date_approved),
             payment_method_id,
             transaction_amount,
-            description
+            description,
+            userId
         ], (err, resultado) => {
             if (err) {
                 console.error("Error al registrar pago:", err);
