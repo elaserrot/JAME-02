@@ -39,15 +39,17 @@ Contraseña: 21O6OGks76
 git clone https://github.com/tu-usuario/tu-repositorio.git
 cd tu-repositorio
 ```
-2. Instalar dependencias
+### 2. Instalar dependencias
 Backend
-bash
+```bash
 cd back
 npm install
+```
 Frontend
-bash
+```bash
 cd ../front
 npm install
+```
 🔌 Configuración de Ngrok
 Instalación
 Descargar Ngrok desde https://ngrok.com/download
@@ -78,36 +80,43 @@ Buscar la alerta relacionada con ngrok
 Seleccionar "Permitir en dispositivo"
 
 Autenticación
-bash
+```bash
 ngrok authtoken TU_TOKEN_AQUI
+```
 🖥️ Ejecución del Proyecto
 1. Iniciar Backend
-bash
+```bash
 cd back
 npm start
+```
 2. Iniciar Frontend
-bash
+```bash
 cd ../front
 npm start
+```
 3. Configurar Ngrok
-bash
+```bash
 ngrok http 3000
+```
 🔄 Actualizar URL en Controlador
 Copiar la URL HTTPS que proporciona Ngrok (ej. https://abc1-23-456-789.ngrok-free.app)
 
 Editar el archivo:
 
-bash
+```bash
 nano back/src/controllers/comprasControllers.js
+```
 Buscar línea ~119 y actualizar:
 
-javascript
+```javascript
 const url = "https://tu-url-de-ngrok.ngrok-free.app";
 Reiniciar el backend:
-
-bash
+```
+```bash
 cd back
 npm start
+```
+
 💳 Probar Pasarela de Pagos
 Iniciar sesión como usuario normal
 
