@@ -6,42 +6,48 @@ import Swal from "sweetalert2";
 const BACKEND_URL = "http://localhost:3001";
 
 export default function Success() {
-
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const confirmPayment = async () => {
-            const queryParams = await new URLSearchParams(window.location.search);
-            const paymentId = await queryParams.get('payment_id');
-            const status = await queryParams.get('status');
-
-            if (!paymentId) {
-                await Swal.fire('Error', 'No se recibió información de pago', 'error');
-                return window.location.href = '/';
-            }
-
             try {
-                setIsLoading(true);
-                const token = await localStorage.getItem('token');
-                const decoded_token = await JSON.parse(atob(token.split('.')[1]));
-                const userId = await decoded_token.id;
-                // 1. Confirmar el pago con el backend
-                const confirmResponse = await axios.post(`${BACKEND_URL}/api/compras/confirmar-pago/${userId}`, {
+                const queryParams = new URLSearchParams(window.location.search);
+                const paymentId = queryParams.get('payment_id');
+                const status = queryParams.get('status');
+
+                if (!paymentId || !status) {
+                    await Swal.fire('Error', 'No se recibió información de pago', 'error');
+                    return navigate('/');
+                }
+
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    await Swal.fire('Error', 'No se encontró el token de autenticación', 'error');
+                    return navigate('/');
+                }
+
+                const decodedToken = JSON.parse(atob(token.split('.')[1]));
+                const userId = decodedToken.id;
+
+                // Confirmar el pago con el backend
+                const { status: confirmStatus } = await axios.post(`${BACKEND_URL}/api/compras/confirmar-pago/${userId}`, {
                     paymentId,
                     status,
                 });
 
-                // 2. Vaciar el carrito (si la confirmación fue exitosa)
-                await axios.delete(`http://localhost:3001/api/carrito/eliminarCarrito/${userId}`);
+                if (confirmStatus === 200) {
+                    // Vaciar el carrito
+                    await axios.delete(`${BACKEND_URL}/api/carrito/eliminarCarrito/${userId}`);
 
-                // 3. Mostrar confirmación al usuario
-                if (confirmResponse.status === 200) {
                     await Swal.fire({
                         title: 'Pago confirmado',
-                        text: 'Tu pago ha sido confirmado con exito.',
+                        text: 'Tu pago ha sido confirmado con éxito.',
                         icon: 'success'
                     });
-                    window.location.href = '/miscompras';
+                    navigate('/miscompras');
+                } else {
+                    throw new Error('La confirmación del pago falló');
                 }
             } catch (error) {
                 console.error("Error en confirmación de pago:", error);
@@ -50,17 +56,14 @@ export default function Success() {
                     text: 'Hubo un problema confirmando tu pago. Por favor contacta a soporte.',
                     icon: 'error'
                 });
-                window.location.href = '/';
+                navigate('/');
             } finally {
                 setIsLoading(false);
             }
         };
 
-        // Manejar la promesa correctamente
-        confirmPayment().catch(error => {
-            console.error("Error no manejado en confirmPayment:", error);
-        });
-    }, [userId]);
+        confirmPayment();
+    }, [navigate]);
 
     return (
         <div className="container my-5 text-center">
@@ -71,7 +74,7 @@ export default function Success() {
             ) : (
                 <div>
                     <h1 className="fw-bold">¡Gracias por tu compra!</h1>
-                    <p>Tu pago ha sido confirmado con exito.</p>
+                    <p>Tu pago ha sido confirmado con éxito.</p>
                 </div>
             )}
         </div>
