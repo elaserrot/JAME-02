@@ -17,17 +17,17 @@ La base de datos debe llamarse **jame**.
 
 El script de creación y carga inicial se encuentra en:
 
-\`\`\`
+```
 back/src/config/jame.sql
-\`\`\`
+```
 
 Pasos rápidos:
 
 1. Crear base de datos:
-\`\`\`sql
+```sql
 CREATE DATABASE jame;
-\`\`\`
-2. Importar el archivo \`jame.sql\` en tu gestor de base de datos (por ejemplo, con MySQL Workbench o consola).
+```
+2. Importar el archivo `jame.sql` en tu gestor de base de datos (por ejemplo, con MySQL Workbench o consola).
 
 ---
 
@@ -56,26 +56,26 @@ CREATE DATABASE jame;
 ## 🛠️ Configuración inicial
 
 ### 1. Clonar el repositorio
-\`\`\`bash
+```bash
 git clone https://github.com/tu-usuario/tu-repositorio.git
 cd tu-repositorio
-\`\`\`
+```
 
 ### 2. Instalar dependencias
 Backend:
-\`\`\`bash
+```bash
 cd back
 npm install
-\`\`\`
+```
 Frontend:
-\`\`\`bash
+```bash
 cd ../front
 npm install
-\`\`\`
+```
 
 ### 3. Configurar la Base de Datos
 - Asegúrate de tener MySQL corriendo.
-- Crear la base de datos **jame** e importar el script \`back/src/config/jame.sql\`.
+- Crear la base de datos **jame** e importar el script `back/src/config/jame.sql`.
 
 ---
 
@@ -92,49 +92,49 @@ Instalación:
 - Si bloquea Ngrok: ir a "Historial de Protección" y permitir el ejecutable.
 
 Autenticación:
-\`\`\`bash
+```bash
 ngrok authtoken TU_TOKEN_AQUI
-\`\`\`
+```
 
 ---
 
 ## 🖥️ Ejecución del Proyecto
 
 1. Iniciar Backend:
-\`\`\`bash
+```bash
 cd back
 npm start
-\`\`\`
+```
 2. Iniciar Frontend:
-\`\`\`bash
+```bash
 cd ../front
 npm start
-\`\`\`
+```
 3. Iniciar Ngrok:
-\`\`\`bash
+```bash
 ngrok http 3000
-\`\`\`
+```
 
 ---
 
 ## 🔄 Actualizar URL en Controlador de Compras
 
-1. Copiar la URL HTTPS de Ngrok (por ejemplo, \`https://abc1-23-456-789.ngrok-free.app\`).
+1. Copiar la URL HTTPS de Ngrok (por ejemplo, `https://abc1-23-456-789.ngrok-free.app`).
 2. Editar:
 
-\`\`\`bash
+```bash
 nano back/src/controllers/comprasControllers.js
-\`\`\`
+```
 Buscar alrededor de la línea **119** y actualizar:
 
-\`\`\`javascript
+```javascript
 const url = "https://tu-url-de-ngrok.ngrok-free.app";
-\`\`\`
+```
 3. Reiniciar el backend:
-\`\`\`bash
+```bash
 cd back
 npm start
-\`\`\`
+```
 
 ---
 
@@ -149,7 +149,7 @@ npm start
 
 ## 🌐 Acceso al Proyecto
 
-- Local: \`http://localhost:[puerto-frontend]\`
+- Local: `http://localhost:[puerto-frontend]`
 - Remoto (Ngrok): URL HTTPS proporcionada por Ngrok
 
 ---
@@ -166,6 +166,6 @@ npm start
 ✅ Confirmar que no haya bloqueo del firewall  
 
 ### Base de Datos
-✅ Asegurarse que la base de datos se llame exactamente \`jame\`  
-✅ Confirmar que el script \`jame.sql\` fue importado correctamente  
+✅ Asegurarse que la base de datos se llame exactamente `jame`  
+✅ Confirmar que el script `jame.sql` fue importado correctamente  
 ✅ Verificar conexión en el archivo de configuración del backend si es necesario
