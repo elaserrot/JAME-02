@@ -103,8 +103,8 @@ Copiar la URL HTTPS que proporciona Ngrok (ej. https://abc1-23-456-789.ngrok-fre
 
 Editar el archivo:
 
-```bash
-nano back/src/controllers/comprasControllers.js
+```bashnano
+back/src/controllers/comprasControllers.js
 ```
 Buscar línea ~119 y actualizar:
 
