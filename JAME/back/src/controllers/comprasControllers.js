@@ -172,12 +172,13 @@ exports.confirmarPago = async (req, res) => {
         } = paymentData;
 
         const userId = req.params.id;
+        const codigo_verificacion = Math.floor(100000 + Math.random() * 900000);
 
         // 4. Registrar en tu base de datos
         const q = `
             INSERT INTO compras 
-            (payment_id, status, fecha_aprobacion, metodo_pago, monto, descripcion, id_user)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            (payment_id, status, fecha_aprobacion, metodo_pago, monto, descripcion, id_user, codigo_verificacion)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `;
 
         conexion.query(q, [
@@ -187,7 +188,8 @@ exports.confirmarPago = async (req, res) => {
             payment_method_id,
             transaction_amount,
             description,
-            userId
+            userId,
+            codigo_verificacion
         ], (err, resultado) => {
             if (err) {
                 console.error("Error al registrar pago:", err);

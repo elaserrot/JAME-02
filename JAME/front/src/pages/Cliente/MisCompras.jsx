@@ -40,9 +40,11 @@ export default function MisCompras() {
                         <div key={compra.payment_id} className="col my-3">
                             <div className="card">
                                 <div className="card-body">
-                                    <h5 className="card-title">{compra.producto}</h5>
-                                    <p className="card-text">Cantidad: {compra.cantidad}</p>
+                                    <h5 className="card-title">{compra.descripcion}</h5>
                                     <p className="card-text">Total: ${compra.monto}</p>
+                                    <p className='card-text'>Fecha: {compra.fecha_aprobacion}</p>
+                                    <p className='card-text'>Estado: {compra.status}</p>
+                                    <p className='card-text'>Codigo de verificacion: {compra.codigo_verificacion}</p>
                                 </div>
                             </div>
                         </div>

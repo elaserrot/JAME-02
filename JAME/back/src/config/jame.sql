@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-04-2025 a las 02:35:45
+-- Tiempo de generación: 27-04-2025 a las 03:09:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -86,7 +86,8 @@ CREATE TABLE `compras` (
   `monto` decimal(10,2) NOT NULL,
   `descripcion` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `id_user` int(11) NOT NULL
+  `id_user` int(11) NOT NULL,
+  `codigo_verificacion` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
