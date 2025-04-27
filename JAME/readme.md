@@ -9,7 +9,7 @@ Este proyecto requiere la configuración de un entorno fullstack con conexión s
 - MySQL instalado y corriendo
 - Cuenta en [Ngrok](https://ngrok.com/)
 - Git
-- Puertos 3000 y 5000 disponibles
+- Puertos 3001 y 5173 disponibles
 
 ## 🗄️ Base de Datos
 
@@ -112,7 +112,7 @@ npm start
 ```
 3. Iniciar Ngrok:
 ```bash
-ngrok http 3000
+ngrok http 5173
 ```
 
 ---
