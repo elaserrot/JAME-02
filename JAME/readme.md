@@ -1,4 +1,4 @@
-# 🚀 Proyecto E-commerce con Backend, Frontend y Ngrok
+# 🐾 JAME - Sistema Veterinario
 
 Este proyecto requiere la configuración de un entorno fullstack con conexión segura mediante Ngrok para pruebas en red, incluyendo pasarela de pagos con MercadoPago.
 
@@ -103,8 +103,8 @@ Copiar la URL HTTPS que proporciona Ngrok (ej. https://abc1-23-456-789.ngrok-fre
 
 Editar el archivo:
 
-```bash
-nano back/src/controllers/comprasControllers.js
+```bashnano
+back/src/controllers/comprasControllers.js
 ```
 Buscar línea ~119 y actualizar:
 
