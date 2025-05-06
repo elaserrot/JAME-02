@@ -157,10 +157,36 @@ export default function PerfilUsuario() {
 
     const handleModalInputChange = (e) => {
         const { name, value } = e.target;
-        setMascotaEditar((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
+
+        if (name === 'fecha') {
+            const edad = calcularEdadDesdeFecha(value);
+            setMascotaEditar(prev => ({
+                ...prev,
+                [name]: value,
+                edad: edad
+            }));
+        } else {
+            setMascotaEditar(prev => ({
+                ...prev,
+                [name]: value
+            }));
+        }
+    };
+
+    const calcularEdadDesdeFecha = (fechaString) => {
+        if (!fechaString) return 0;
+
+        const fechaNacimiento = new Date(fechaString);
+        const hoy = new Date();
+
+        let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+        const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+
+        if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+            edad--;
+        }
+
+        return edad;
     };
 
     const handleModalSubmit = async (e) => {
@@ -168,7 +194,6 @@ export default function PerfilUsuario() {
         try {
             const response = await axios.put(`${BACKEND_URL}/api/mascota/actualizarMascota/${mascotaEditar.id_mascota}`, mascotaEditar);
             if (response.status === 200) {
-                setIsDataUpdated(true);
                 const cerrarBoton = document.getElementById('cerrar');
                 cerrarBoton.click();
                 await Swal.fire({
@@ -178,7 +203,6 @@ export default function PerfilUsuario() {
                 })
             }
         } catch (error) {
-            setIsDataUpdated(true);
             console.error("Error al actualizar la mascota:", error);
             Swal.fire({
                 icon: "error",
@@ -186,6 +210,8 @@ export default function PerfilUsuario() {
                 showConfirmButton: false,
                 timer: 1500
             })
+        } finally {
+            setIsDataUpdated(true);
         }
     }
 
@@ -385,11 +411,17 @@ export default function PerfilUsuario() {
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="edad">Edad:</label>
-                                                <input type="number" min={0} max={50} className="form-control" name="edad" value={mascotaEditar?.edad || ''} onChange={handleModalInputChange} />
+                                                <input type="text" min={0} max={50} className="form-control" name="edad" value={mascotaEditar?.edad ? `${mascotaEditar.edad}` : ''} onChange={handleModalInputChange} readOnly />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="edad">Fecha de Nacimiento:</label>
-                                                <input type="datetime-local" className="form-control" name="fecha" value={moment(mascotaEditar?.fecha).format('YYYY-MM-DD HH:mm') || ''} onChange={handleModalInputChange} />
+                                                <input
+                                                    type="datetime-local"
+                                                    className="form-control"
+                                                    name="fecha"
+                                                    value={moment(mascotaEditar?.fecha).format('YYYY-MM-DDTHH:mm') || ''}
+                                                    onChange={handleModalInputChange}
+                                                />
                                             </div>
                                         </div>
                                         <div className="modal-footer">
