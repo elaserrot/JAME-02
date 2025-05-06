@@ -18,6 +18,25 @@ const AgregarMascota = () => {
         setMascota({ ...mascota, [e.target.name]: e.target.value });
     };
 
+    const calcularEdad = (fechaNacimiento) => {
+        if (!fechaNacimiento) return;
+        
+        const fechaNac = new Date(fechaNacimiento);
+        const hoy = new Date();
+        
+        let edad = hoy.getFullYear() - fechaNac.getFullYear();
+        const mes = hoy.getMonth() - fechaNac.getMonth();
+        
+        if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNac.getDate())) {
+            edad--;
+        }
+        
+        setMascota(prevState => ({
+            ...prevState,
+            Edad_Mascota: edad
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -74,9 +93,12 @@ const AgregarMascota = () => {
                                 type="date"
                                 name="Fecha_nacimiento"
                                 value={mascota.Fecha_nacimiento}
-                                onChange={handleChange}
+                                onChange={(e) => {
+                                handleChange(e); 
+                                calcularEdad(e.target.value); 
+                                }}
                                 className="form-control"
-                            />
+                                />
                         </div>
                         <div className="form-group my-3">
                             <label>Raza de la Mascota:</label>
@@ -96,6 +118,7 @@ const AgregarMascota = () => {
                                 value={mascota.Edad_Mascota}
                                 onChange={handleChange}
                                 className="form-control"
+                                readOnly
                             />
                         </div>
                         <div className="form-group my-3">
