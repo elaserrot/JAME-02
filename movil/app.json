@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Veterinaria Ciudad Canina",
+    "slug": "Veterinaria Ciudad Canina",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/logovet.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./src/assets/logovet.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/logovet.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+    "favicon": "./src/assets/fondopes.png"
+    }
+  }
+}
