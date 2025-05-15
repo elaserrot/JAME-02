@@ -4,11 +4,11 @@
     "slug": "Veterinaria Ciudad Canina",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/logovet.png",
+    "icon": "./src/assets/fondopes.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./src/assets/logovet.png",
+      "image": "./src/assets/fondopes.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,7 +17,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/logovet.png",
+        "foregroundImage": "./src/assets/fondopes.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true
