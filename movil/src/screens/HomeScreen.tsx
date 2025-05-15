@@ -179,24 +179,30 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.contactInfo}>
-            <Text style={styles.infoTitle}>INFORMACIÓN DE CONTACTO</Text>
-            <TouchableOpacity onPress={() => Linking.openURL('tel:+57321234567')}>
-              <Text style={styles.infoText}>+57 321 234567</Text>
-            </TouchableOpacity>
+         <View style={styles.contactInfo}>
+  <Text style={styles.infoTitle}>INFORMACIÓN DE CONTACTO</Text>
 
-            <View style={styles.socialIcons}>
-              <TouchableOpacity onPress={() => Linking.openURL('https://www.facebook.com/juan.uparela.3')}>
-                <FontAwesome name="facebook" size={24} color="#3b5998" style={styles.icon} />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => Linking.openURL('https://wa.me/+573115929738')}>
-                <FontAwesome name="whatsapp" size={24} color="#25D366" style={styles.icon} />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => Linking.openURL('https://www.instagram.com/jusbass07/?hl=es-la')}>
-                <FontAwesome name="instagram" size={24} color="#E1306C" style={styles.icon} />
-              </TouchableOpacity>
-            </View>
-          </View>
+  <TouchableOpacity
+    style={styles.contactRow}
+    onPress={() => Linking.openURL('tel:+57321234567')}
+  >
+    <FontAwesome name="phone" size={20} color="#4A90E2" style={styles.contactIcon} />
+    <Text style={styles.infoText}>+57 321 234567</Text>
+  </TouchableOpacity>
+
+  <View style={styles.socialIcons}>
+    <TouchableOpacity onPress={() => Linking.openURL('https://www.facebook.com/juan.uparela.3')}>
+      <FontAwesome name="facebook-square" size={28} color="#3b5998" style={styles.icon} />
+    </TouchableOpacity>
+    <TouchableOpacity onPress={() => Linking.openURL('https://wa.me/+573115929738')}>
+      <FontAwesome name="whatsapp" size={28} color="#25D366" style={styles.icon} />
+    </TouchableOpacity>
+    <TouchableOpacity onPress={() => Linking.openURL('https://www.instagram.com/jusbass07/?hl=es-la')}>
+      <FontAwesome name="instagram" size={28} color="#E1306C" style={styles.icon} />
+    </TouchableOpacity>
+  </View>
+</View>
+
         </View>
       </View>
     </ScrollView>
@@ -290,6 +296,7 @@ const styles = StyleSheet.create({
     color: '#333',
     textAlign: 'center',
     marginBottom: 10,
+    fontWeight: 'bold',
   },
   infoSubtitle: {
     fontSize: 24,
@@ -422,6 +429,15 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginHorizontal: 10,
+  },
+   contactIcon: {
+    marginRight: 10,
+  },
+  contactRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+    justifyContent: 'center',
   },
 });
 
