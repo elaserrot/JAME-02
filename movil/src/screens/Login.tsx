@@ -58,7 +58,7 @@ const Login = () => {
 
       if (response.status === 200) {
         const usuario = response.data.usuario?.usuario || 'usuario';
-        alert(`Bienvenido, ${usuario} Inicio de sesión exitoso.`);
+        alert(`Bienvenido ${usuario}, Inicio de sesión exitoso.`);
         navigation.navigate('HomeScreen' as never);
       }
     } catch (error) {
@@ -75,7 +75,7 @@ const Login = () => {
       resizeMode="cover"
     >
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Veterinaria Ciudad Canina</Text>
+        <Text style={styles.title}>Clinica Veterinaria Ciudad Canina</Text>
 
         <View style={styles.imageContainer}>
           <Image source={require('../assets/perroa.png')} style={styles.image} />
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   loginButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#28A745',
     padding: 15,
     borderRadius: 5,
     marginTop: 10,
