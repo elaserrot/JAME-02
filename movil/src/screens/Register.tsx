@@ -103,7 +103,7 @@ const Register = () => {
     >
       <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
         <View style={styles.formContainer}>
-          <Text style={styles.title}>Veterinaria Ciudad Canina</Text>
+          <Text style={styles.title}>Clinica Veterinaria Ciudad Canina</Text>
           <Text style={styles.subtitle}>Regístrate para acceder a nuestros servicios.</Text>
 
           <TextInput
@@ -143,7 +143,7 @@ const Register = () => {
 
           <View style={styles.passwordContainer}>
             <TextInput
-              placeholder="Verificar contraseña"
+              placeholder="Confirmar contraseña"
               style={styles.passwordInput}
               secureTextEntry={!showPassword2}
               value={form.verificarContrasena}
