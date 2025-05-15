@@ -36,18 +36,43 @@ const HomeScreen = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Menú superior */}
-      <View style={styles.menuContainer}>
-        <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Cuenta' as never)}>
-          <Feather name="user" size={18} color="#014d82" style={styles.menuIcon} />
-          <Text style={styles.menuButtonText}>Perfil</Text>
-        </TouchableOpacity>
-
-        
+       <View style={styles.infoContainer}>
+        <Text style={styles.infoTitle}>La mejor opción para el cuidado de tu mascota</Text>
       </View>
+      <View style={styles.infoContainer2}>
+        <Image
+    source={require('../assets/logovet.png')} // ajusta la ruta a tu logo
+    style={styles.logo}
+    resizeMode="contain"
+  />
+        <Text style={styles.infoSubtitle}>Veterinaria Ciudad Canina</Text>
+      <TouchableOpacity style={styles.profileButton} onPress={() => navigation.navigate('Cuenta' as never)}>
+          <Feather name="user" size={12} color="#7EB6FF" style={styles.profileIcon} />
+          <Text style={styles.profileText}>PERFIL</Text>
+        </TouchableOpacity>
+        </View>
+      
+      <View style={styles.menuContainer}>
+        <View style={styles.menuItems}>
+          <TouchableOpacity style={styles.menuItem}>
+            <Text style={styles.menuText}>Home</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem}>
+            <Text style={styles.menuText}>Productos</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem}>
+            <Text style={styles.menuText}>Servicios</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem}>
+            <Text style={styles.menuText}>Contáctanos</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem}>
+            <Text style={styles.menuText}>Acerca de nosotros</Text>
+          </TouchableOpacity>
+        </View>
+      </View>  
 
-      {/* Carrusel de los banners */}
-      <View style={styles.carouselContainer}>
+     <View style={styles.carouselContainer}>
         <Swiper
           style={styles.wrapper}
           showsButtons={false}
@@ -66,11 +91,29 @@ const HomeScreen = () => {
           </View>
         </Swiper>
       </View>
-
-      {/* Sección Servicios */}
+      <View style={[styles.nContainer, styles.nSection]}>
+        <Text style={styles.nTitle}>NOSOTROS</Text>
+        <View style={styles.nButtonsContainer}>
+            <Text 
+            style={styles.nText}>
+              Nuestra clínica está conformada por profesionales altamente capacitados, 
+              con amplia experiencia en atención veterinaria y un profundo amor por los animales.
+              Cada uno de nuestros servicios ha sido cuidadosamente diseñado para brindar atención médica de alta calidad,
+              considerando las necesidades individuales de cada uno de nuestros pacientes.
+              </Text>
+        </View>
+      </View>
       <View style={[styles.sectionContainer, styles.servicesSection]}>
         <Text style={styles.sectionTitle}>SERVICIOS DISPONIBLES</Text>
         <View style={styles.serviceButtonsContainer}>
+          <TouchableOpacity
+            style={[styles.serviceButton, activeSection === 'citas' && styles.activeServiceButton]}
+            onPress={() => setActiveSection('citas')}
+          >
+            <Text style={[styles.serviceButtonText, activeSection === 'citas' && styles.activeServiceButtonText]}>
+              Citas médicas
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={[styles.serviceButton, activeSection === 'urgencias' && styles.activeServiceButton]}
             onPress={() => setActiveSection('urgencias')}
@@ -90,7 +133,7 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      {/* Sección Contacto */}
+      {/* Sección Contacto (manteniendo tu funcionalidad) */}
       <View style={[styles.sectionContainer, styles.contactSection]}>
         <Text style={styles.sectionTitle}>CONTACTO</Text>
         <View style={styles.contactContainer}>
@@ -146,45 +189,104 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f5f5f5' },
+  container: { 
+    flex: 1, 
+    backgroundColor: '#fff' 
+  },
+  logo: {
+    width: 60,
+    height: 60,
+    marginRight: 15,
+  },
   menuContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 10,
-    backgroundColor: '#fff',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 15,
+    backgroundColor: '#5D9CEC',
     borderBottomWidth: 1,
     borderColor: '#ddd',
+    
   },
-  menuButton: {
+  menuItems: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-start', 
+  },
+  menuItem: {
+    paddingHorizontal: 7,
+    paddingVertical: 5,
+  },
+  menuText: {
+    color: '#333',
+    fontSize: 12,
+  },
+  nText: {
+    color: '#333',
+    fontSize: 12,
+  },
+  profileButton: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 12,
     paddingVertical: 6,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    backgroundColor: '#e9ecef',
+    borderRadius: 20,
+    marginLeft: 10,
   },
-  menuButtonText: {
-    color: '#014d82',
-    fontWeight: 'bold',
-  },
-  menuIcon: {
+  profileIcon: {
     marginRight: 6,
   },
-  carouselContainer: {
-    height: 250,
-    position: 'relative',
+  profileText: {
+    color: '#014d82',
+    fontWeight: 'bold',
+    fontSize: 12,
   },
+  
+  carouselContainer: { 
+    height: 250, 
+    position: 'relative', 
+  }, 
   wrapper: {},
-  slide: {
-    flex: 1,
-    justifyContent: 'center',
+   slide: { 
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+  }, 
+  bannerImage: { 
+    width: '100%', 
+    height: '100%', },
+
+  infoContainer: {
+    padding: 10,
     alignItems: 'center',
+    backgroundColor: '#5D9CEC',
   },
-  bannerImage: {
-    width: '100%',
-    height: '100%',
+  infoContainer2: {
+    flexDirection: 'row',
+    padding: 10,
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    justifyContent: 'space-between'
+  },
+  infoTitle: {
+    fontSize: 15,
+    color: '#333',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  infoSubtitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#000000',
+    textAlign: 'center',
   },
   sectionContainer: {
+    padding: 20,
+    backgroundColor: 'white',
+    marginVertical: 10,
+  },
+  nContainer: {
     padding: 20,
     backgroundColor: 'white',
     marginVertical: 10,
@@ -196,10 +298,25 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
   },
+  nTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#014d82',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
   servicesSection: {
     backgroundColor: '#f8f9fa',
   },
+  nSection: {
+    backgroundColor: '#f8f9fa',
+  },
   serviceButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 15,
+  },
+  nButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: 15,
@@ -263,8 +380,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
   },
-  contactInfo: {},
-  infoTitle: {
+  contactInfo: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 15,
