@@ -29,6 +29,13 @@ const HomeScreen = () => {
             afectar a tu mascota. Tu tranquilidad y la salud de tu compañero son nuestra prioridad.
           </Text>
         );
+        case 'productos':
+        return (
+          <Text style={styles.serviceText}>
+            Ofrecemos una amplia variedad de productos y servicios, 
+            desde alimentos premium hasta accesorios y tratamientos especializados para el bienestar de tu mascota.
+          </Text>
+        );
       default:
         return null;
     }
@@ -120,6 +127,14 @@ const HomeScreen = () => {
           >
             <Text style={[styles.serviceButtonText, activeSection === 'urgencias' && styles.activeServiceButtonText]}>
               Servicio de urgencias
+            </Text>
+          </TouchableOpacity>
+           <TouchableOpacity
+            style={[styles.serviceButton1, activeSection === 'productos' && styles.activeServiceButton]}
+            onPress={() => setActiveSection('productos')}
+          >
+            <Text style={[styles.serviceButtonText, activeSection === 'productos' && styles.activeServiceButtonText]}>
+              Productos y Servicios adicionales
             </Text>
           </TouchableOpacity>
         </View>
@@ -223,8 +238,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   nText: {
-    color: '#333',
-    fontSize: 12,
+    fontSize: 16,
+    lineHeight: 24,
+    marginBottom: 15,
   },
   profileButton: {
     flexDirection: 'row',
@@ -314,7 +330,7 @@ const styles = StyleSheet.create({
   serviceButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 15,
+    marginBottom: 8,
   },
   nButtonsContainer: {
     flexDirection: 'row',
@@ -322,9 +338,17 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   serviceButton: {
-    padding: 10,
+    flex: 1,
+    padding: 3,
     borderRadius: 5,
-    marginHorizontal: 5,
+    marginHorizontal: 3,
+    backgroundColor: '#e9ecef',
+  },
+   serviceButton1: {
+    flex: 1,
+    padding: 3,
+    borderRadius: 5,
+    marginHorizontal: 3,
     backgroundColor: '#e9ecef',
   },
   activeServiceButton: {
