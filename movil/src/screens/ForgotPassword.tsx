@@ -61,7 +61,7 @@ const ForgotPassword = () => {
             style={styles.button} 
             onPress={handleSubmit}
           >
-            <Text style={styles.buttonText}>Enviar enlace de recuperación</Text>
+            <Text style={styles.buttonText}>Enviar Correo</Text>
           </TouchableOpacity>
         </View>
         
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   button: {
-    backgroundColor: '#014d82',
+    backgroundColor: '#007BFF',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
