@@ -342,20 +342,20 @@ const styles = StyleSheet.create({
     padding: 3,
     borderRadius: 5,
     marginHorizontal: 3,
-    backgroundColor: '#e9ecef',
+    backgroundColor: '#3A7BD5',
   },
    serviceButton1: {
     flex: 1,
     padding: 3,
     borderRadius: 5,
     marginHorizontal: 3,
-    backgroundColor: '#e9ecef',
+    backgroundColor: '#3A7BD5',
   },
   activeServiceButton: {
     backgroundColor: '#014d82',
   },
   serviceButtonText: {
-    color: '#495057',
+    color: '#ffffff',
   },
   activeServiceButtonText: {
     color: 'white',
