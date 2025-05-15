@@ -1,165 +1,212 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image, ScrollView } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 
-
-
 const MiCuenta = () => {
   const navigation = useNavigation();
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState({
+    nombre: '',
+    usuario: '',
+    email: '@gmail.com',
+    telefono: '',
+    direccion: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const [hasPets, setHasPets] = useState(false);
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:3001/api/usuarios/perfil/:id')
-      .then((response) => {
-        setUser(response.data.usuario);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error al obtener los datos del usuario", error);
-        setLoading(false);
-      });
-  }, []);
-
-  const handleLogout = () => {
-    navigation.navigate('Login' as never);
+  const handleAddPet = () => {
+    navigation.navigate('AgregarMascota' as never);
   };
 
   const handleEditProfile = () => {
-    navigation.navigate('Citas' as never);
+    navigation.navigate('EditarPerfil' as never);
   };
-
-  if (loading) {
-    return <Text style={styles.loadingText}>Cargando...</Text>;
-  }
 
   return (
     <ImageBackground
-       source={require('../assets/fondol.png')}
+      source={require('../assets/fondol.png')}
       style={styles.backgroundContainer}
       resizeMode="cover"
     >
-      <View style={styles.container}>
-
+      <ScrollView style={styles.container}>
+        {/* Encabezado */}
+        <Text style={styles.headerTitle}>Veterinaria Ciudad Canina</Text>
+        
+        {/* Sección de perfil */}
+        <View style={styles.profileSection}>
+          <Text style={styles.sectionTitle}>Detalles del perfil</Text>
+          
+          {/* Foto de perfil */}
+          <View style={styles.avatarContainer}>
+            <Image 
+              source={require('../assets/perroa.png')} 
+              style={styles.avatar}
+            />
+            <TouchableOpacity onPress={handleEditProfile}>
+              <Text style={styles.editPhotoText}>Cambiar foto</Text>
+            </TouchableOpacity>
+          </View>
+          
+          {/* Mis mascotas */}
+          <Text style={styles.subtitle}>Mis mascotas</Text>
+          {!hasPets && (
+            <>
+              <Text style={styles.noPetsText}>No tienes mascotas registradas.</Text>
+              <TouchableOpacity style={styles.addButton} onPress={handleAddPet}>
+                <Text style={styles.addButtonText}>Agregar mascota</Text>
+              </TouchableOpacity>
+            </>
+          )}
+          
+          {/* Información del usuario */}
+          <View style={styles.infoContainer}>
+            <Text style={styles.infoLabel}>Nombre</Text>
+            <Text style={styles.infoValue}>{user.nombre}</Text>
+            
+            <Text style={styles.infoLabel}>Usuario</Text>
+            <Text style={styles.infoValue}>{user.usuario}</Text>
+            
+            <Text style={styles.infoLabel}>Correo</Text>
+            <Text style={styles.infoValue}>{user.email}</Text>
+            
+            <Text style={styles.infoLabel}>Teléfono</Text>
+            <Text style={styles.infoValue}>{user.telefono || 'No registrado'}</Text>
+            
+            <Text style={styles.infoLabel}>Dirección</Text>
+            <Text style={styles.infoValue}>{user.direccion || 'No registrado'}</Text>
+          </View>
+        </View>
+        
+        {/* Botones de acción */}
         <TouchableOpacity style={styles.editButton} onPress={handleEditProfile}>
-          <Feather name="edit" size={18} color="#007bff" />
-          <Text style={styles.editText}>Agenda tus citas</Text>
+          <Feather name="edit" size={18} color="#014d82" />
+          <Text style={styles.editText}>Editar perfil</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.menuButton, { backgroundColor: '#dc3545' }]}
-          onPress={handleLogout}
-        >
-          <Feather name="log-out" size={18} color="#fff" style={styles.menuIcon} />
-          <Text style={[styles.menuButtonText, { color: 'white' }]}>Cerrar Sesión</Text>
+        
+        <TouchableOpacity style={styles.logoutButton} onPress={() => navigation.navigate('Login' as never)}>
+          <Feather name="log-out" size={18} color="white" />
+          <Text style={styles.logoutText}>Cerrar sesión</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-    backgroundContainer: {
+  backgroundContainer: {
     flex: 1,
     width: '100%',
-    },
-  loadingText: {
-    fontSize: 18,
-    textAlign: 'center',
-    marginTop: 20,
-    color: '#007bff',
-  },
-  backgroundImage: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  backgroundImageStyle: {
-    opacity: 0.7, // Ajusta la opacidad según tus necesidades
   },
   container: {
     flex: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo blanco semitransparente
-    paddingHorizontal: 20,
-    paddingTop: 40,
-    borderRadius: 10,
-    marginHorizontal: 10,
+    padding: 20,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#007bff',
-    paddingVertical: 20,
-    paddingHorizontal: 15,
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#014d82',
+    textAlign: 'center',
+    marginVertical: 20,
+  },
+  profileSection: {
+    backgroundColor: 'white',
     borderRadius: 10,
+    padding: 20,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#014d82',
     marginBottom: 20,
   },
-  headerText: {
-    color: '#fff',
-    fontSize: 22,
-    fontWeight: '600',
-    marginLeft: 10,
-  },
-  profileContainer: {
-    alignItems: 'center',
-    marginBottom: 40,
-  },
-  avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: '#ccc',
-    marginBottom: 10,
-  },
-  avatarImage: {
-    borderRadius: 50,
-  },
-  name: {
-    fontSize: 20,
+  subtitle: {
+    fontSize: 18,
     fontWeight: '600',
     color: '#333',
+    marginTop: 20,
+    marginBottom: 10,
   },
-  email: {
-    fontSize: 16,
-    color: '#6c757d',
+  avatarContainer: {
+    alignItems: 'center',
     marginBottom: 20,
+  },
+  avatar: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    borderWidth: 3,
+    borderColor: '#014d82',
+  },
+  editPhotoText: {
+    color: '#014d82',
+    marginTop: 8,
+    fontWeight: '600',
+  },
+  noPetsText: {
+    color: '#6c757d',
+    marginBottom: 10,
+  },
+  addButton: {
+    backgroundColor: '#014d82',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  addButtonText: {
+    color: 'white',
+    fontWeight: '600',
+  },
+  infoContainer: {
+    marginTop: 10,
+  },
+  infoLabel: {
+    fontWeight: 'bold',
+    color: '#014d82',
+    marginTop: 12,
+  },
+  infoValue: {
+    color: '#333',
+    marginBottom: 5,
+    paddingBottom: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
   },
   editButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 8,
-    backgroundColor: '#e9ecef',
-    marginBottom: 20,
-    width: '100%',
     justifyContent: 'center',
+    backgroundColor: '#e9ecef',
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 15,
   },
   editText: {
-    marginLeft: 8,
-    fontSize: 16,
-    color: '#007bff',
+    color: '#014d82',
     fontWeight: '600',
+    marginLeft: 8,
   },
-  menuButton: {
+  logoutButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 8,
-    backgroundColor: '#e9ecef',
-    marginBottom: 20,
-    width: '100%',
     justifyContent: 'center',
+    backgroundColor: '#dc3545',
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 20,
   },
-  menuButtonText: {
-    fontSize: 16,
+  logoutText: {
+    color: 'white',
     fontWeight: '600',
-  },
-  menuIcon: {
-    marginRight: 6,
+    marginLeft: 8,
   },
 });
 

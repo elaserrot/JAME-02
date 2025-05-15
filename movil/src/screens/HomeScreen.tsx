@@ -180,12 +180,12 @@ const HomeScreen = () => {
           </View>
 
          <View style={styles.contactInfo}>
-  <Text style={styles.infoTitle}>INFORMACIÓN DE CONTACTO</Text>
+          <Text style={styles.infoTitle}>INFORMACIÓN DE CONTACTO</Text>
 
-  <TouchableOpacity
-    style={styles.contactRow}
-    onPress={() => Linking.openURL('tel:+57321234567')}
-  >
+          <TouchableOpacity
+          style={styles.contactRow}
+          onPress={() => Linking.openURL('tel:+57321234567')}
+          >
     <FontAwesome name="phone" size={20} color="#4A90E2" style={styles.contactIcon} />
     <Text style={styles.infoText}>+57 321 234567</Text>
   </TouchableOpacity>
