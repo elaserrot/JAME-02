@@ -16,9 +16,7 @@ function CustomHeader() {
 
   return (
     <View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>La mejor opción para el cuidado de tu mascota</Text>
-      </View>
+
 
       <View style={styles.infoContainer2}>
         <Image
@@ -59,6 +57,7 @@ function CustomHeader() {
 export default function StackNavigator() {
   return (
     <Stack.Navigator
+     id={undefined}
       initialRouteName="Login"
       screenOptions={{ 
         headerStyle: {
