@@ -27,32 +27,38 @@ export default function StackNavigator() {
       <Stack.Screen 
         name="Login" 
         component={Login} 
-        options={{ title: 'Iniciar Sesión' }} 
+        options={{ headerShown: false }}
+
       />
       <Stack.Screen 
         name="Register" 
         component={Register} 
-        options={{ title: 'Registro' }} 
+        options={{ headerShown: false }}
+
       />
       <Stack.Screen 
         name="ForgotPassword" 
         component={ForgotPassword} 
-        options={{ title: 'Recuperar Contraseña' }} 
+        options={{ headerShown: false }}
+
       />
       <Stack.Screen 
         name="HomeScreen" 
         component={HomeScreen} 
-        options={{ title: 'Bienvenido' }}  
+        options={{ headerShown: false }}
+
       />
       <Stack.Screen 
         name="Citas" 
         component={Citas} 
-        options={{ title: 'Agenda tus citas' }}  
+        options={{ headerShown: false }}
+
       />
       <Stack.Screen 
         name="Cuenta" 
         component={Cuenta} 
-        options={{ title: 'Perfil' }}  
+        options={{ headerShown: false }}
+ 
       />
     </Stack.Navigator>
   );
