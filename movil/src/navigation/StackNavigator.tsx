@@ -33,20 +33,33 @@ function CustomHeader() {
 
       <View style={styles.menuContainer}>
         <View style={styles.menuItems}>
-          <TouchableOpacity style={styles.menuItem}>
-            <Text style={styles.menuText}>Home</Text>
-          </TouchableOpacity>
+          
           <TouchableOpacity style={styles.menuItem}>
             <Text style={styles.menuText}>Productos</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.menuItem}>
             <Text style={styles.menuText}>Servicios</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem}>
-            <Text style={styles.menuText}>Contáctanos</Text>
+        </View>
+      </View>
+    </View>
+  );
+}
+function CustomHeader1() {
+  const navigation = useNavigation(); 
+
+  return (
+    <View>
+      <View style={styles.menuContainer1}>
+        <View style={styles.menuItems1}>
+          <TouchableOpacity style={styles.menuItem1} onPress={() => navigation.navigate('HomeScreen' as never)}>
+            <Text style={styles.menuText1}>Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem}>
-            <Text style={styles.menuText}>Acerca de nosotros</Text>
+          <TouchableOpacity style={styles.menuItem1}>
+            <Text style={styles.menuText1}>Productos</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem1}>
+            <Text style={styles.menuText1}>Servicios</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -58,7 +71,7 @@ export default function StackNavigator() {
   return (
     <Stack.Navigator
      id={undefined}
-      initialRouteName="Login"
+      initialRouteName="Cuenta"
       screenOptions={{ 
         headerStyle: {
           backgroundColor: '#f8f9fa',  
@@ -97,7 +110,7 @@ export default function StackNavigator() {
       <Stack.Screen 
         name="Cuenta" 
         component={Cuenta} 
-        options={{ title: 'Perfil' }} 
+        options={{ header: () => <CustomHeader1 /> }}
       />
     </Stack.Navigator>
   );
@@ -163,11 +176,33 @@ menuItems: {
     alignItems: 'flex-start', 
   },
   menuItem: {
-    paddingHorizontal: 7,
-    paddingVertical: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
   },
   menuText: {
     color: '#333',
-    fontSize: 12,
+    fontSize: 15,
+    fontWeight: 'bold'
+  },
+  menuContainer1: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: '#dcdcdc',
+    paddingVertical: 18,
+  },
+menuItems1: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-start', 
+  },
+  menuItem1: {
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+  },
+  menuText1: {
+    color: '#000000',
+    fontSize: 15,
+    fontWeight: 'bold'
   },
 });
