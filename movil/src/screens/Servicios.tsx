@@ -1,7 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ImageBackground } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Servicios = () => {
+  const navigation = useNavigation();
+
   const servicios = [
     {
       id: 1,
@@ -27,7 +30,7 @@ const Servicios = () => {
       descripcion: 'Consulta especializada de cardiología veterinaria para seguimiento y control del paciente.',
       icono: require('../assets/perroa.png'), 
     },
-     {
+    {
       id: 5,
       nombre: 'Esterilización',
       descripcion: 'Ofrecemos servicios de esterilización y castración para perros y gatos.',
@@ -57,14 +60,15 @@ const Servicios = () => {
               </View>
               <Text style={styles.servicioNombre}>{servicio.nombre}</Text>
               <Text style={styles.servicioDesc}>{servicio.descripcion}</Text>
-              <TouchableOpacity style={styles.boton}>
+              <TouchableOpacity 
+                style={styles.boton} 
+                onPress={() => navigation.navigate('Citas' as never)}
+              >
                 <Text style={styles.botonTexto}>Agendar Cita</Text>
               </TouchableOpacity>
             </TouchableOpacity>
           ))}
         </View>
-
-    
       </ScrollView>
     </ImageBackground>
   );
@@ -78,13 +82,13 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.85)', // Fondo semi-transparente para mejor legibilidad
+    backgroundColor: 'rgba(255, 255, 255, 0.85)',
     padding: 16,
   },
   header: {
     alignItems: 'center',
     marginBottom: 30,
-    backgroundColor: 'rgba(255, 255, 255, 0.7)', // Fondo semi-transparente para el header
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
     padding: 15,
     borderRadius: 10,
   },
@@ -147,44 +151,6 @@ const styles = StyleSheet.create({
   },
   botonTexto: {
     color: '#fff',
-    fontWeight: '500',
-  },
-  promocionesContainer: {
-    marginTop: 20,
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    padding: 15,
-    borderRadius: 10,
-  },
-  promocionesTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 15,
-  },
-  promoCard: {
-    backgroundColor: 'rgba(255, 248, 225, 0.9)',
-    borderRadius: 8,
-    padding: 15,
-    width: '100%',
-    alignItems: 'center',
-  },
-  promoBadge: {
-    backgroundColor: '#ff5722',
-    borderRadius: 4,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginBottom: 8,
-  },
-  promoBadgeText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 14,
-  },
-  promoText: {
-    fontSize: 14,
-    color: '#333',
-    textAlign: 'center',
     fontWeight: '500',
   },
 });
