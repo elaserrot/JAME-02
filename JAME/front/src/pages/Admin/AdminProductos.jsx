@@ -82,7 +82,7 @@ export default function AdminProductos() {
         precio: "",
         stock: "",
         imagen: null,
-        categoria: ""
+        id_cate: 0
     });
 
     const handleChange = (e) => {
@@ -105,23 +105,15 @@ export default function AdminProductos() {
             formData.append('descripcion', producto.descripcion);
             formData.append('precio', producto.precio);
             formData.append('stock', producto.stock);
-            formData.append('categoria', producto.categoria);
+            formData.append('id_cate', producto.id_cate);
             console.log(producto);
-            const response = await axios.put(`${BACKEND_URL}/api/productos/actualizar/${producto.id_producto}`, producto);
+            const response = await axios.put(`${BACKEND_URL}/api/productos/actualizar/${producto.id_producto}`, formData);
             if (response.status === 200) {
+                setIsDataUpdated(true);
                 Swal.fire({
                     icon: 'success',
                     title: 'Producto editado',
                     text: 'El producto ha sido editado con éxito.',
-                }).then(() => {
-                    setIsDataUpdated(true);
-                    setProducto({
-                        nombre_producto: "",
-                        descripcion: "",
-                        precio: "",
-                        stock: "",
-                        imagen: null,
-                    });
                 })
             }
 
@@ -202,7 +194,10 @@ export default function AdminProductos() {
                             <div class="modal-body">
                                 <div className="form-group my-3 d-flex flex-column justify-content-center text-center align-items-center">
                                     <label>Imagen:</label>
-                                    {producto.imagen ? <img className="img-fluid w-25" src={`${BACKEND_URL}/PRODUCTOS_FOTOS/${producto.imagen}`} alt="Preview" /> : <img className="img-fluid w-25" src="https://placehold.co/600x400" alt="Preview" />}
+                                    {imagePreview ? <img src={imagePreview} alt="Preview" className="rounded" style={{ height: "100px", width: "100px", objectFit: "cover" }} />
+                                        :
+                                        <img src={`${BACKEND_URL}/PRODUCTOS_FOTOS/${producto?.imagen}`} alt={producto?.nombre_producto} className="rounded" style={{ height: "100px", width: "100px", objectFit: "cover" }} />
+                                    }
                                     <input
                                         className='form-control w-50 my-3'
                                         type="file"

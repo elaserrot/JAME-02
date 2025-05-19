@@ -86,16 +86,35 @@ exports.actualizarProducto = (req, res) => {
         return res.status(400).json({ message: "Por favor, proporcione nombre, descripción, precio, stock y categoría." });
     }
 
-    const query = `UPDATE productos SET nombre_producto = ?, descripcion = ?, precio = ?, stock = ? , id_cate = ?, imagen = ? WHERE id_producto = ?`;
-    conexion.query(query, [nombre_producto, descripcion, precio, stock, id_cate, imagen, id], (error, resultado) => {
+    conexion.query('SELECT * FROM productos WHERE id_producto = ?', [id], (error, resultado) => {
         if (error) {
             console.error(error.message);
             return res.status(500).json({ message: "Error al actualizar el producto", error: error.message });
         }
-        if (resultado.affectedRows > 0) {
-            res.json({ message: `Producto con ID ${id} actualizado correctamente.` });
-        } else {
-            res.status(404).json({ message: `No se encontró un producto con el ID ${id}` });
+        if (resultado.length === 0) {
+            return res.status(404).json({ message: `No se encontró un producto con el ID ${id}` });
         }
-    });
+
+        const query = `UPDATE productos SET nombre_producto = ?, descripcion = ?, precio = ?, stock = ? , id_cate = ?, imagen = ? WHERE id_producto = ?`;
+        const values = [
+            nombre_producto ? nombre_producto : resultado[0].nombre_producto,
+            descripcion ? descripcion : resultado[0].descripcion,
+            precio ? precio : resultado[0].precio,
+            stock ? stock : resultado[0].stock,
+            id_cate ? id_cate : resultado[0].id_cate,
+            imagen ? imagen : resultado[0].imagen
+        ]
+        conexion.query(query, [...values, id], (error, resultado) => {
+            if (error) {
+                console.error(error.message);
+                return res.status(500).json({ message: "Error al actualizar el producto", error: error.message });
+            }
+            if (resultado.affectedRows > 0) {
+                res.json({ message: `Producto con ID ${id} actualizado correctamente.` });
+            } else {
+                res.status(404).json({ message: `No se encontró un producto con el ID ${id}` });
+            }
+        });
+    })
+
 };

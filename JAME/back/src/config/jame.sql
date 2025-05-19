@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-04-2025 a las 06:20:09
+-- Tiempo de generación: 19-05-2025 a las 14:00:27
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Versión de PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -52,9 +52,9 @@ CREATE TABLE `categorias` (
 --
 
 INSERT INTO `categorias` (`id_cate`, `nombre_Categoria`, `Descripción_Categoria`) VALUES
-(1, 'Humedo', 'Productos humedos'),
 (2, 'Medicina', 'Medicina para tu mascota'),
-(3, 'Comida gatos', 'comida gatosa para gatos gatunos');
+(3, 'Comida gatos', 'comida gatosa para gatos gatunos'),
+(4, 'Humedo', 'Productos humedos');
 
 -- --------------------------------------------------------
 
@@ -88,7 +88,10 @@ INSERT INTO `citas` (`ID_Citas`, `ID_Usuario`, `Fecha_Cita`, `Motivo_Cita`, `Est
 (10, 10, '2025-04-26 23:18:00', 'Vacunacion', 'pendiente', 12),
 (11, 10, '2025-04-26 23:18:00', 'Vacunacion', 'pendiente', 12),
 (12, 10, '2025-04-26 23:18:00', 'Esterilizacion', 'pendiente', 12),
-(13, 10, '2025-04-30 14:18:00', 'Vacunacion', 'pendiente', 12);
+(13, 10, '2025-04-30 14:18:00', 'Vacunacion', 'pendiente', 12),
+(14, 14, '2025-05-14 09:30:00', 'MedicinaGeneral', 'rechazada', 13),
+(15, 14, '2025-05-14 09:30:00', 'MedicinaGeneral', 'rechazada', 13),
+(16, 14, '2025-05-14 09:30:00', 'MedicinaGeneral', 'pendiente', 13);
 
 -- --------------------------------------------------------
 
@@ -146,7 +149,9 @@ CREATE TABLE `mascota` (
 --
 
 INSERT INTO `mascota` (`ID_Mascota`, `Nombre_Mascota`, `Edad_Mascota`, `Fecha_nacimiento`, `Raza_Mascota`, `imagen`, `Observaciones_Mascota`, `ID_Usuario`, `Estado_Mascota`) VALUES
-(12, 'Gema', 4, '2021-05-23', 'Gato', '', 'Ninguna', 10, 1);
+(12, 'Gema', 4, '2021-05-23', 'Gato', '', 'Ninguna', 10, 1),
+(13, 'Alekey', 4, '2020-09-30', 'Golder Retriever', '', 'Mascota de pelo largo, color dorado brillante, 45.0 kg peso ', 14, 1),
+(14, 'Prueba minima para actualizar', 1, '2024-05-13', 'Golder Retriever', '', 'Mascota de prueba para realizar manual', 14, 0);
 
 -- --------------------------------------------------------
 
@@ -176,7 +181,7 @@ CREATE TABLE `productos` (
   `stock` int(11) NOT NULL,
   `imagen` varchar(200) DEFAULT NULL,
   `id_cate` int(11) NOT NULL,
-  `estado` int(2) NOT NULL
+  `estado` int(2) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -184,8 +189,11 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id_producto`, `nombre_producto`, `descripcion`, `precio`, `stock`, `imagen`, `id_cate`, `estado`) VALUES
-(1, 'auto ', 'Nissan gtr', 10000, 3, 'producto_1745716742012-453187649.jpg', 2, 1),
-(2, 'Muñoz', '1 muñoz', 100, 10, 'producto_1745719417105-707138866.png', 2, 0);
+(1, 'auto ', 'Nissan gtr', 10000, 3, 'producto_1745716742012-453187649.jpg', 2, 0),
+(2, 'Muñoz', '1 muñoz', 100, 10, 'producto_1745719417105-707138866.png', 2, 0),
+(3, 'Comida para mascotas', 'Alimento Para Perro Agility Gold Pequeños Adultos Piel - 1,5 kg', 45000, 10, 'producto_1747233992217-179861543.webp', 4, 1),
+(4, 'hola', 'Alimento Para Perro Agility Gold Pequeños Adultos Piel - 1,5 kg', 150000, 15, 'producto_1747234064340-64179021.webp', 2, 1),
+(5, 'Comida ', 'Alimento Para Perro Agility Gold Pequeños Adultos Piel - 1,5 kg', 45000, 14, 'producto_1747234140845-621565089.webp', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -236,12 +244,11 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre_completo`, `correo_electronico`, `
 (1, 'Juan José Uparela Sosa', 'uparelajuan2@gmail.com', 'juanjo', '1111', '94 B 130a-67', 3138332309, 'USUARIOS_FOTOS/1.jpg', NULL, NULL, '2024-10-08 19:33:21', 1, 1),
 (2, 'Diego esteban sanchez', 'diego@gmail.com', 'Diego', '1111', 'kenedy', 3209207777, 'USUARIOS_FOTOS/2.jpg', '', NULL, '2024-09-07 20:59:42', 2, 1),
 (3, 'Alisson', 'alison@gmail.com', 'Alisson', '1111', 'Dirección', 3109999999, 'USUARIOS_FOTOS/3.jpg', '', NULL, '2024-10-03 19:33:21', 1, 1),
-(4, 'martin', 'misterlee272006@gmail.com', 'martinlee', '$2y$10$PdVFzzhsC.EUo8C/V5F.h.SODYF9e2fCLveDcOiKxn1/.AefPSdm6', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '2024-09-29 22:53:38', 1, 1),
-(5, 'Martin Lee Moya Llano ', 'misterlee272006@gmail.com', 'lee', '$2b$10$GxLv4KzNDuKi7W6AWibV/.H0vynm.9uCqV5X2WG/M1mY5algdHUVa', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 2, 1),
-(6, 'Martin Lee Moya Llano ', 'misterlee272006@gmail.com', 'leetosky', '$2b$10$OcPis7W/rDNOGXEIseeGhuTCvvqt/8/e03QAQPx82xanvQLLtZxxK', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 2, 1),
 (7, 'JuanJo', 'uparelajuan2@gmail.com', 'jj', '$2b$10$Mgg58VT6B.pWprsg14xJ9Oswc7xS.Y2jo6KL/81vSLO9SMQvno36G', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 2, 1),
 (9, 'Admin', 'admin@gmail.com', 'Admin', '$2b$10$zbgPu3YYZ8I53Hm61s6KaepYek81lI6hdVsFQvjPZ7yWqerMxs6va', 'san cristobal', NULL, 'USUARIOS_FOTOS/nf.jpg', '', NULL, '0000-00-00 00:00:00', 1, 1),
-(10, 'Diego Esteban', 'egoessanrero@gmail.com', 'Diego', '$2b$10$qx0a82T.tJKarF9GcOcIruX/j9emEQk.g3juqmLRmcO8Je25we1kC', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', NULL, NULL, '0000-00-00 00:00:00', 2, 1);
+(10, 'Diego Esteban', 'egoessanrero@gmail.com', 'Diego', '$2b$10$qx0a82T.tJKarF9GcOcIruX/j9emEQk.g3juqmLRmcO8Je25we1kC', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', NULL, NULL, '0000-00-00 00:00:00', 2, 1),
+(12, 'Martin Lee', 'misterlee272006@gmail.com', 'Moya Llano', '$2b$10$iXQ2yxTIaFFgLhOyyFvIqecWjLUdKElVxtsBwp.DxTyVgVISlT4OK', NULL, NULL, 'USUARIOS_FOTOS/nf.jpg', NULL, NULL, '0000-00-00 00:00:00', 2, 1),
+(14, 'Prueba Manual Actualizado', 'manualprueba@gmail.com', 'PruebaManual', '$2b$10$tOXPGFD4CChUhPcWvFgFeOm5RNBmsC7nU6VVwrnU1V8tS/mFNBG8a', 'SENA CEET', 3115929738, '1747138701316-834290549.png', NULL, NULL, '0000-00-00 00:00:00', 2, 1);
 
 --
 -- Índices para tablas volcadas
@@ -333,13 +340,13 @@ ALTER TABLE `carrito_compras`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id_cate` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_cate` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `citas`
 --
 ALTER TABLE `citas`
-  MODIFY `ID_Citas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `ID_Citas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `compras`
@@ -357,7 +364,7 @@ ALTER TABLE `detalle_pedidos`
 -- AUTO_INCREMENT de la tabla `mascota`
 --
 ALTER TABLE `mascota`
-  MODIFY `ID_Mascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ID_Mascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
@@ -369,7 +376,7 @@ ALTER TABLE `pedidos`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -381,7 +388,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Restricciones para tablas volcadas
