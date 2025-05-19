@@ -15,6 +15,6 @@ router.post('/agregar', upload.single("imagen"), productosController.agregarProd
 
 router.delete('/eliminar/:id', productosController.eliminarProducto);
 
-router.put('/actualizar/:id', productosController.actualizarProducto);
+router.put('/actualizar/:id', upload.single("imagen"), productosController.actualizarProducto);
 
 module.exports = router;

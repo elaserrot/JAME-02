@@ -158,7 +158,7 @@ function RegistrarMascota() {
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 }

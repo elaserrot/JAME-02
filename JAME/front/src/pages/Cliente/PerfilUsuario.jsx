@@ -219,9 +219,7 @@ export default function PerfilUsuario() {
 
     return (
         <div className="d-flex flex-column min-vh-100">
-            <div className="bg-primary text-dark py-2 text-center bg-info">
-                <p className="mb-0">La mejor opción para el cuidado de tu mascota</p>
-            </div>
+           
 
             <header className="bg-white py-3 border-bottom">
                 <div className="container">
