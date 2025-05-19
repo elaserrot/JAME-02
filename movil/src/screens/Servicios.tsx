@@ -1,40 +1,57 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Feather } from '@expo/vector-icons';
+
+// Definimos el tipo para los nombres de iconos válidos
+type FeatherIconName = React.ComponentProps<typeof Feather>['name'];
+
+interface Servicio {
+  id: number;
+  nombre: string;
+  descripcion: string;
+  icono: FeatherIconName;
+  color: string;
+}
 
 const Servicios = () => {
   const navigation = useNavigation();
 
-  const servicios = [
+  const servicios: Servicio[] = [
     {
       id: 1,
       nombre: 'Medicina General',
       descripcion: 'Consulta de medicina veterinaria general para caninos y felinos menores de 7 años.',
-      icono: require('../assets/perroa.png'),
+      icono: 'activity',
+      color: '#00bfff'
     },
     {
       id: 2,
       nombre: 'Consulta Nutricional',
       descripcion: 'Recomendaciones sobre comidas balanceadas respecto a sus nutrientes ajusta para los perros y gatos.',
-      icono: require('../assets/perroa.png'), 
+      icono: 'package',
+      color: '#007BFF'
     },
     {
       id: 3,
       nombre: 'Vacunación',
       descripcion: 'Guías para la vacunación de perros (caninos) y gatos (felinos).',
-      icono: require('../assets/perroa.png'), 
+      icono: 'shield',
+      color: '#007BFF'
     },
     {
       id: 4,
       nombre: 'Cardiología',
       descripcion: 'Consulta especializada de cardiología veterinaria para seguimiento y control del paciente.',
-      icono: require('../assets/perroa.png'), 
+      icono: 'heart',
+      color: '#00bfff'
     },
     {
       id: 5,
       nombre: 'Esterilización',
       descripcion: 'Ofrecemos servicios de esterilización y castración para perros y gatos.',
-      icono: require('../assets/perroa.png'), 
+      icono: 'scissors',
+      color: '#00bfff'
     },
   ];
 
@@ -54,19 +71,29 @@ const Servicios = () => {
         {/* Listado de servicios */}
         <View style={styles.serviciosGrid}>
           {servicios.map((servicio) => (
-            <TouchableOpacity key={servicio.id} style={styles.servicioCard}>
-              <View style={styles.iconContainer}>
-                <Image source={servicio.icono} style={styles.icon} />
+            <View 
+              key={servicio.id} 
+              style={[
+                styles.servicioCard, 
+                { borderTopColor: servicio.color, borderTopWidth: 4 }
+              ]}
+            >
+              <View style={[styles.iconContainer, { backgroundColor: `${servicio.color}20` }]}>
+                <Feather 
+                  name={servicio.icono}
+                  size={28}
+                  color={servicio.color}
+                />
               </View>
               <Text style={styles.servicioNombre}>{servicio.nombre}</Text>
               <Text style={styles.servicioDesc}>{servicio.descripcion}</Text>
               <TouchableOpacity 
-                style={styles.boton} 
+                style={[styles.boton, { backgroundColor: servicio.color }]}
                 onPress={() => navigation.navigate('Citas' as never)}
               >
                 <Text style={styles.botonTexto}>Agendar Cita</Text>
               </TouchableOpacity>
-            </TouchableOpacity>
+            </View>
           ))}
         </View>
       </ScrollView>
@@ -122,13 +149,13 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   iconContainer: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
-  },
-  icon: {
-    width: 50,
-    height: 50,
-    resizeMode: 'contain',
+    marginBottom: 15,
+    alignSelf: 'center',
   },
   servicioNombre: {
     fontSize: 16,
@@ -144,7 +171,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   boton: {
-    backgroundColor: '#007BFF',
     borderRadius: 5,
     padding: 8,
     alignItems: 'center',
