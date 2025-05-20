@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-05-2025 a las 14:00:27
+-- Tiempo de generación: 20-05-2025 a las 16:33:19
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -35,6 +35,14 @@ CREATE TABLE `carrito_compras` (
   `carrito_estado` int(2) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `carrito_compras`
+--
+
+INSERT INTO `carrito_compras` (`ID_CarritoCompras`, `id_producto`, `cantidad`, `id_usuario`, `carrito_estado`) VALUES
+(40, 10, 1, 14, 1),
+(41, 9, 1, 14, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -53,8 +61,9 @@ CREATE TABLE `categorias` (
 
 INSERT INTO `categorias` (`id_cate`, `nombre_Categoria`, `Descripción_Categoria`) VALUES
 (2, 'Medicina', 'Medicina para tu mascota'),
-(3, 'Comida gatos', 'comida gatosa para gatos gatunos'),
-(4, 'Humedo', 'Productos humedos');
+(3, 'Alimentos', 'Comida, Gatos, perros, pescados, alimentacion, todo lo integrado en alimetacion para pets'),
+(4, 'Humedo', 'Productos humedos'),
+(5, 'Entretenimiento', 'Objetos de entretenimiento para mascotas, como juguetes y temas de diversion para ellos \r\n');
 
 -- --------------------------------------------------------
 
@@ -191,9 +200,12 @@ CREATE TABLE `productos` (
 INSERT INTO `productos` (`id_producto`, `nombre_producto`, `descripcion`, `precio`, `stock`, `imagen`, `id_cate`, `estado`) VALUES
 (1, 'auto ', 'Nissan gtr', 10000, 3, 'producto_1745716742012-453187649.jpg', 2, 0),
 (2, 'Muñoz', '1 muñoz', 100, 10, 'producto_1745719417105-707138866.png', 2, 0),
-(3, 'Comida para mascotas', 'Alimento Para Perro Agility Gold Pequeños Adultos Piel - 1,5 kg', 45000, 10, 'producto_1747233992217-179861543.webp', 4, 1),
-(4, 'hola', 'Alimento Para Perro Agility Gold Pequeños Adultos Piel - 1,5 kg', 150000, 15, 'producto_1747234064340-64179021.webp', 2, 1),
-(5, 'Comida ', 'Alimento Para Perro Agility Gold Pequeños Adultos Piel - 1,5 kg', 45000, 14, 'producto_1747234140845-621565089.webp', 2, 1);
+(3, 'Shampoo Canino', 'Shampoo para el pelo de tu mascota,sea sedoso y rico', 45000, 10, 'producto_1747745346348-857570719.jpg', 4, 1),
+(4, 'Donkat ', 'Alimento Seco Donkat para Gato adulto es un alimento 100% completo y balanceado para gatos adultos de todas las razas. Su delicioso sabor cuenta con todos los beneficios nutricionales necesarios para ', 13700, 15, 'producto_1747745399943-977730687.webp', 2, 1),
+(5, 'Comida  Canina', 'Alimento Para Perro Agility Gold Pequeños Adultos Piel - 1,5 kg', 45000, 14, 'producto_1747234140845-621565089.webp', 2, 1),
+(8, 'Canine Adult Small & Mini Lamb & Rice', '¿Sabías que la nutrición específica es crucial para los perros miniatura?  Los perritos pequeños tienen necesidades nutricionales únicas y requieren un cuidado especial. Por eso, en Animal\'s Veterinar', 88400, 15, 'producto_1747746388469-525234658.png', 3, 1),
+(9, 'Pet Love Juguete Para Perro En Caucho Natural Hueso Con Grietas', 'Fabricado con caucho 100% ecológico y libre de sustancias tóxicas, este juguete ha sido diseñado pensando en la salud y seguridad de tu mascota. Su resistencia lo convierte en el aliado perfecto para ', 34000, 15, 'producto_1747746518094-589553823.png', 5, 1),
+(10, 'Cytopoint 20Mg', 'Cytopoint es un innovador inmunoterapéutico diseñado para aliviar el prurito y las lesiones cutáneas causadas por la dermatitis atópica canina. Su fórmula avanzada, basada en un anticuerpo monoclonal ', 391800, 15, 'producto_1747746666110-919712303.png', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -334,13 +346,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `carrito_compras`
 --
 ALTER TABLE `carrito_compras`
-  MODIFY `ID_CarritoCompras` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `ID_CarritoCompras` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id_cate` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_cate` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=656;
 
 --
 -- AUTO_INCREMENT de la tabla `citas`
@@ -376,7 +388,7 @@ ALTER TABLE `pedidos`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
