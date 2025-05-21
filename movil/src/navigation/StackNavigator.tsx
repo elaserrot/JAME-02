@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import ForgotPassword from '../screens/ForgotPassword';
 import Citas from '../screens/Citas';
 import Cuenta from '../screens/Cuenta';
+import Servicios from '../screens/Servicios';
 import { useNavigation } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
@@ -16,8 +17,6 @@ function CustomHeader() {
 
   return (
     <View>
-
-
       <View style={styles.infoContainer2}>
         <Image
           source={require('../assets/logovet.png')}
@@ -33,12 +32,21 @@ function CustomHeader() {
 
       <View style={styles.menuContainer}>
         <View style={styles.menuItems}>
-          
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity 
+            style={styles.menuItem}
+            onPress={() => navigation.navigate('Productos' as never)}>
+            <View style={styles.menuItemContent}>
+            <Feather name="shopping-cart" size={20} color="#333" />
             <Text style={styles.menuText}>Productos</Text>
+          </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem}>
+         <TouchableOpacity 
+            style={styles.menuItem}
+            onPress={() => navigation.navigate('Servicios' as never)}>
+            <View style={styles.menuItemContent}>
+            <Feather name="clipboard" size={20} color="#333" />
             <Text style={styles.menuText}>Servicios</Text>
+          </View>
           </TouchableOpacity>
         </View>
       </View>
@@ -52,26 +60,81 @@ function CustomHeader1() {
     <View>
       <View style={styles.menuContainer1}>
         <View style={styles.menuItems1}>
-          <TouchableOpacity style={styles.menuItem1} onPress={() => navigation.navigate('HomeScreen' as never)}>
+          <TouchableOpacity 
+            style={styles.menuItem1}
+            onPress={() => navigation.navigate('HomeScreen' as never)}>
+            <View style={styles.menuItemContent}>
+            <Feather name="home" size={20} color="#333" />
             <Text style={styles.menuText1}>Home</Text>
+          </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem1}>
+          <TouchableOpacity 
+            style={styles.menuItem1}
+            onPress={() => navigation.navigate('Productos' as never)}>
+            <View style={styles.menuItemContent}>
+            <Feather name="shopping-cart" size={20} color="#333" />
             <Text style={styles.menuText1}>Productos</Text>
+          </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem1}>
+          <TouchableOpacity 
+            style={styles.menuItem1}
+            onPress={() => navigation.navigate('Servicios' as never)}>
+            <View style={styles.menuItemContent}>
+            <Feather name="clipboard" size={20} color="#333" />
             <Text style={styles.menuText1}>Servicios</Text>
+          </View>
           </TouchableOpacity>
         </View>
       </View>
     </View>
   );
 }
+function CustomHeader2() {
+  const navigation = useNavigation(); // Se requiere para navegar dentro del header
 
+  return (
+    <View>
+      <View style={styles.infoContainer2}>
+        <Image
+          source={require('../assets/logovet.png')}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+        <Text style={styles.infoSubtitle}>Veterinaria Ciudad Canina</Text>
+        <TouchableOpacity style={styles.profileButton} onPress={() => navigation.navigate('Cuenta' as never)}>
+          <Feather name="user" size={14} color="#7EB6FF" style={styles.profileIcon} />
+          <Text style={styles.profileText}>PERFIL</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.menuContainer2}>
+        <View style={styles.menuItems}>
+          <TouchableOpacity 
+            style={styles.menuItem2}
+            onPress={() => navigation.navigate('HomeScreen' as never)}>
+            <View style={styles.menuItemContent}>
+            <Feather name="home" size={20} color="#333" />
+            <Text style={styles.menuText2}>Home</Text>
+          </View>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.menuItem2}
+            onPress={() => navigation.navigate('Productos' as never)}>
+            <View style={styles.menuItemContent}>
+            <Feather name="shopping-cart" size={20} color="#333" />
+            <Text style={styles.menuText2}>Productos</Text>
+          </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+}
 export default function StackNavigator() {
   return (
     <Stack.Navigator
      id={undefined}
-      initialRouteName="Cuenta"
+      initialRouteName="HomeScreen"
       screenOptions={{ 
         headerStyle: {
           backgroundColor: '#f8f9fa',  
@@ -112,11 +175,20 @@ export default function StackNavigator() {
         component={Cuenta} 
         options={{ header: () => <CustomHeader1 /> }}
       />
+      <Stack.Screen 
+        name="Servicios" 
+        component={Servicios} 
+        options={{ header: () => <CustomHeader2 /> }}
+      />
     </Stack.Navigator>
   );
 }
 
 const styles = StyleSheet.create({
+  menuItemContent: {
+  alignItems: 'center',
+  justifyContent: 'center',
+},
   infoContainer: {
     padding: 10,
     alignItems: 'center',
@@ -133,7 +205,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 10,
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: '87cefa',
     justifyContent: 'space-between'
   },
  logo: {
@@ -167,7 +239,7 @@ profileText: {
     flexDirection: 'row',
     justifyContent: 'center',
     backgroundColor: '#5D9CEC',
-    paddingVertical: 10,
+    paddingVertical: 6,
   },
 menuItems: {
     flex: 1,
@@ -181,14 +253,14 @@ menuItems: {
   },
   menuText: {
     color: '#333',
-    fontSize: 15,
-    fontWeight: 'bold'
+    fontSize: 13,
+    opacity: 0.5
   },
   menuContainer1: {
     flexDirection: 'row',
     justifyContent: 'center',
     backgroundColor: '#dcdcdc',
-    paddingVertical: 18,
+    paddingVertical: 6,
   },
 menuItems1: {
     flex: 1,
@@ -201,8 +273,29 @@ menuItems1: {
     paddingVertical: 8,
   },
   menuText1: {
-    color: '#000000',
-    fontSize: 15,
-    fontWeight: 'bold'
+    color: '#333',
+    fontSize: 13,
+    opacity: 0.5
+  },
+  menuContainer2: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: '#87cefa',
+    paddingVertical: 6,
+  },
+menuItems2: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-start', 
+  },
+  menuItem2: {
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+  },
+  menuText2: {
+    color: '#333',
+    fontSize: 13,
+    opacity: 0.5
   },
 });

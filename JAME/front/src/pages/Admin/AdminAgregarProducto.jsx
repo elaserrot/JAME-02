@@ -146,6 +146,7 @@ export default function AgregarProducto() {
                         <div className="form-group my-3">
                             <label>Categoria:</label>
                             <select className='form-control' name="categoria" value={producto.categoria} onChange={handleChange} id="">
+                                <option disabled value={''}>Seleccione una categoria</option>
                                 {categorias.map((categoria) => (
                                     <option key={categoria.id_cate} value={categoria.id_cate}>{categoria.nombre_Categoria}</option>
                                 ))}
