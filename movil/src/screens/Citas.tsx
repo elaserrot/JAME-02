@@ -142,7 +142,9 @@ const Citas = ({ navigation }) => {
   const servicios = [
     { id: 1, nombre: 'Vacunación' },
     { id: 2, nombre: 'Medicina General' },
-    { id: 3, nombre: 'Esterilización' }
+    { id: 3, nombre: 'Esterilización' },
+    { id: 4, nombre: 'Cardiologia' },
+    { id: 5, nombre: 'Consulta nutricional' }
   ];
 
   const horasDisponibles = [
@@ -188,10 +190,10 @@ const Citas = ({ navigation }) => {
     Alert.alert('Éxito', 'Cita agendada correctamente');
     
     // Resetear el formulario
-    setServicio('Vacunación');
+    setServicio('Seleccione el servicio');
     setMascota('Seleccione la mascota');
     setFecha(new Date());
-    setHora('09:00 AM');
+    setHora('00:00 AM/PM');
   };
 
   return (

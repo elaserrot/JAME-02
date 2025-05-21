@@ -3,11 +3,11 @@ import {
   View, Text, TextInput, Alert, TouchableOpacity, StyleSheet,
   ScrollView, ActivityIndicator, ImageBackground, Image
 } from 'react-native';
-import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
+import API from '../config/api';
 
 type RootStackParamList = {
   Login: undefined;
@@ -29,7 +29,7 @@ const Login = () => {
   const validateFields = () => {
     const { correo, password } = form;
     if (!correo || !password) {
-      alert( 'Debes completar todos los campos.');
+      alert('Debes completar todos los campos.');
       return false;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -48,13 +48,8 @@ const Login = () => {
   const handleSubmit = async () => {
     if (!validateFields()) return;
 
-
-
     try {
-      const response = await axios.post('http://localhost:3001/api/usuarios/login', form, {
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        timeout: 10000,
-      });
+      const response = await API.post("/usuarios/login", form)
 
       if (response.status === 200) {
         const usuario = response.data.usuario?.usuario || 'usuario';
@@ -62,7 +57,7 @@ const Login = () => {
         navigation.navigate('HomeScreen' as never);
       }
     } catch (error) {
-      alert( 'Verifica tus datos, correo o contraseña incorrectos.');
+      alert('Verifica tus datos, correo o contraseña incorrectos.');
     } finally {
       setLoading(false);
     }

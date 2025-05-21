@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import API from '../config/api';
 
 type RootStackParamList = {
   Login: undefined;
@@ -52,7 +53,7 @@ const Register = () => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(correoElectronico)) {
-     alert('El correo electrónico no es válido.');
+      alert('El correo electrónico no es válido.');
       return false;
     }
 
@@ -74,16 +75,10 @@ const Register = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:3001/api/usuarios/agregar', form, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        timeout: 10000,
-      });
+      const response = await API.post('/usuarios/agregar', form);
 
       if (response.status === 200) {
-       alert('¡Bienvenido a la familia! Ahora inicia sesión y empieza a disfrutar.');
+        alert('¡Bienvenido a la familia! Ahora inicia sesión y empieza a disfrutar.');
         navigation.navigate('Login');
       }
     } catch (error) {

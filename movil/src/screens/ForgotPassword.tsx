@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  TextInput, 
-  TouchableOpacity, 
+import API from '../config/api';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
   Alert,
-  ImageBackground 
+  ImageBackground
 } from 'react-native';
 
 const ForgotPassword = () => {
@@ -15,27 +16,31 @@ const ForgotPassword = () => {
   const navigation = useNavigation();
 
   const handleNavigateToLogin = () => {
-    navigation.navigate('Login'as never);
-  };  
+    navigation.navigate('Login' as never);
+  };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!email) {
-      alert( 'Por favor ingresa tu correo electrónico');
+      alert('Por favor ingresa tu correo electrónico');
       return;
     }
-    
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       alert('El correo electrónico no es válido.');
       return;
     }
-    alert(`Se ha enviado un enlace de recuperación a ${email}`);
-    handleNavigateToLogin();
 
+    const response = await API.post("/auth/enviarCodigo", { email });
+
+    if (response.status == 200) {
+      alert(`Se ha enviado un enlace de recuperación a ${email}`);
+      handleNavigateToLogin();
+    }
   };
 
   return (
-    <ImageBackground 
+    <ImageBackground
       source={require('../assets/fondol.png')}
       style={styles.backgroundContainer}
       resizeMode="cover"
@@ -46,7 +51,7 @@ const ForgotPassword = () => {
           <Text style={styles.subtitle}>
             Ingresa tu correo electrónico para restablecer tu contraseña
           </Text>
-          
+
           <TextInput
             style={styles.input}
             placeholder="Correo electrónico"
@@ -56,15 +61,15 @@ const ForgotPassword = () => {
             value={email}
             onChangeText={setEmail}
           />
-          
-          <TouchableOpacity 
-            style={styles.button} 
+
+          <TouchableOpacity
+            style={styles.button}
             onPress={handleSubmit}
           >
             <Text style={styles.buttonText}>Enviar Correo</Text>
           </TouchableOpacity>
         </View>
-        
+
         <View style={styles.textContainer}>
           <Text style={styles.normalText}>¿Recordaste tu contraseña? </Text>
           <TouchableOpacity onPress={handleNavigateToLogin}>
