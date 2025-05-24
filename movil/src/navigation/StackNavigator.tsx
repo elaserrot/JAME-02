@@ -16,6 +16,7 @@ function CustomHeader() {
   const navigation = useNavigation(); // Se requiere para navegar dentro del header
 
   return (
+    
     <View>
       <View style={styles.infoContainer2}>
         <Image
@@ -134,7 +135,7 @@ export default function StackNavigator() {
   return (
     <Stack.Navigator
      id={undefined}
-      initialRouteName="HomeScreen"
+      initialRouteName="Login"
       screenOptions={{ 
         headerStyle: {
           backgroundColor: '#f8f9fa',  
@@ -240,6 +241,7 @@ profileText: {
     justifyContent: 'center',
     backgroundColor: '#5D9CEC',
     paddingVertical: 6,
+    
   },
 menuItems: {
     flex: 1,

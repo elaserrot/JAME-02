@@ -8,6 +8,7 @@ import {
   ScrollView,
   ActivityIndicator,
   ImageBackground,
+  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
@@ -47,23 +48,23 @@ const Register = () => {
     const { nombreCompleto, correoElectronico, usuario, contrasena, verificarContrasena } = form;
 
     if (!nombreCompleto || !correoElectronico || !usuario || !contrasena || !verificarContrasena) {
-      window.alert('Debes completar todos los campos.');
+      Alert.alert('Debes completar todos los campos.');
       return false;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(correoElectronico)) {
-      alert('El correo electrónico no es válido.');
+      Alert.alert('El correo electrónico no es válido.');
       return false;
     }
 
     if (contrasena.length < 8) {
-      alert('La contraseña debe tener al menos 8 caracteres.');
+      Alert.alert('La contraseña debe tener al menos 8 caracteres.');
       return false;
     }
 
     if (contrasena !== verificarContrasena) {
-      alert('Las contraseñas no coinciden.');
+      Alert.alert('Las contraseñas no coinciden.');
       return false;
     }
 
@@ -78,11 +79,11 @@ const Register = () => {
       const response = await API.post('/usuarios/agregar', form);
 
       if (response.status === 200) {
-        alert('¡Bienvenido a la familia! Ahora inicia sesión y empieza a disfrutar.');
+        Alert.alert('¡Bienvenido a la familia! Ahora inicia sesión y empieza a disfrutar.');
         navigation.navigate('Login');
       }
     } catch (error) {
-      alert('Hubo un problema con el servidor.');
+      Alert.alert('Hubo un problema con el servidor.');
     } finally {
       setTimeout(() => {
         setLoading(false);

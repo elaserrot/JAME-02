@@ -11,6 +11,7 @@ import {
   ImageBackground
 } from 'react-native';
 
+
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const navigation = useNavigation();
@@ -21,23 +22,23 @@ const ForgotPassword = () => {
 
   const handleSubmit = async () => {
     if (!email) {
-      alert('Por favor ingresa tu correo electrónico');
+      Alert.alert('Por favor ingresa tu correo electrónico');
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      alert('El correo electrónico no es válido.');
+      Alert.alert('El correo electrónico no es válido.');
       return;
     }
 
     const response = await API.post("/auth/enviarCodigo", { email });
 
     if (response.status == 200) {
-      alert(`Se ha enviado un enlace de recuperación a ${email}`);
+      Alert.alert(`Se ha enviado un enlace de recuperación a ${email}`);
       handleNavigateToLogin();
     }
-  };
+  }
 
   return (
     <ImageBackground

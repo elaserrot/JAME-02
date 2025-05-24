@@ -6,8 +6,8 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
-import { Audio } from 'expo-av';
 import API from '../config/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type RootStackParamList = {
   Login: undefined;
@@ -29,7 +29,7 @@ const Login = () => {
   const validateFields = () => {
     const { correo, password } = form;
     if (!correo || !password) {
-      alert('Debes completar todos los campos.');
+      Alert.alert('Debes completar todos los campos.');
       return false;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -38,7 +38,7 @@ const Login = () => {
       return false;
     }
     if (password.length < 8) {
-      alert('La contraseña debe tener al menos 8 caracteres.');
+      Alert.alert('La contraseña debe tener al menos 8 caracteres.');
       return false;
     }
     return true;
@@ -53,11 +53,12 @@ const Login = () => {
 
       if (response.status === 200) {
         const usuario = response.data.usuario?.usuario || 'usuario';
-        alert(`Bienvenido ${usuario}, Inicio de sesión exitoso.`);
+        Alert.alert(`Bienvenido ${usuario}, Inicio de sesión exitoso.`);
+        AsyncStorage.setItem('token', response.data.token);
         navigation.navigate('HomeScreen' as never);
       }
     } catch (error) {
-      alert('Verifica tus datos, correo o contraseña incorrectos.');
+      Alert.alert('Verifica tus datos, correo o contraseña incorrectos.');
     } finally {
       setLoading(false);
     }
