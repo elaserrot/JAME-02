@@ -319,7 +319,7 @@ const Citas = () => {
                   <Text>
                     {formatDateForDisplay(formatDateForDB(fecha))} - {formatTimeForDisplay(fecha)}
                   </Text>
-                  <MaterialIcons name="calendar-today" size={20} color="#666" />
+                  <MaterialIcons name="calendar-today" size={20} color="#0056B3" />
                 </TouchableOpacity>
 
                 {showDatePicker && (
@@ -398,8 +398,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   pickerContainer: {
-    borderWidth: 1.5,
-    borderColor: '#d3d3d3',
+    borderWidth: 2.5,
+    borderColor: '#6C757D',
     borderRadius: 12,
     overflow: 'hidden',
     backgroundColor: '#f9f9f9',
@@ -410,8 +410,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   dateInput: {
-    borderWidth: 1.5,
-    borderColor: '#d3d3d3',
+    borderWidth: 3.5,
+    borderColor: '#0056B3',
     backgroundColor: '#f1f1f1',
     padding: 14,
     borderRadius: 12,

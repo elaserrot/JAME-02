@@ -135,7 +135,7 @@ export default function StackNavigator() {
   return (
     <Stack.Navigator
      id={undefined}
-      initialRouteName="Login"
+      initialRouteName="Citas"
       screenOptions={{ 
         headerStyle: {
           backgroundColor: '#f8f9fa',  
