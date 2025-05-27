@@ -30,7 +30,7 @@ const AdminAgregarVenta = () => {
                     title: 'Venta creada',
                     text: 'La venta ha sido finalizada con exito.',
                 }).then(() => {
-                    window.location.href = "/ventas";
+                    window.location.href = "/ventas ";
                 })
                 setVenta({
                     payment_id: "",
