@@ -47,15 +47,15 @@ exports.listarCitasUsuario = async (req, res) => {
 
 //controlador para agregar citas
 exports.agregarCita = async (req, res) => {
-    const { Usuario, Fecha, Motivo, Estado, mascotas } = req.body;
+    const { Usuario, Fecha, Motivo, Estado, Mascota } = req.body;
 
-    if (!Usuario || !Fecha || !Motivo || !Estado || !mascotas) {
+    if (!Usuario || !Fecha || !Motivo || !Estado || !Mascota) {
         return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
 
     const q = "INSERT INTO citas (ID_Usuario , Fecha_Cita, Motivo_Cita, Estado_Cita, ID_Mascota) VALUES (?, ?, ?, ?, ?)";
 
-    conexion.query(q, [Usuario, Fecha, Motivo, Estado, mascotas], (err, resultado) => {
+    conexion.query(q, [Usuario, Fecha, Motivo, Estado, Mascota], (err, resultado) => {
         if (err) {
             console.log(err);
             return res.status(500).json("Error al agregar la cita");
@@ -102,7 +102,7 @@ exports.actualizarCita = async (req, res) => {
             Fecha = ?, 
             Motivo = ?, 
             Estado = ?, 
-            mascotas = ?
+            Mascota = ?
         WHERE ID_Citas = ?
     `;
 
