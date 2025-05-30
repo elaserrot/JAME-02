@@ -7,11 +7,11 @@ exports.listarCitas = async (req, res) => {
     Motivo_Cita, 
     Estado_Cita, 
     citas.ID_Mascota, 
-    mascota.Nombre_Mascota, 
+    mascotas.Nombre_Mascota, 
     usuarios.nombre_completo 
     FROM citas 
     INNER JOIN usuarios ON citas.ID_Usuario = usuarios.id_usuario 
-    INNER JOIN mascota ON citas.ID_Mascota = mascota.ID_Mascota`;
+    INNER JOIN mascotas ON citas.ID_Mascota = mascotas.ID_Mascota`;
     conexion.query(q, (err, resultado) => {
         if (err) {
             console.log(err)
@@ -30,11 +30,11 @@ exports.listarCitasUsuario = async (req, res) => {
     Motivo_Cita, 
     Estado_Cita, 
     citas.ID_Mascota, 
-    mascota.Nombre_Mascota, 
+    mascotas.Nombre_Mascota, 
     usuarios.nombre_completo 
     FROM citas 
     INNER JOIN usuarios ON citas.ID_Usuario = usuarios.id_usuario 
-    INNER JOIN mascota ON citas.ID_Mascota = mascota.ID_Mascota
+    INNER JOIN mascotas ON citas.ID_Mascota = mascotas.ID_Mascota
     WHERE citas.ID_Usuario = ?`;
     conexion.query(q, [id], (err, resultado) => {
         if (err) {
@@ -47,15 +47,15 @@ exports.listarCitasUsuario = async (req, res) => {
 
 //controlador para agregar citas
 exports.agregarCita = async (req, res) => {
-    const { Usuario, Fecha, Motivo, Estado, Mascota } = req.body;
+    const { Usuario, Fecha, Motivo, Estado, mascotas } = req.body;
 
-    if (!Usuario || !Fecha || !Motivo || !Estado || !Mascota) {
+    if (!Usuario || !Fecha || !Motivo || !Estado || !mascotas) {
         return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
 
     const q = "INSERT INTO citas (ID_Usuario , Fecha_Cita, Motivo_Cita, Estado_Cita, ID_Mascota) VALUES (?, ?, ?, ?, ?)";
 
-    conexion.query(q, [Usuario, Fecha, Motivo, Estado, Mascota], (err, resultado) => {
+    conexion.query(q, [Usuario, Fecha, Motivo, Estado, mascotas], (err, resultado) => {
         if (err) {
             console.log(err);
             return res.status(500).json("Error al agregar la cita");
@@ -93,7 +93,7 @@ exports.eliminarCita = async (req, res) => {
 //CONTROLADOR PARA ACTUALIZAR CITAS
 exports.actualizarCita = async (req, res) => {
     const { id } = req.params;
-    const { usuario, fecha, motivo, estado, mascota } = req.body;
+    const { usuario, fecha, motivo, estado, mascotas } = req.body;
 
     const q = `
         UPDATE citas 
@@ -102,11 +102,11 @@ exports.actualizarCita = async (req, res) => {
             Fecha = ?, 
             Motivo = ?, 
             Estado = ?, 
-            Mascota = ?
+            mascotas = ?
         WHERE ID_Citas = ?
     `;
 
-    conexion.query(q, [usuario, fecha, motivo, estado, mascota, id], (err, resultado) => {
+    conexion.query(q, [usuario, fecha, motivo, estado, mascotas, id], (err, resultado) => {
         if (err) {
             console.log(err);
             return res.status(500).json({ error: "Error al actualizar la cita" });
