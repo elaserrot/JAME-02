@@ -32,7 +32,7 @@ CREATE TABLE `carrito_compras` (
   `id_producto` int(100) NOT NULL,
   `cantidad` int(100) NOT NULL,
   `id_usuario` int(255) NOT NULL,
-  `carrito_estado` int(2) NOT NULL DEFAULT 1
+  `carrito_estado` int(2) NOT NULL DEFAULT 1,
   PRIMARY KEY (`ID_CarritoCompras`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
