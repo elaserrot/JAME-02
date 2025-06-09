@@ -33,6 +33,7 @@ CREATE TABLE `carrito_compras` (
   `cantidad` int(100) NOT NULL,
   `id_usuario` int(255) NOT NULL,
   `carrito_estado` int(2) NOT NULL DEFAULT 1
+  PRIMARY KEY (`ID_CarritoCompras`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -238,7 +239,6 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre_completo`, `correo_electronico`, `
 -- Indices de la tabla `carrito_compras`
 --
 ALTER TABLE `carrito_compras`
-  ADD PRIMARY KEY (`ID_CarritoCompras`),
   ADD KEY `id usuario` (`id_usuario`),
   ADD KEY `producto` (`id_producto`);
 
