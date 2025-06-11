@@ -4,7 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContaine
 import axios from 'axios';
 import moment from 'moment';
 
-const BACKEND_URL = 'http://localhost:3001';
+const BACKEND_URL = process.env.BACKEND_URL || 'localhost:3001';
 
 
 export default function AdminVentas() {
@@ -38,7 +38,7 @@ export default function AdminVentas() {
 
     return (
         <div>
-            <h3 className="mb-4">Gestión de Ventas</h3> 
+            <h3 className="mb-4">Gestión de Ventas</h3>
             <Link to="/agregarventa" className="btn btn-primary mb-3">Generar ventas</Link>
             <div className="row">
                 <div className="col-8">

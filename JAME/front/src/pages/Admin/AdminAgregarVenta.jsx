@@ -3,7 +3,7 @@ import { Card } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-const BACKEND_URL = 'http://localhost:3001';
+const BACKEND_URL = process.env.BACKEND_URL || 'localhost:3001';
 
 const AdminAgregarVenta = () => {
     const [venta, setVenta] = useState({
@@ -42,11 +42,11 @@ const AdminAgregarVenta = () => {
                 });
             }
         } catch (error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error al realizar la venta',
-                    text: error.response.data.message,
-                })
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al realizar la venta',
+                text: error.response.data.message,
+            })
         }
     };
 

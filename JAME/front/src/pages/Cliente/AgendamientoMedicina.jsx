@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 
-const BACKEND_URL = 'http://localhost:3001';
+const BACKEND_URL = process.env.BACKEND_URL || 'localhost:3001';
 
 const AgendamientoMedicina = () => {
     const [selectedDate, setSelectedDate] = useState(moment().format('YYYY-MM-DDTHH:mm'));

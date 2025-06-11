@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card } from "react-bootstrap";
 import axios from 'axios';
 import Swal from 'sweetalert2';
-const BACKEND_URL = 'http://localhost:3001';
+const BACKEND_URL = process.env.BACKEND_URL || 'localhost:3001';
 
 export default function AgregarProducto() {
 

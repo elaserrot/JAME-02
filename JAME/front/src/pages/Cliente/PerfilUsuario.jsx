@@ -219,14 +219,14 @@ export default function PerfilUsuario() {
 
     return (
         <div className="d-flex flex-column min-vh-100">
-           
+
 
             <header className="bg-white py-3 border-bottom">
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-md-4 d-flex align-items-center">
                             <img
-                                src="/src/img/logovet.png"
+                                src="/img/logovet.png"
                                 alt="Logo Veterinaria"
                                 className="w-25 rounded-circle me-5"
                             />

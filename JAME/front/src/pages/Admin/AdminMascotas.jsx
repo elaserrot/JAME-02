@@ -5,7 +5,7 @@ import axios from 'axios';
 import moment from 'moment';
 import Swal from 'sweetalert2';
 
-const BACKEND_URL = 'http://localhost:3001';
+const BACKEND_URL = process.env.BACKEND_URL || 'localhost:3001';
 
 export default function AdminMascotas() {
 
@@ -124,7 +124,7 @@ export default function AdminMascotas() {
                         <div className="row d-flex align-items-start">
                             <div className="col-md-4">
                                 <img
-                                    src={mascotaSeleccionada?.imagen || "/src/img/dog_placeholder.png"}
+                                    src={mascotaSeleccionada?.imagen || "/img/dog_placeholder.png"}
                                     alt={mascotaSeleccionada?.Nombre_Mascota}
                                     className="img-fluid rounded"
                                     style={{ height: "300px", objectFit: "cover" }} />
